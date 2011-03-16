@@ -1,0 +1,105 @@
+@charset "utf-8";
+
+a:hover {
+color:#f00;
+} 
+a.photo-container {    
+ position: relative;   
+ display: block;  
+}   
+img.watermark {    
+ position: relative;  
+ bottom: 0.4em;    
+ right: 1.4em;  
+}
+
+tr.odd td { 
+	background:#dedeef;
+	border-bottom-width:1px;
+	border-bottom-color:#c5c5e2;
+	border-bottom-style:solid;
+}
+
+.imgbrd {
+  border: 2px solid #444;
+  padding: 2px;
+}
+	
+body {
+font-family: Verdana, Helvetica, sans-serif;
+background-color: #fff;
+color: #444;
+letter-spacing: 0;
+margin-left: 2.6em;
+margin-right: 2.6em;
+margin-top: 1.8em;
+margin-bottom: 1.0em;
+text-align: left;
+text-decoration: none;
+word-spacing: normal;
+font-size: 1.0em;
+}
+input {
+color: #444;
+font-family: Verdana;
+font-size: 1.0em;
+}
+select {
+color: #444;
+font-family: Verdana;
+font-size: 1.0em;
+}
+textarea {
+color: #444;
+font-family: Verdana;
+font-size: 1.0em;
+}
+pre {
+color: #444;
+font-family: Verdana;
+font-size: 1.0em;
+}
+.logo {
+font-family: Impact;
+font-size: 4.8em;
+line-height: 0.8em;
+}
+.logounderline {
+font-family: Georgia;
+font-size: 1.8em;
+font-weight: bold;
+line-height: 0.1em;
+}
+.title {
+font-size: 1.6em;
+}
+.smtitle {
+font-size: 1.4em;
+}
+.greeting {
+font-family: Georgia;
+line-height: 1.2em;
+font-size: 2.4em;
+font-weight: bold;
+}
+.marking {
+font-family: Georgia;
+font-style: italic;
+font-size: 1.1em;
+}
+.max {
+max-width: 500px;
+}
+.small {
+font-size: 0.8em;
+}
+.xsmall {
+font-size: 0.6em;
+}
+.err {
+color:#f00;
+}
+.msg {
+color:#060;
+}
+

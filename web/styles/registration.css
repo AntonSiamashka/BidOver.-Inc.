@@ -1,0 +1,37 @@
+body{
+	background: white;
+}
+
+#t_registration{
+	margin : 20 auto;
+	font-family: Comic Sans MS ;
+	border: 3px ridge orange;
+	background-color: rgb(200, 255, 99);
+	}
+#t_back{
+	margin : 20 auto;
+	font-family: Comic Sans MS ;
+	border: 1px ridge orange;
+	background-color: rgb(200, 255, 99);
+	}
+
+#t_picture{
+	margin : 0 auto;
+	border: 1px solid green;
+	font-family: Comic Sans MS ;
+}
+
+td{
+	text-align: center;
+}
+
+center{
+	font-family: Comic Sans MS ;
+	color: orange;
+}
+
+
+
+
+
+

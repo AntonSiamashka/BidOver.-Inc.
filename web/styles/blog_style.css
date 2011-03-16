@@ -1,0 +1,15 @@
+#blog-header {
+    width: 1000px;
+	margin: 0;
+	padding: 0;
+	font-family: "Lucina Grande", "Trebuchet MS";
+	background: #fff url(../images/blog_op.gif) repeat-x top left;
+}
+
+#blog-header h1 {
+	margin: 0;
+	padding: 45px 60px 50px 160px;
+	font-size: 200%;
+	color: #000;
+	background: url(../images/blog_bottm2.gif) repeat-x bottom left;
+}

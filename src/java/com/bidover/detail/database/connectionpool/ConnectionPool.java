@@ -1,0 +1,103 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.bidover.detail.database.connectionpool;
+
+import com.bidover.common.logger.Logger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+/**
+ *
+ * @author Администратор
+ */
+public class ConnectionPool {
+
+    private static ConnectionPool mc;
+    private int maxConn = 10;
+    private Connection[] ConnArray = new Connection[maxConn];
+    private int withdrewed = 0;
+    private Properties properties = new Properties();
+
+    private ConnectionPool() {
+        
+        for (int i = 0; i < maxConn; i++) {
+            try {
+                ConnArray[i] = openOneConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.log(ex);
+            } catch (SQLException ex) {
+                Logger.log(ex);
+            }
+        }
+
+    }
+
+    static public ConnectionPool getConnectionPool() {
+        ConnectionPool mcc;
+        mcc = (mc == null ? new ConnectionPool() : mc);
+        mc = mcc;
+        return mcc;
+    }
+
+    synchronized public Connection getConnection() {
+        Connection conn = null;
+        while (withdrewed == 10) {
+            try {
+                wait();
+            } catch (InterruptedException ex) {
+                Logger.log(ex);
+            }
+        }
+
+        withdrewed++;
+
+        for (int i = 0; i < maxConn; i++) {
+            if (ConnArray[i] != null) {
+                conn = ConnArray[i];
+                ConnArray[i] = null;
+                break;
+            }
+        }
+
+        notify();
+        return conn;
+    }
+
+    synchronized public void releaseConnection(Connection conn) throws SQLException {
+        withdrewed--;
+        for (int i = 0; i < maxConn; i++) {
+            if (ConnArray[i] == null) {
+                ConnArray[i] = conn;
+                break;
+            }
+        }
+        notify();
+    }
+
+    synchronized public void closeAll() {
+        for (int i = 0; i < maxConn; i++) {
+            if (ConnArray[i] != null) {
+                try {
+                    ConnArray[i].close();
+                } catch (Exception ex) {
+                    Logger.log(ex);
+                }
+            }
+        }
+        ConnArray = null;
+    }
+
+    private Connection openOneConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        Properties prop = new Properties();
+        prop.setProperty("user", "root");
+        prop.setProperty("password", "admin");
+        prop.setProperty("useUnicode", "true");
+        prop.setProperty("characterEncoding", "utf-8");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/bidover_db", prop);
+    }
+}

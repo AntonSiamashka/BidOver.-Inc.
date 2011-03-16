@@ -1,0 +1,30 @@
+#box {
+	width: 290;
+	background: #fff;
+	border: 1px solid #000;
+	
+}
+#box h3 {
+	margin: 0;
+	padding: 6px 8px 4px 10px;
+	font-size: 80%;
+	color: #000;
+	border-bottom: 1px solid #E0CFAB;
+	background: #fff;
+}
+
+#box ul {
+	margin: 0;
+	padding: 14px 10px 14px 10px;
+	list-style: none;
+}
+
+#box ul li {
+	margin: 0 0 6px;
+	padding: 0;
+}
+
+#box ul li a{
+	color: #339933;
+	
+}

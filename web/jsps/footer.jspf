@@ -1,0 +1,9 @@
+<script type="text/javascript" src="js/http.request.js"></script>
+<script type="text/javascript" src="js/srv.lang.js"></script>
+<p>&nbsp;</p>
+<table width="100%" style="border-top: 2px solid #444">
+	<tr>
+	<td width="38%" class="xsmall">Copyright © 2010 bidOver. All Rights Reserved. Designated trademarks and brands are the property of their respective owners. Use of this Web site constitutes acceptance of the bidOver <a href="jsps/inf.ua.jsp">User Agreement</a> and <a href="jsps/inf.pp.jsp">Privacy Policy</a>.</td>
+	<td valign="top" align="right"><table cellpadding="3"><tr><td valign="top" class="small" style="border-right: 1px solid #ccc"><fmt:message key="lbl.language" />:</td><td valign="top" class="small"><div><a href="#" onClick="setLang('en'); return false;">English</a></div><div><a href="#" onClick="setLang('ru'); return false;">Russian</a></div></td></tr></table></td>
+	</tr>
+</table>

@@ -1,0 +1,43 @@
+<%@page pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+                    <br/>
+                    <table width="100%" cellpadding="5">
+                    <tr>
+                        <td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.condition" />:<div id="cond"><a href="jsps/inf.cond.jsp"><fmt:message key="btn.assist.cond" /></a></div></td>
+                        <td><jsp:include page="jsps/fm.cond.jsp" /></td>
+                        <td width="10%"><input id="condition" name="condition" type="hidden" value="0"></td>
+                    </tr>
+                    <tr><td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.salesduration" />:</td><td><span id="sales_duration_list"></span> <fmt:message key="lbl.days" /></td><td width="10%"></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td width="20%" style="border-top: 1px solid #ccc">&nbsp;</td><td><span class="smtitle"><fmt:message key="lbl.lotlocation" /></span></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.country" />:</td><td valign="top"><span id="country_list"> </span> <span id="progress_indicator_country" style="visibility:hidden"><img src="css/bo.progress_bar.gif" alt=""></span></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.atd" />:</td><td valign="top"><span id="atd_list"> </span> <span id="progress_indicator_atd" style="visibility:hidden"><img src="css/bo.progress_bar.gif" alt=""></span></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.location" />:</td><td valign="top"><span id="location_list"><select name="location" disabled><option value=""><fmt:message key="lbl.choosestate" /></option></select></span><div class="small"><fmt:message key="mrk07" /></div></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><input type="checkbox" onclick="ckboxBidForbid();"><input id="forbid_bidding" name="forbid_bidding"  type="hidden" value="0"></td><td><fmt:message key="mrk42" /></td><td width="10%"></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td width="20%" style="border-top: 1px solid #ccc">&nbsp;</td><td><span class="smtitle"><fmt:message key="lbl.pricing" /></span></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><fmt:message key="lbl.fixedprice" />:</td><td><input id="fixed_price" name="fixed_price" type="text" value=""><div class="small"></div></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><input type="checkbox" onclick="ckboxFPSOnly();"><input id="fixed_price_only" name="fixed_price_only" type="hidden" value="0"></td><td><fmt:message key="lbl.fpsaleonly" /></td><td width="10%"></td></tr>
+                    <tr><td width="20%" align="right" valign="top"></td><td><div id="BlkQntDefault" style="display:block"><fmt:message key="lbl.itemsavailable" />: 1</div><div id="BlkQntItemsAvailable" style="display:none"><fmt:message key="lbl.itemsavailable" />:  <input id="qnt_items_available" name="qnt_items_available" type="text" size="5" value="1"></div></td><td width="10%"></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td width="20%" align="right" valign="top"><fmt:message key="lbl.minprice" />:</td><td>
+                        <input id="floor_price" name="floor_price" type="text" value="" onFocus="ckboxFloorPrice();" onKeyUp="ckboxFloorPrice();" onkeypress="ckboxFloorPrice();"><div class="small"><fmt:message key="mrk09" /><br><fmt:message key="mrk41" /> <span class="err"><span id="fee_floor_price"></span> USD</span>.</div>
+                        <div id='BlkStartingBid' style='display:none'><fmt:message key="lbl.startbid" />: <input id="starting_bid" name="starting_bid" type="text" value=""></div>
+                        </td><td width="10%"></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.currency" />:</td><td><span id="currency_list"> </span><div class="small"></div></td><td width="10%"></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td width="20%" style="border-top: 1px solid #ccc">&nbsp;</td><td><span class="smtitle"><fmt:message key="lbl.pmntdetails" /></span></td><td width="10%"></td></tr>
+                    <tr><td width="20%"><p id="msg_pmnt" class="small"></p></td><td><jsp:include page="jsps/fm.pmnt.jsp" /></td><td width="10%"><input id="payment_method" name="payment_method" type="hidden" value=""></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><fmt:message key="lbl.pmntinstr" />:</td><td><input id="payment_instructions" name="payment_instructions" type="text" value="" style="width:100%"><div class="small"></div></td><td width="10%"></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td width="20%" style="border-top: 1px solid #ccc">&nbsp;</td><td><span class="smtitle"><fmt:message key="lbl.shippinghandling" /></span></td><td width="10%"></td></tr>
+                    <tr><td width="20%"><p id="msg_shpg" class="small"></p></td><td><jsp:include page="jsps/fm.shpg.jsp" /></td><td width="10%"><input id="free_shipping" name="free_shipping" type="hidden" value=""><input id="paid_shipping" name="paid_shipping" type="hidden" value=""></td></tr>
+                    <tr><td width="20%" align="right" valign="top"><fmt:message key="lbl.handling" />:</td><td><input id="handling_time" name="handling_time" type="text" value="2"><div class="small"><fmt:message key="lbl.businessdays" /></div></td><td width="10%"></td></tr>
+                   <tr><td width="20%" align="right" valign="top">Description</td><td><textarea id="description" name="description" rows="4" cols="20" ></textarea></td></tr>
+                    <tr><td align="center" colspan="3"><span id="msg_lot" style="color:#f00">&nbsp;</span></td></tr>
+                    <tr><td width="20%" style="border-top: 1px solid #444"><div class="small"><fmt:message key="mrk03" /></div></td><td><input type="button" name="add_lot" value='<fmt:message key="btn.continue" />' onClick="showPreviewAdd();">&nbsp;<span id="progress_indicator_lot" style="visibility:hidden"><img src="css/bo.progress_bar.gif" alt=""></span></td><td width="10%"></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    </table>
+                    <div id="message-div" style="color:red"></div>

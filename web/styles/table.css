@@ -1,0 +1,65 @@
+body{
+	margin: 0;
+	padding: 30px;
+	font-family: "Lucida Grande", Arial, sans-serif;
+	font-size: small;
+	background: #b5b5b5;
+}
+
+.autos {
+	background: #919191;
+}
+
+
+table{
+	position: relative;
+	top: -4px;
+	left: -4px;
+	width: 100%;
+	border: 1px solid #000;
+	background: #fff;
+}
+
+table th, table td {
+	margin: 0;
+	padding: 8px 20px;
+	text-align: center;
+	border-bottom: 1px solid #b5b5b5;
+}
+
+table .name {
+	text-align: left;
+}
+
+table tr {
+	background: #e6e6e6;
+}
+
+table tr.alt {
+	background: #f1f1f1;
+}
+
+table td a {
+	display: block;
+	font-weight: bold;
+}
+
+table th {
+	color: #999;
+}
+
+table caption {
+	margin: 0;
+	padding: 8px 20px;
+	text-align: left;
+	border: 1px solid #000;
+	border-bottom: none;
+	background: #fff;
+}
+
+
+
+
+
+
+

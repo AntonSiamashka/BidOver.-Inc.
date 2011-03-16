@@ -1,0 +1,346 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<c:if test="${not empty auto}">
+<br>
+<table>
+    <tr><td class="smtitle">Lot# ${auto.lot.id}</td></tr>
+    <tr><td class="title">${auto.year} ${auto.idMake.title} ${auto.idModel.title}</td></tr>
+</table>
+<br>
+<table width="100%">
+    <tr>
+        <td width="20%" style="border: 2px solid #dedeef;" align="center" valign="top">
+            <br>
+            <c:forEach var="img" items="${img_files}">
+            <a href="images/pics/${auto.lot.id}/${auto.lot.id}_${img}_.jpg" rel="lightbox" title="${auto.idMake.title} ${auto.idModel.title}">
+                <img src="images/pics/${auto.lot.id}/${auto.lot.id}_${img}_small.jpg" width="100" height="100" border="0" alt=""/>
+            </a>
+            </c:forEach>
+            <c:if test="${qnt_files == 0}">
+                No Images found.
+            </c:if>
+        </td>
+        <td width="80%">
+                <!-- ---------------------------------------- -->
+                <table width="100%" cellpadding="5">
+			<tr><td width="25%" align="right"><fmt:message key="lbl.condition" />:</td><td><div id="cond"><a href="jsps/inf.cond.jsp">${lot.condition.title}</a></div></td></tr>
+ 			<tr><td width="25%" align="right"><fmt:message key="lbl.timeleft" />:</td><td>
+                        <c:if test="${lot.isBiddingClosed}"><span class="err">Sales Closed!</span></c:if>
+                        <c:if test="${!lot.isBiddingClosed}"><span id="TimeLeft">${lot.formattedTimeLeft}</span> <span class="small">(${lot.formattedExpirationTime})</span></c:if>
+                        </td></tr>
+                        <c:if test="${lot.fixedPriceOnly == 0}">
+			<tr><td width="25%" align="right"><fmt:message key="lbl.bidhistory" />:</td>
+                            <td>
+                                <span id="bidhist">
+                                    <a href="jsps/inf.bidhist.jsp?<%=System.currentTimeMillis()%>&lotId=${lot.id}" target="_blank">
+                                        <span id="nBids">
+                                            <c:if test="${lot.bidHistoryRecords  > 0}">${lot.bidHistoryRecords}</c:if>
+                                            <c:if test="${lot.bidHistoryRecords == 0}">0</c:if>
+                                        </span>
+                                        <fmt:message key="lbl.bids" />
+                                    </a>
+                                </span>
+                        </td></tr>
+                        </c:if>
+                        <tr><td colspan="2">&nbsp;</td></tr>
+			<tr><td width="25%"></td><td><span id="msg" class="err"><%//=userWarning%></span></td></tr>
+		</table>
+
+                <c:if test="${lot.isBiddingClosed}">
+        	<table width="100%" cellpadding="5" bgcolor="#DEDEDE">
+			<tr><td width="25%" align="right" valign="top"><fmt:message key="lbl.winningbid" />:</td><td>${lot.currentBid} ${lot.currency}</td></tr>
+			<tr><td colspan="2">&nbsp;</td></tr>
+		</table>
+                </c:if>
+       
+                <c:if test="${!lot.isBiddingClosed}">
+		<table width="100%" bgcolor="#dedeef">
+			<tr><td>
+                        <c:if test="${lot.fixedPriceOnly == 0}">
+                        <form action="">
+			<input id="LotId" type="hidden" value="${lot.id}">
+			<input id="OutBid" type="hidden" value="${lot.outBid}">
+			<input id="ExpirationTime" type="hidden" value="${lot.expirationTime}">
+                        <c:if test="${lot.itemsQnt == 1}"><input id="LotQnt" value="1" type="hidden"></c:if>
+
+                        <table width="100%" cellpadding="5">
+				<tr><td width="25%" align="right" valign="top">
+                                        <c:if test="${lot.currentBid == 0 and lot.startingBid > 0}"><fmt:message key="lbl.startbid" />:</c:if>
+                                        <c:if test="${lot.currentBid >= lot.startingBid}"><fmt:message key="lbl.currentbid" />:</c:if>
+                                </td><td>
+                                        <span id="curMaxBid">
+                                        <c:if test="${lot.currentBid == 0 and lot.startingBid > 0}">${lot.startingBid}</c:if>
+                                        <c:if test="${lot.currentBid >= lot.startingBid}">${lot.currentBid}</c:if>
+                                        </span> ${lot.currency}
+                                </td></tr>
+				<tr><td width="25%"></td><td><c:if test="${lot.floorPrice > 0 and !lot.isFloorPriceReached}">Floor price is not reached!</c:if></td></tr>
+				<tr><td width="25%" align="right" valign="middle"><fmt:message key="lbl.yourmaxbid" />:</td><td valign="top"><c:if test="${lot.isBiddingPermitted}"><input id="MaxBid" name="maxbid" type="text" size="7" value="">&nbsp;<input id="btnBid" type="button" name="makebid" value="<fmt:message key='btn.placebid' />" onClick="placeBid();"></c:if></td></tr>
+                                <tr><td width="25%" align="right"><span id="progress_indicator" style="visibility:hidden"><img src="css/bo.progress_bar.gif" alt=""></span></td><td class="small">(Enter <span id="requireOutBid">${lot.outBid}</span> or more)</td></tr>
+                                <c:if test="${lot.fixedPrice == 0}"><tr><td colspan="2">&nbsp;</td></tr></c:if>
+                                <c:if test="${lot.fixedPrice  > 0}"><tr><td width="25%"></td><td>&#8212; <b><fmt:message key="lbl.or" /></b> &#8212;</td></tr></c:if>
+                        </table>
+                        </form>
+                        </c:if>
+
+                        <c:if test="${lot.fixedPrice > 0}">
+                        <form action="">
+                        <input id="LotId" type="hidden" value="${lot.id}">
+                        <input id="LotFixedPrice" type="hidden" value="${lot.fixedPrice}">
+                        <c:if test="${lot.itemsQnt == 1}">
+                        <input id="LotQnt" type="hidden" value="1">
+                        </c:if>
+                        <table width="100%" cellpadding="5">
+                            <c:if test="${lot.itemsQnt > 1}">
+                            <tr><td width="25%" align="right" valign="middle"><fmt:message key="lbl.quantity" />:</td><td><c:if test="${lot.isBiddingPermitted}"><input id="LotQnt" type="text" name="qnt" value="1" size="3"> ${lot.itemsQnt} <fmt:message key="lbl.available" /></c:if></td></tr>
+                            </c:if>
+                            <tr><td width="25%" align="right" valign="middle"><fmt:message key="lbl.price" />:</td><td>${lot.fixedPrice} ${lot.currency}&nbsp;&nbsp;&nbsp;<c:if test="${lot.isBiddingPermitted}"><input type="button" name="buynow" value="<fmt:message key='btn.buyitnow' />" onClick="lotBuyNow();"></c:if></td></tr>
+			</table>
+			</form>
+                        </c:if>
+			</td></tr>
+		</table>
+                        
+		<span id="CountDown">
+			<script type="text/javascript">
+                        <c:if test="${lot.isCountDownStart}">
+                            setInterval("getHighBid()", 1000);
+                        </c:if>
+			</script>
+		</span>
+                </c:if>
+                <!-- ---------------------------------------- -->
+
+        </td>
+    </tr>
+</table>
+<br><br>
+<table width="100%">
+    <tr>
+<!-- DETAILS -->
+        <td width="33%" valign="top">
+            <div class="smtitle" style="border-bottom: 2px solid blue">Details</div>
+            <table>
+                <tr><td align="right">Modification: </td><td>${auto.idModification.title}</td></tr>
+                <tr><td align="right">VIN: </td><td>${auto.vin}</td></tr>
+                <tr><td align="right">Engine: </td><td>${auto.engine.title}</td></tr>
+                <tr><td align="right">Fuel: </td><td>${auto.idFuel.title}</td></tr>
+                <tr><td align="right">Transmission: </td><td>${auto.transmission.title}</td></tr>
+                <tr><td align="right">Drive Traine: </td><td>${auto.idDriveTrain.title}</td></tr>
+                <tr><td align="right">Doors: </td><td>${auto.doors.title}</td></tr>
+                <tr><td align="right">Body Style: </td><td>${auto.idBodyStyle.title}</td></tr>
+                <tr><td align="right">TopType: </td><td>${auto.idTopType.title}</td></tr>
+                <tr><td align="right">Trim: </td><td>${auto.trim.title}</td></tr>
+                <tr><td align="right">Exterior Color: </td><td>${auto.idExteriorColor.title}</td></tr>
+                <tr><td align="right">Interior Color: </td><td>${auto.idInteriorColor.title}</td></tr>
+                <tr><td align="right">Interior Type: </td><td>${auto.interiorType.title}</td></tr>
+                <tr><td align="right">Wheels: </td><td>${auto.idTires.title} R${auto.idWheels.title}"</td></tr>
+            </table>
+        </td>
+<!-- OPTIONS -->
+        <td width="33%" valign="top">
+            <div class="smtitle" style="border-bottom: 2px solid green">Options</div>
+            <table class="small">
+                <c:if test="${auto.idOptions.pwrLocks == 1}">
+                    <tr><td>Pwr Locks</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.pwrWindows == 1}">
+                    <tr><td>Pwr Windows</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.pwrSteering == 1}">
+                    <tr><td>Pwr Steering</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.pwrMirrors == 1}">
+                    <tr><td>Pwr Mirrors</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.pwrSeats == 1}">
+                    <tr><td>Pwr Seats</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.pwrSeatsDriversOnly == 1}">
+                    <tr><td>Pwr Seats - Drivers Only</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.tiltSteering == 1}">
+                    <tr><td>Tilt Steering</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.airConditioning == 1}">
+                    <tr><td>Air Conditioning</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.rearAirConditioning == 1}">
+                    <tr><td>Rear Air Conditioning</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.cruiseCtrl == 1}">
+                    <tr><td>Cruise Ctl</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.sideAirBags == 1}">
+                    <tr><td>Side Air Bags</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.dualAirBags == 1}">
+                    <tr><td>Dual Air Bags</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.fogLamps == 1}">
+                    <tr><td>Fog Lamps</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.tripCounter == 1}">
+                    <tr><td>Third Row Seat</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.luggageRack == 1}">
+                    <tr><td>Luggage Rack</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.thirdRowSeat == 1}">
+                    <tr><td>Third Row Seat</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.xenonHeadlights == 1}">
+                    <tr><td>Xenon Headlights</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.cdPlayer == 1}">
+                    <tr><td>CD Player</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.cdChanger == 1}">
+                    <tr><td>CD Changer</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.rearWiper == 1}">
+                    <tr><td>Rear Wiper</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.floorMats == 1}">
+                    <tr><td>Floor Mats</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.securitySystem == 1}">
+                    <tr><td>Security System</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.tractionControl == 1}">
+                    <tr><td>Traction Control</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.rearTail == 1}">
+                    <tr><td>Rear Tail</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.liftGate == 1}">
+                    <tr><td>Lift Gate</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.heatedSeats == 1}">
+                    <tr><td>Heated Seats</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.tintedWindows == 1}">
+                    <tr><td>Tinted Windows</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.homeLink == 1}">
+                    <tr><td>Home Link</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.tirePressureMonitorSystem == 1}">
+                    <tr><td>Tire Pressure Monitor System</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.steeringWheelAudioControl == 1}">
+                    <tr><td>Steering Wheel Audio Control</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.spoiler == 1}">
+                    <tr><td>Spoiler</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.bugDeflector == 1}">
+                    <tr><td>Bug Deflector</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.keylessEntry == 1}">
+                    <tr><td>Keyless Entry</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.handToolKit == 1}">
+                    <tr><td>Hand Tool Kit</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.dualSlidingSideDoors == 1}">
+                    <tr><td>Dual Sliding Side Doors</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.powerVentWindows == 1}">
+                    <tr><td>Power Vent Windows</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.frontCenterConsole == 1}">
+                    <tr><td>Power Vent Windows</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.stowAndGo == 1}">
+                    <tr><td>Stow & Go</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.stowAndGoThirdRowOnly == 1}">
+                    <tr><td>Stow & Go 3rd Row Only</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.woodTrimDash == 1}">
+                    <tr><td>Wood Trim Dash</td></tr>
+                </c:if>
+                <c:if test="${auto.idOptions.woodgrainInteriorPackage == 1}">
+                    <tr><td>Woodgrain Interior Package</td></tr>
+                </c:if>
+            </table>
+        </td>
+<!-- DAMAGES -->
+        <td width="33%" valign="top">
+            <div class="smtitle" style="border-bottom: 2px solid red">Damages</div>
+            <table class="small">
+                <tr>
+                    <td align="right">hoodStr: </td>
+                    <td>${auto.damage.hoodStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">roofStr: </td>
+                    <td>${auto.damage.roofStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">windshieldStr: </td>
+                    <td>${auto.damage.windshieldStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">lfDoorStr: </td>
+                    <td>${auto.damage.lfDoorStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">lrDoorStr: </td>
+                    <td>${auto.damage.lrDoorStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">rfDoorStr: </td>
+                    <td>${auto.damage.rfDoorStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">rrDoorStr: </td>
+                    <td>${auto.damage.rrDoorStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">lQtrPanelStr: </td>
+                    <td>${auto.damage.lQtrPanelStr}</td>
+                </tr>
+
+                <tr>
+                    <td align="right">rQtrPanelStr: </td>
+                    <td>${auto.damage.rQtrPanelStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">frontBumperStr: </td>
+                    <td>${auto.damage.frontBumperStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">rearBumperStr: </td>
+                    <td>${auto.damage.rearBumperStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">lfFenderStr: </td>
+                    <td>${auto.damage.lfFenderStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">lQtrPanelStr: </td>
+                    <td>${auto.damage.lQtrPanelStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">rfFenderStr: </td>
+                    <td>${auto.damage.rfFenderStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">deckLidStr: </td>
+                    <td>${auto.damage.deckLidStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">seatsStr: </td>
+                    <td>${auto.damage.seatsStr}</td>
+                </tr>
+                <tr>
+                    <td align="right">overallVehicleStr: </td>
+                    <td>${auto.damage.overallVehicleStr}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+  
+</c:if>

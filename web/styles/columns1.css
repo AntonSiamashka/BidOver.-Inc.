@@ -1,0 +1,60 @@
+table .left-bar{
+	text-align: left;
+	width: 15%;
+}
+
+table .content {
+	text-align: left;
+	width: 50%;
+}
+
+table .right-bar{
+	text-align: left;
+	width: 35%;
+}
+
+#content {
+
+	
+}
+
+#content div {
+	float: center;
+
+}
+
+#right-sidebar {
+	//background: #9c3;
+	float: right;
+}
+
+#right-sidebar div {
+	padding: 10px;
+
+}
+
+#left-sidebar {
+	//background: #9c3;
+	float: left;
+}
+
+#left-sidebar div {
+	padding: 10px;
+
+}
+
+#footer{
+	//background: #cc9;
+}
+
+#header {
+	//background: #369;
+}
+
+#main-table  {
+	width: 900px;
+}
+
+#main {
+	float: center;
+}

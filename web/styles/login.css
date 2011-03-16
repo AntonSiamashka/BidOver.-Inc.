@@ -1,0 +1,27 @@
+body{
+	background: white;
+}
+
+#t_login{
+    position: relative;
+	top: +0px;
+	left: +0px;
+    width: 1000px;
+	border: 3px white;
+	}
+
+
+td{
+	text-align: center;
+}
+
+center{
+	font-family: Comic Sans MS ;
+	color: green;
+}
+
+
+
+
+
+

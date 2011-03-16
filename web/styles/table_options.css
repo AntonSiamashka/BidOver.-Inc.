@@ -1,0 +1,72 @@
+/* 
+    Document   : table_options
+    Created on : 10.04.2010, 2:41:04
+    Author     : Jedai
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+	margin: 0;
+	padding: 50px;
+	font-family: "Lucida Grande", Arial, sans-serif;
+	font-size: small;
+}
+
+.autos {
+	background: #919191;
+}
+
+
+#auto_opt{
+    width: 600px;
+	position: relative;
+	top: -4px;
+	left: -4px;
+	width: 100%;
+	border: 1px solid #000;
+	background: #fff;
+}
+
+#auto_opt #auto_opt td {
+	margin: 0;
+	padding: 8px 20px;
+	text-align: center;
+	border-bottom: 1px solid #b5b5b5;
+}
+
+#auto_opt .name {
+	text-align: left;
+}
+
+#auto_opt tr {
+	background: #e6e6e6;
+}
+
+#auto_opt tr.alt {
+	background: #f1f1f1;
+}
+
+#auto_opt td a {
+	font-weight: bold;
+}
+
+#auto_opt th {
+	color: #999;
+}
+
+#auto_opt caption {
+	margin: 0;
+	padding: 8px 20px;
+	text-align: left;
+	border: 1px solid #000;
+	border-bottom: none;
+	background: #fff;
+}
+
+
+
+
+
+
+
+
