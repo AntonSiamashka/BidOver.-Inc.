@@ -21,6 +21,7 @@ import com.bidover.auto.model.bean.Transmission;
 import com.bidover.auto.model.bean.Wheels;
 import com.bidover.auto.database.dao.AutoDAO;
 import com.bidover.auto.model.bean.Characteristics;
+import com.bidover.auto.model.bean.CountryAssembly;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -45,6 +46,7 @@ public class SearchCommand implements ICommand {
         try {
             String makeTxt = request.getParameter("make");
             String modelTxt = request.getParameter("model");
+            String modificationTxt = request.getParameter("modification");
             String topTypeTxt = request.getParameter("top_type");
             String exteriorColorTxt = request.getParameter("exterior_color");
             String interiorColorTxt = request.getParameter("interior_color");
@@ -55,11 +57,13 @@ public class SearchCommand implements ICommand {
             String driveTrainChTxt = request.getParameter("drive_train");
             String intTypeChTxt = request.getParameter("int_type");
             String wheelsChTxt = request.getParameter("wheels");
-            String tiresChTxt = request.getParameter("tires");
+            //String tiresChTxt = request.getParameter("tires");
             String engineTxt = request.getParameter("engine");
             String fuelTxt = request.getParameter("fuel");
             String transmissionTxt = request.getParameter("transmission");
             String bodyStyleTxt = request.getParameter("body_style");
+            String salvageTxt = request.getParameter("salvage");
+            String countryAssemblyTxt = request.getParameter("country_assembly");
 
             Auto auto = new Auto();
 
@@ -83,10 +87,10 @@ public class SearchCommand implements ICommand {
             if (Integer.valueOf(interiorColorTxt) != -1) {
                 intColor.setId(Integer.valueOf(interiorColorTxt));
             }
-            Tires tires = new Tires();
-            if (Integer.valueOf(tiresChTxt) != -1) {
-                tires.setId(Integer.valueOf(tiresChTxt));
-            }
+//            Tires tires = new Tires();
+//            if (Integer.valueOf(tiresChTxt) != -1) {
+//                tires.setId(Integer.valueOf(tiresChTxt));
+//            }
             TopType topType = new TopType();
             if (Integer.valueOf(topTypeTxt) != -1) {
                 topType.setId(Integer.valueOf(topTypeTxt));
@@ -115,6 +119,11 @@ public class SearchCommand implements ICommand {
             if (Integer.valueOf(odometerTxt) != -1) {
                 auto.setOdometer(Integer.valueOf(odometerTxt));
             }
+            
+            CountryAssembly countryAssembly = new CountryAssembly();
+            if (Integer.valueOf(countryAssemblyTxt) != -1) {
+                countryAssembly.setId(Integer.valueOf(countryAssemblyTxt));
+            }
 
             auto.setDoors(door);
             auto.setInteriorType(interiorType);
@@ -124,20 +133,35 @@ public class SearchCommand implements ICommand {
             Characteristics characteristics = new Characteristics();
             characteristics.setMake(makeTxt);
             characteristics.setModel(modelTxt);
+            characteristics.setModification(modificationTxt);
             auto.setCharacteristics(characteristics);
-            auto.setIdTires(tires);
+            //auto.setIdTires(tires);
+            auto.setCountryAssembly(countryAssembly);
             auto.setIdTopType(topType);
             auto.setIdWheels(wheels);
             auto.setEngine(engine);
             auto.setTransmission(transmission);
             auto.setIdFuel(fuel);
             auto.setIdBodyStyle(bodyStyle);
+            if("on".equals(salvageTxt)) {
+                auto.setSalvage(true);
+            } else {
+                auto.setSalvage(null);
+            }
+            
             AutoDAO autoDAO = new AutoDAO();
-            if (yearBegTxt == null || yearEndTxt == null) {
+            if (yearBegTxt == null || yearBegTxt.isEmpty()) {
                 yearBegTxt = String.valueOf(Integer.MIN_VALUE);
+            }
+            if(yearEndTxt == null || yearEndTxt.isEmpty()) {
                 yearEndTxt = String.valueOf(Integer.MAX_VALUE);
             }
-            List<Auto> autos = autoDAO.findPreview(auto, Integer.valueOf(yearBegTxt), Integer.valueOf(yearEndTxt));
+            List<Auto> autos;
+//            if(Integer.valueOf(yearBegTxt)==0 && Integer.valueOf(yearEndTxt) == 0){
+//                autos = autoDAO.findPreview(auto);
+//            } else {
+                autos = autoDAO.findPreview(auto, Integer.valueOf(yearBegTxt), Integer.valueOf(yearEndTxt));
+//            }
             request.setAttribute("autos", autos);
             request.getRequestDispatcher("searchResult.jsp").forward(request, response);
         } catch (NumberFormatException ex) {

@@ -5,7 +5,7 @@
 package com.bidover.auto.database.dao;
 
 import com.bidover.auto.model.bean.Characteristics;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.auto.model.bean.Make;
 import com.bidover.auto.model.bean.Model;
 import java.sql.Connection;
@@ -295,17 +295,17 @@ public class CharacteristicsDAO {
         endYear = "2010";
 
 
-        make.setId(Integer.valueOf(make_id));
+        make.setId(Integer.getInteger(make_id));
         ///////////////////
         MakeDAO makeDAO = new MakeDAO();
         List<Make> makes = makeDAO.find(make);
         make = makes.get(0);
         ///////////////////
         model.setMake(make);
-        model.setId(Integer.valueOf(id));
+        model.setId(Integer.getInteger(id));
         model.setTitle(title);
-        model.setBegYear(Integer.valueOf(begYear));
-        model.setEndYear(Integer.valueOf(endYear));
+        model.setBegYear(Integer.getInteger(begYear));
+        model.setEndYear(Integer.getInteger(endYear));
         model.setCount(count);
         return model;
     }

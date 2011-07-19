@@ -14,16 +14,19 @@ function getUserLoginInfo() {
 	request.open("POST", url, true);
 	request.onreadystatechange = updateLoginPage;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	request.send( "command=LOGIN&email="+encodeURIComponent(getUserEmail())+"&pass="+encodeURIComponent(getUserPass()) );
+	request.send( "command=LOGIN&j_username="+encodeURIComponent(getUserEmail())+"&j_password="+encodeURIComponent(getUserPass()) );
 }
 
 function updateLoginPage() {
 	if (request.readyState == 4) {
-//      alert(request.responseText);
-        	var jsonData = eval("("+request.responseText+")");
-
-		document.getElementById("progress_indicator").style.visibility = 'hidden';
-		if (jsonData.status == 1) window.location = "cp.jsp";
-		else replaceText(document.getElementById("msg"), jsonData.message);
+            var jsonData = eval("("+request.responseText+")");
+            document.getElementById("progress_indicator").style.visibility = 'hidden';
+            if (jsonData.status == 1){
+                window.location = "cp.jsp";
+            } else if (jsonData.status == 0) {
+                window.location = "Controller?command=REGISTRATION";
+            } else {
+                replaceText(document.getElementById("msg"), jsonData.message);
+            }
 	}
 }

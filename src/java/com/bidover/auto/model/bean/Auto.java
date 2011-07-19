@@ -5,19 +5,19 @@
 package com.bidover.auto.model.bean;
 
 import com.bidover.common.model.bean.Lot;
-import java.io.Serializable;
+//import java.io.Serializable;
 
 /**
  *
  * @author Jedai
  */
-public class Auto implements Serializable {
+public class Auto extends Lot {
 
-    private static final long serialVersionUID = 1L;
     private String vin;
     private Integer id;
     private Integer odometer;
     private Integer year;
+    private Integer displacement;
     private Door doors;
     private Engine engine;
     private Transmission transmission;
@@ -32,9 +32,11 @@ public class Auto implements Serializable {
     private Wheels idWheels;
     private InteriorType interiorType;
     private Trim trim;
-    private Lot lot;
     private Damage damage;
     private Characteristics characteristics;
+    private Boolean salvage = false;
+    private CountryAssembly countryAssembly;
+    
 
 
     public Auto() {
@@ -66,14 +68,6 @@ public class Auto implements Serializable {
 
     public void setEngine(Engine engine) {
         this.engine = engine;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public BodyStyle getIdBodyStyle() {
@@ -196,14 +190,6 @@ public class Auto implements Serializable {
         this.damage = damage;
     }
 
-    public Lot getLot() {
-        return lot;
-    }
-
-    public void setLot(Lot lot) {
-        this.lot = lot;
-    }
-
     public Characteristics getCharacteristics() {
         return characteristics;
     }
@@ -211,29 +197,37 @@ public class Auto implements Serializable {
     public void setCharacteristics(Characteristics characteristics) {
         this.characteristics = characteristics;
     }
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    
+    public CountryAssembly getCountryAssembly() {
+        return countryAssembly;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Auto)) {
-            return false;
-        }
-        Auto other = (Auto) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setCountryAssembly(CountryAssembly countryAssembly) {
+        this.countryAssembly = countryAssembly;
     }
 
-    @Override
+    public Boolean isSalvage() {
+        return salvage;
+    }
+    
+    public Boolean getSalvage() {
+        return salvage;
+    }
+
+    public void setSalvage(Boolean salvage) {
+        this.salvage = salvage;
+    }
+
+    public Integer getDisplacement() {
+        return displacement;
+    }
+
+    public void setDisplacement(Integer displacement) {
+        this.displacement = displacement;
+    }
+    
+    
+
     public String toString() {
         return "bidoverdb.bean.newpackage.Auto[id=" + id + "]";
     }

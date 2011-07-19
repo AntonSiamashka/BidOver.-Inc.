@@ -5,13 +5,14 @@
 package com.bidover.auto.database.dao;
 
 import com.bidover.auto.model.bean.Damage;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -30,8 +31,11 @@ public class DamageDAO {
 
     public int add(Damage damage) {
         int id = -1;
+         ResultSet resultSet = null;
         try {
-            String s = "INSERT INTO bidover_db.damage(" +
+            connection = connectionPool.getConnection();
+            
+            String request = "INSERT INTO bidover_db.damage(" +
                     "hood," +
                     "roof," +
                     "windshield," +
@@ -48,27 +52,33 @@ public class DamageDAO {
                     "deck_lid," +
                     "seats," +
                     "overall_vehicle" +
-                    ") VALUES('" +
-                    damage.getHood() + "','" +
-                    damage.getRoof() + "','" +
-                    damage.getWindshield() + "','" +
-                    damage.getLfDoor() + "','" +
-                    damage.getLrDoor() + "','" +
-                    damage.getRfDoor() + "','" +
-                    damage.getRrDoor() + "','" +
-                    damage.getLQtrPanel() + "','" +
-                    damage.getRQtrPanel() + "','" +
-                    damage.getFrontBumper() + "','" +
-                    damage.getRearBumper() + "','" +
-                    damage.getLfFender() + "','" +
-                    damage.getRfFender() + "','" +
-                    damage.getDeckLid() + "','" +
-                    damage.getSeats() + "','" +
-                    damage.getOverallVehicle() + "')";
-
-            executeRequest(s);
-            id = find(damage).get(0).getId();
-
+                    ") VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?)";
+            peparedStatement = (PreparedStatement) connection.prepareStatement(request, PreparedStatement.RETURN_GENERATED_KEYS);
+            peparedStatement.setObject(1, damage.getHood());
+            peparedStatement.setObject(2, damage.getRoof());
+            peparedStatement.setObject(3, damage.getWindshield());
+            peparedStatement.setObject(4, damage.getLfDoor());
+            peparedStatement.setObject(5, damage.getLrDoor());
+            peparedStatement.setObject(6, damage.getRfDoor());
+            peparedStatement.setObject(7, damage.getRrDoor());
+            peparedStatement.setObject(8, damage.getlQtrPanel());
+            peparedStatement.setObject(9, damage.getRQtrPanel());
+            peparedStatement.setObject(10, damage.getFrontBumper());
+            peparedStatement.setObject(11, damage.getRearBumper());
+            peparedStatement.setObject(12, damage.getLfFender());
+            peparedStatement.setObject(13, damage.getRfFender());
+            peparedStatement.setObject(14, damage.getDeckLid());
+            peparedStatement.setObject(15, damage.getSeats());
+            peparedStatement.setObject(16, damage.getOverallVehicle());
+            peparedStatement.execute();
+            
+            resultSet = peparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+            resultSet.close();
+            peparedStatement.close();
+            connectionPool.releaseConnection(connection);
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(OptionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,105 +111,123 @@ public class DamageDAO {
 
     public Damage createDamage(ResultSet resultSet) throws SQLException {
         Damage damage = new Damage();
+        DamageConditionDAO damageConditionDao = new DamageConditionDAO();
+        Map<Integer,String> damageConditions = damageConditionDao.findAllMap();
         String currentString = resultSet.getString("damage.id");
         if (currentString != null) {
-            damage.setId(Integer.valueOf(currentString));
+            damage.setId(Integer.getInteger(currentString));
         } else {
             damage.setId(null);
         }
         currentString = resultSet.getString("damage.hood");
         if (currentString != null) {
-            damage.setHood(Integer.valueOf(currentString));
+            damage.setHood(Integer.getInteger(currentString));
+            damage.setHoodStr(damageConditions.get(damage.getHood()));
         } else {
             damage.setHood(null);
         }
         currentString = resultSet.getString("damage.roof");
         if (currentString != null) {
-            damage.setRoof(Integer.valueOf(currentString));
+            damage.setRoof(Integer.getInteger(currentString));
+            damage.setRoofStr(damageConditions.get(damage.getRoof()));
         } else {
             damage.setRoof(null);
         }
         currentString = resultSet.getString("damage.windshield");
         if (currentString != null) {
-            damage.setWindshield(Integer.valueOf(currentString));
+            damage.setWindshield(Integer.getInteger(currentString));
+            damage.setWindshieldStr(damageConditions.get(damage.getWindshield()));
         } else {
             damage.setWindshield(null);
         }
         currentString = resultSet.getString("damage.lf_door");
         if (currentString != null) {
-            damage.setLfDoor(Integer.valueOf(currentString));
+            damage.setLfDoor(Integer.getInteger(currentString));
+            damage.setLfDoorStr(damageConditions.get(damage.getLfDoor()));
         } else {
             damage.setLfDoor(null);
         }
         currentString = resultSet.getString("damage.lr_door");
         if (currentString != null) {
-            damage.setLrDoor(Integer.valueOf(currentString));
+            damage.setLrDoor(Integer.getInteger(currentString));
+            damage.setLrDoorStr(damageConditions.get(damage.getLrDoor()));
         } else {
             damage.setLrDoor(null);
         }
         currentString = resultSet.getString("damage.rf_door");
         if (currentString != null) {
-            damage.setRfDoor(Integer.valueOf(currentString));
+            damage.setRfDoor(Integer.getInteger(currentString));
+            damage.setRfDoorStr(damageConditions.get(damage.getRfDoor()));
         } else {
             damage.setRfDoor(null);
         }
         currentString = resultSet.getString("damage.rr_door");
         if (currentString != null) {
-            damage.setRrDoor(Integer.valueOf(currentString));
+            damage.setRrDoor(Integer.getInteger(currentString));
+            damage.setRrDoorStr(damageConditions.get(damage.getRrDoor()));
         } else {
             damage.setRrDoor(null);
         }
         currentString = resultSet.getString("damage.l_qtr_panel");
         if (currentString != null) {
-            damage.setLQtrPanel(Integer.valueOf(currentString));
+            damage.setLQtrPanel(Integer.getInteger(currentString));
+            damage.setlQtrPanelStr(damageConditions.get(damage.getLQtrPanel()));
         } else {
             damage.setLQtrPanel(null);
         }
         currentString = resultSet.getString("damage.r_qtr_panel");
         if (currentString != null) {
-            damage.setRQtrPanel(Integer.valueOf(currentString));
+            damage.setRQtrPanel(Integer.getInteger(currentString));
+            damage.setrQtrPanelStr(damageConditions.get(damage.getRQtrPanel()));
         } else {
             damage.setRQtrPanel(null);
         }
         currentString = resultSet.getString("damage.front_bumper");
         if (currentString != null) {
-            damage.setFrontBumper(Integer.valueOf(currentString));
+            damage.setFrontBumper(Integer.getInteger(currentString));
+            damage.setFrontBumperStr(damageConditions.get(damage.getFrontBumper()));
         } else {
             damage.setFrontBumper(null);
         }
         currentString = resultSet.getString("damage.rear_bumper");
         if (currentString != null) {
-            damage.setRearBumper(Integer.valueOf(currentString));
+            damage.setRearBumper(Integer.getInteger(currentString));
+            damage.setRearBumperStr(damageConditions.get(damage.getRearBumper()));
         } else {
             damage.setRearBumper(null);
         }
         currentString = resultSet.getString("damage.lf_fender");
         if (currentString != null) {
-            damage.setLfFender(Integer.valueOf(currentString));
+            damage.setLfFender(Integer.getInteger(currentString));
+            damage.setLfFenderStr(damageConditions.get(damage.getLfFender()));
         } else {
             damage.setLfFender(null);
         }
         currentString = resultSet.getString("damage.rf_fender");
         if (currentString != null) {
-            damage.setRfFender(Integer.valueOf(currentString));
+            damage.setRfFender(Integer.getInteger(currentString));
+            damage.setRfFenderStr(damageConditions.get(damage.getRfFender()));
         } else {
             damage.setRfFender(null);
         }
         currentString = resultSet.getString("damage.deck_lid");
         if (currentString != null) {
-            damage.setDeckLid(Integer.valueOf(currentString));
+            damage.setDeckLid(Integer.getInteger(currentString));
+            damage.setDeckLidStr(damageConditions.get(damage.getDeckLid()));
         } else {
             damage.setDeckLid(null);
         }
         currentString = resultSet.getString("damage.seats");
         if (currentString != null) {
-            damage.setSeats(Integer.valueOf(currentString));
+            damage.setSeats(Integer.getInteger(currentString));
+            damage.setSeatsStr(damageConditions.get(damage.getSeats()));
         } else {
             damage.setSeats(null);
         }
         currentString = resultSet.getString("damage.overall_vehicle");
         if (currentString != null) {
-            damage.setOverallVehicle(Integer.valueOf(currentString));
+            damage.setOverallVehicle(Integer.getInteger(currentString));
+            damage.setOverallVehicleStr(damageConditions.get(damage.getOverallVehicle()));
         } else {
             damage.setOverallVehicle(null);
         }

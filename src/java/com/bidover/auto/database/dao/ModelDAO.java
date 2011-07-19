@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import com.bidover.common.logger.Logger;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -157,17 +157,17 @@ public class ModelDAO {
         endYear = "2010";
 
 
-        make.setId(Integer.valueOf(make_id));
+        make.setId(Integer.getInteger(make_id));
         ///////////////////
         MakeDAO makeDAO = new MakeDAO();
         List<Make> makes = makeDAO.find(make);
         make = makes.get(0);
         ///////////////////
         model.setMake(make);
-        model.setId(Integer.valueOf(id));
+        model.setId(Integer.getInteger(id));
         model.setTitle(title);
-        model.setBegYear(Integer.valueOf(begYear));
-        model.setEndYear(Integer.valueOf(endYear));
+        model.setBegYear(Integer.getInteger(begYear));
+        model.setEndYear(Integer.getInteger(endYear));
         model.setCount(count);
         return model;
     }

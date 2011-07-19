@@ -1,14 +1,9 @@
 package com.bidover.common.database.dao;
 
-import com.bidover.common.database.dao.ConditionDAO;
-import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.common.logger.Logger;
 import com.bidover.common.model.bean.Lot;
-import com.bidover.common.model.bean.User;
 import com.bidover.common.upload.FileIOSet;
 import com.bidover.util.DateSets;
-import com.bidover.util.UtilSets;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,69 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-public class LotDAO {
-
-    private Connection connection;
-    private PreparedStatement peparedStatement;
-    private ConnectionPool connectionPool;
+public class LotDAO extends BaseLotDAO {
 
     public LotDAO() {
-        connectionPool = ConnectionPool.getConnectionPool();
-    }
-
-    private void executeRequest(String request) throws SQLException {
-        connection = connectionPool.getConnection();
-        peparedStatement = (PreparedStatement) connection.prepareStatement(request);
-        peparedStatement.execute();
-        peparedStatement.close();
-        connectionPool.releaseConnection(connection);
-    }
-
-    public int add(Lot lot) {
-        int generatedId = -1;
-        ResultSet resultSet = null;
-        try {
-
-            // LOCK TABLE
-            executeRequest("LOCK TABLES bidover_db.lot WRITE");
-
-            // INSERT RECORD
-            String query = "INSERT INTO bidover_db.lot SET " +
-                    "distribution_time=" + lot.getDistributionTime() +
-                    ", expiration_time=" + lot.getExpirationTime() +
-                    ", seller_id=" + lot.getSellerId().getId() +
-                    ", condition_code=" + lot.getCondition().getId() +
-                    ", location_code='" + lot.getLocation() + "'" +
-                    ", forbid_bidding=" + lot.getForbidBidding() +
-                    ", fixed_price=" + lot.getFixedPrice() +
-                    ", fixed_price_only=" + lot.getFixedPriceOnly() +
-                    ", floor_price=" + lot.getFloorPrice() +
-                    ", starting_bid=" + lot.getStartingBid() +
-                    ", currency_code='" + lot.getCurrency() + "'" +
-                    ", payment_method='" + lot.getPaymentMethod() + "'" +
-                    ", payment_instructions='" + lot.getPaymentInstructions() + "'" +
-                    ", free_shipping='" + lot.getFreeShipping() + "'" +
-                    ", paid_shipping='" + lot.getPaidShipping() + "'" +
-                    ", handling_time=" + lot.getHandlingTime() +
-                    ", qnt_items_available=" + lot.getItemsQnt() +
-                    ", description='" + lot.getDescription() + "'";
-            connection = connectionPool.getConnection();
-            peparedStatement = (PreparedStatement) connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            peparedStatement.execute();
-            resultSet = peparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                generatedId = resultSet.getInt(1);
-            }
-            closeAll(resultSet, peparedStatement, connection);
-
-            // UNLOCK TABLE
-            executeRequest("UNLOCK TABLES");
-
-        } catch (SQLException ex) {
-            Logger.log(ex);
-        }
-
-        return generatedId;
+        super();
     }
 
     public List<Lot> find(Lot lot) {
@@ -103,31 +39,7 @@ public class LotDAO {
         }
         return lots;
     }
-    /*
-    public List<Lot> findAll() {
-    List<Lot> lots = null;
-
-    try {
-    connection = connectionPool.getConnection();
-    peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.lot");
-    ResultSet resultSet = peparedStatement.executeQuery();
-    while (resultSet.next()) {
-    if (resultSet.isFirst()) {
-    lots = new ArrayList<Lot>();
-    }
-    lots.add(createLot(resultSet));
-    }
-    peparedStatement.close();
-    connectionPool.releaseConnection(connection);
-    } catch (SQLException ex) {
-    Logger.log(ex);
-    }
-
-    return lots;
-
-    }
-     */
-
+    
     public Lot getNextLot() {
         int id = 0;
         long expirationTime = 0;
@@ -159,7 +71,7 @@ public class LotDAO {
             connection = connectionPool.getConnection();
 //            peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.lot WHERE lot.id='"+lotId+"' ORDER BY lot.id");
             peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.lot " +
-                    "INNER JOIN bidover_db.condition ON lot.condition_code=condition.id WHERE lot.id=" + lotId);
+                    "WHERE lot.id=" + lotId);
 
             ResultSet resultSet = peparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -259,15 +171,6 @@ public class LotDAO {
         }
     }
 
-    /*    public void bidOver(Integer id) {
-    try {
-    executeRequest("UPDATE bidover_db.lot SET lot.status=1 WHERE lot.id='" + id + "'");
-    } catch (SQLException ex) {
-    Logger.log(ex);
-    }
-
-    }
-     */
     public void closeBidding(Integer lotId) {
         try {
             LotDAO lotDAO = new LotDAO();
@@ -364,91 +267,6 @@ public class LotDAO {
         return lot;
     }
 
-    public Lot createLot(ResultSet resultSet) throws SQLException {
-        String id = resultSet.getString("lot.id");
-        String sellerId = resultSet.getString("lot.seller_id");
-        String forbid_bidding = resultSet.getString("lot.forbid_bidding");
-        String location = resultSet.getString("lot.location_code");
-        String expirationTime = resultSet.getString("lot.expiration_time");
-        String floorPrice = resultSet.getString("lot.floor_price");
-        String startingBid = resultSet.getString("lot.starting_bid");
-        String fixedPrice = resultSet.getString("lot.fixed_price");
-        String fixedPriceOnly = resultSet.getString("lot.fixed_price_only");
-        String itemsQnt = resultSet.getString("lot.qnt_items_available");
-        String shipCost = resultSet.getString("lot.shipping_cost");
-        String currency = resultSet.getString("lot.currency_code");
-        String status = resultSet.getString("lot.status");
-
-        User seller = new User();
-        Lot lot = new Lot();
-        lot.setSellerId(seller);
-        lot.setId(Integer.valueOf(id));
-        lot.setLocation(location);
-        lot.setForbidBidding(Byte.valueOf(forbid_bidding));
-        lot.setFloorPrice(Double.parseDouble(floorPrice));
-        lot.setStartingBid(Double.parseDouble(startingBid));
-        lot.setFixedPrice(Double.parseDouble(fixedPrice));
-        lot.setFixedPriceOnly(Byte.valueOf(fixedPriceOnly));
-        lot.setItemsQnt(Integer.parseInt(itemsQnt));
-        lot.setShippingCost(Double.parseDouble(shipCost));
-        lot.setCurrency(currency);
-        lot.setStatus(Byte.valueOf(status));
-
-        ConditionDAO conditionDAO = new ConditionDAO();
-        lot.setCondition(conditionDAO.createCondition(resultSet));
-
-        long millisTimeLeft = Long.valueOf(expirationTime) - System.currentTimeMillis();
-        lot.setMillisTimeLeft(millisTimeLeft);
-        boolean isBiddingClosed = millisTimeLeft < 0 || lot.getStatus() > 0 ? true : false;
-        lot.setIsBiddingClosed(isBiddingClosed);
-        lot.setExpirationTime(Long.valueOf(expirationTime));
-
-        DateSets dt = new DateSets();
-        lot.setFormattedExpirationTime(dt.convMillsToDate(Long.valueOf(expirationTime), "MMM dd, yyyy  HH:mm:ss  z"));
-        lot.setFormattedTimeLeft(dt.getTimeLeft(millisTimeLeft));
-
-        UtilSets utl = new UtilSets();
-        double stabid = lot.getStartingBid();
-        double currentBid = 0;
-        double outBid = 0;
-        int biddingRecords = 0;
-        String fileName = lot.getId() + "/bidhistory.dat";
-        FileIOSet fio = new FileIOSet();
-        if (fio.fileExists(fileName)) {
-            String[] allStrings = fio.readStringsFromFile(fileName);
-            biddingRecords = allStrings.length;
-            if (biddingRecords > 0) {
-                String str = allStrings[biddingRecords - 1];
-                String parts[] = str.split(";");
-                currentBid = Double.parseDouble(parts[2]);
-                outBid = currentBid + utl.getBidInc(currentBid);
-            } else {
-                outBid = stabid > 0 ? stabid : 0.5;
-            }
-        } else {
-            outBid = stabid > 0 ? stabid : 0.5;
-        }
-
-        lot.setCurrentBid(currentBid);
-        lot.setOutBid(outBid);
-        lot.setBidHistoryRecords(biddingRecords);
-
-        boolean isFloorPriceReached = currentBid < Double.parseDouble(floorPrice) ? false : true;
-        lot.setIsFloorPriceReached(isFloorPriceReached);
-
-        boolean isBiddingPermitted = lot.getForbidBidding() == 0 & lot.getSellerId().getId() != Integer.valueOf(sellerId) ? true : false;
-        lot.setIsBiddingPermitted(isBiddingPermitted);
-
-        boolean isLastHour = millisTimeLeft < 3600000 ? true : false;
-        lot.setIsLastHour(isLastHour);
-
-//        boolean isCountDownStart = lot.getIsLastHour() & lot.getCurrentBid()>0 & lot.getFixedPrice()==0 ? true : false;
-        boolean isCountDownStart = lot.getIsLastHour() & lot.getCurrentBid() > 0 ? true : false;
-        lot.setIsCountDownStart(isCountDownStart);
-
-        return lot;
-    }
-
     private String createDBRequest(Lot lot) {
         String dbRequest = "";
         if (lot != null) {
@@ -523,24 +341,18 @@ public class LotDAO {
         return dbRequest;
     }
 
-    private void closeAll(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException ex) {
-            }
-        }
-        if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException ex) {
-            }
-        }
-        if (connection != null) {
-            try {
-                connectionPool.releaseConnection(connection);
-            } catch (SQLException ex) {
-            }
-        }
+    @Override
+    public Lot createNewInstance() {
+        return new Lot();
     }
+
+    @Override
+    public void populateSpecificInfo(Lot lot, ResultSet resulSet) {
+    }
+
+    @Override
+    public Integer addSpecificInfo(Lot lot) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

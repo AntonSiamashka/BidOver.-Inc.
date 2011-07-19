@@ -28,6 +28,8 @@ function updateModelList(){
             cleanElement(divId);
             div.appendChild(select);
             getModifications();
+            var status = document.getElementById("status");
+            status.style.visibility = "hidden";
         }
     }
 
@@ -63,6 +65,8 @@ function updateModificationList(){
             cleanElement(divId);
             div.appendChild(select);
             getOthers();
+            var status = document.getElementById("status");
+            status.style.visibility = "hidden";
         }
     }
 }
@@ -89,73 +93,23 @@ function updateOthersList(){
     if(request.readyState == 4){
         if(request.status == 200){
             var xml = request.responseXML;
-            var divId="specification";
-            var tagName = "year";
-            var onchangeMethod = "";
-            var xmlElement = xml.getElementsByTagName("other-list")[0];
-            var select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            var div = document.getElementById(divId);
-            var table =document.createElement("table");
-            cleanElement(divId);
-            inserTr(table, "Year", select);
-            tagName = "trim";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_trim, select);
-            tagName = "body-style";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_body_style, select);
-            tagName = "drive-train";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_drive_train, select);
-            tagName = "exterior-color";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_exterior_color, select);
-            tagName = "interior-color";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_interior_color, select);
-            tagName = "fuel";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_fuel, select);
-            tagName = "tires";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_tires, select);
-            tagName = "top-type";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_top_type, select);
-            tagName = "wheels";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_wheels, select);
-            tagName = "door";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_door, select);
-            tagName = "engine";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_engine, select);
-            tagName = "interior-type";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_interior_type, select);
-            tagName = "transmission";
-            onchangeMethod = "";
-            select = createSelectWithId(xmlElement,tagName,tagName,onchangeMethod);
-            inserTr(table, lbl_transmission, select);
-            var editVin = createEdit("vin",12345678912345678);
-            var editOdometr = createEdit("odometer",1000);
-            inserTr(table, lbl_vin, editVin);
-            inserTr(table, lbl_odometer, editOdometr);
-            div.appendChild(table);
+            var yearSelect = document.getElementById("year");
+            
+            var list = xml.getElementsByTagName("year-list")[0];
+            
+            var items = list.getElementsByTagName("year");
+            if(items.length!=0){
+                for (var I = 0 ; I < items.length ; I++) {
+                    var item = items[I];
+                    var id = item.getElementsByTagName("id")[0].firstChild.nodeValue;
+                    var title = item.getElementsByTagName("title")[0].firstChild.nodeValue;
+                    var option = document.createElement("option");
+                    option.setAttribute("value",id);
+                    option.appendChild(document.createTextNode(title));
+                    yearSelect.appendChild(option);
+                }
 
+            }
             var specification = document.getElementById("specification");
             var previewButton = document.getElementById("preview_div");
             var optionButton = document.getElementById("option_div");
@@ -169,6 +123,8 @@ function updateOthersList(){
                 previewButton.style.visibility = "visible";
                 optionButton.style.visibility = "visible";
                 damageButton.style.visibility = "visible";
+                specification.style.visibility = "visible";
+                specification.style.display="block";
                 //                getSalesDetails();
                 document.getElementById("sales_details").style.display="block";
                 getOptions();
@@ -184,6 +140,8 @@ function updateOthersList(){
                 selectOption.innerHTML = "";
                 selectOption.style.visibility = "hidden";
                 selectOption.style.display = "none";
+                specification.style.visibility = "hidden";
+                specification.style.display="none";
             }
             var status = document.getElementById("status");
             status.style.visibility = "hidden";
@@ -256,67 +214,9 @@ function showDamages(){
 }
 
 function getDamages(){
-    var status = document.getElementById("status");
-    status.style.visibility = "visible";
-    createRequest();
-    var url = "Controller?command=ADD_DAMAGE_TO_ADD";
-    request.open("POST", url, true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.onreadystatechange = updateDamageList;
-    request.send("damage=1");
-}
-
-function updateDamageList(){
-
-    if(request.readyState == 4){
-        if(request.status == 200){
-            var xml = request.responseXML;
-            var divId="select_damage";
-            var tagName = "damage-condition";
-            var onchangeMethod = "";
-            var select = createSelectWithId(xml,tagName,"hood",onchangeMethod);
-            cleanElement(divId);
-            var table =document.createElement("table");
-            var div = document.getElementById(divId);
-            inserTr(table, lbl_hood, select);
-            select = createSelectWithId(xml,tagName,"roof",onchangeMethod);
-            inserTr(table, lbl_roof, select);
-            select = createSelectWithId(xml,tagName,"windshield",onchangeMethod);
-            inserTr(table, lbl_windshield, select);
-            select = createSelectWithId(xml,tagName,"lf_door",onchangeMethod);
-            inserTr(table, lbl_lf_door, select);
-            select = createSelectWithId(xml,tagName,"lr_door",onchangeMethod);
-            inserTr(table, lbl_lr_door, select);
-            select = createSelectWithId(xml,tagName,"rf_door",onchangeMethod);
-            inserTr(table, lbl_rf_door, select);
-            select = createSelectWithId(xml,tagName,"rr_door",onchangeMethod);
-            inserTr(table, lbl_rr_door, select);
-            select = createSelectWithId(xml,tagName,"l_qtr_panel",onchangeMethod);
-            inserTr(table, lbl_l_qtr_panel, select);
-            select = createSelectWithId(xml,tagName,"r_qtr_panel",onchangeMethod);
-            inserTr(table, lbl_r_qtr_panel, select);
-            select = createSelectWithId(xml,tagName,"front_bumper",onchangeMethod);
-            inserTr(table, lbl_front_bumper, select);
-            select = createSelectWithId(xml,tagName,"rear_bumper",onchangeMethod);
-            inserTr(table, lbl_rear_bumper, select);
-            select = createSelectWithId(xml,tagName,"lf_fender",onchangeMethod);
-            inserTr(table, lbl_lf_fender, select);
-            select = createSelectWithId(xml,tagName,"rf_fender",onchangeMethod);
-            inserTr(table, lbl_rf_fender, select);
-            select = createSelectWithId(xml,tagName,"deck_lid",onchangeMethod);
-            inserTr(table, lbl_deck_lid, select);
-            select = createSelectWithId(xml,tagName,"seats",onchangeMethod);
-            inserTr(table, lbl_seats, select);
-            select = createSelectWithId(xml,tagName,"overall_vehicle",onchangeMethod);
-            inserTr(table, lbl_overall_vehicle, select);
-            var status = document.getElementById("status");
-            status.style.visibility = "hidden";
-            var damage_div = document.getElementById("damage_div");
-            damage_div.style.visibility = "visible";
-            div.appendChild(table);
-            getSalesDetails();
-        }
-    }
+    var damage_div = document.getElementById("damage_div");
+    damage_div.style.visibility = "visible";
+    getSalesDetails();
 }
 
 function showAddButton(){

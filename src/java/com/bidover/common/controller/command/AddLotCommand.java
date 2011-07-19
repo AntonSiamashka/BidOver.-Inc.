@@ -4,8 +4,6 @@
  */
 package com.bidover.common.controller.command;
 
-import com.bidover.common.database.dao.LotDAO;
-import com.bidover.common.model.bean.Condition;
 import com.bidover.common.model.bean.Lot;
 import com.bidover.common.model.bean.User;
 import java.io.IOException;
@@ -24,10 +22,10 @@ public class AddLotCommand implements ICommand {
         return null;
     }
 
-    public Integer addLot(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void addLot(HttpServletRequest request, HttpServletResponse response, Lot lot) throws ServletException, IOException {
         String sales_duration = request.getParameter("sales_duration");
         String location_code = request.getParameter("location_code");
-        String condition_code = request.getParameter("condition");
+        //String condition_code = request.getParameter("condition");
         String forbid_bidding = request.getParameter("forbid_bidding");
         String fixed_price = request.getParameter("fixed_price");
         String floor_price = request.getParameter("floor_price");
@@ -45,7 +43,6 @@ public class AddLotCommand implements ICommand {
         Double floor_priceD = (("".equals(floor_price) || floor_price == null) ? 0 : Double.valueOf(floor_price));
         Double starting_bidD = (("".equals(starting_bid) || starting_bid == null) ? 0 : Double.valueOf(starting_bid));
         Double shipping_cost = (double) 0;
-        Lot lot = new Lot();
         User user = (User) request.getSession().getAttribute("profile");
         lot.setSellerId(user);
         //           lot.setBuyerId(new User());
@@ -57,9 +54,9 @@ public class AddLotCommand implements ICommand {
         lot.setDistributionTime(millisCurrentTime);
         lot.setExpirationTime(millisSaleClosing);
         lot.setLocation(location_code);
-        Condition condition = new Condition();
-        condition.setId(Integer.valueOf(condition_code));
-        lot.setCondition(condition);
+        //Condition condition = new Condition();
+        //condition.setId(Integer.valueOf(condition_code));
+        //lot.setCondition(condition);
         lot.setForbidBidding(Byte.valueOf(forbid_bidding));
         lot.setFixedPrice(fixed_priceD);
         lot.setFixedPriceOnly(Byte.valueOf(fixed_price_only));
@@ -74,8 +71,5 @@ public class AddLotCommand implements ICommand {
         lot.setHandlingTime(Integer.valueOf(handling_time));
         lot.setShippingCost(shipping_cost);
         lot.setDescription(description);
-        LotDAO lotDAO = new LotDAO();
-        int id = lotDAO.add(lot);
-        return id;
     }
 }

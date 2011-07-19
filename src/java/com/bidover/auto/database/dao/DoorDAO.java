@@ -20,7 +20,7 @@ public class DoorDAO {
         Door door;
         for (int i = 0; i < 4; i++) {
             door = new Door();
-            door.setId(i);
+            door.setId(new Integer(i));
             int t = i + 2;
             door.setTitle(String.valueOf(t));
             doors.add(door);
@@ -28,6 +28,9 @@ public class DoorDAO {
     }
 
     public Door find(Door door) {
+        if(door == null || door.getId() == null) {
+            return null;
+        }
         return doors.get(door.getId());
     }
     public List<Door> findAll() {

@@ -2,7 +2,7 @@
 package com.bidover.auto.database.dao;
 
 import com.bidover.auto.model.bean.Country;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

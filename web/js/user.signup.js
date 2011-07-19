@@ -16,11 +16,14 @@ function getUserRegInfo() {
 
 function updateRegPage() {
 	if (request.readyState == 4) {
-//        alert(request.responseText);
-		var jsonData = eval("("+request.responseText+")");
-
-		document.getElementById("progress_indicator").style.visibility = 'hidden';
-		if (jsonData.status == 1) window.location = "login.jsp";
-		else replaceText(document.getElementById("msg"), jsonData.message);
+            var jsonData = eval("("+request.responseText+")");
+            document.getElementById("progress_indicator").style.visibility = 'hidden';
+            if (jsonData.status == 1){
+                window.location = "cp.jsp";
+            } else if (jsonData.status == 0) {
+                window.location = "Controller?command=REGISTRATION";
+            } else {
+                replaceText(document.getElementById("msg"), jsonData.message);
+            }
 	}
 }

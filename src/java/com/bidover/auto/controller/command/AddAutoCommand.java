@@ -14,7 +14,6 @@ import com.bidover.auto.model.bean.Options;
 import com.bidover.auto.model.bean.Tires;
 import com.bidover.auto.model.bean.TopType;
 import com.bidover.auto.model.bean.Transmission;
-import com.bidover.auto.model.bean.Trim;
 import com.bidover.auto.model.bean.Wheels;
 import com.bidover.auto.database.dao.AutoDAO;
 import com.bidover.auto.database.dao.CharacteristicsDAO;
@@ -22,8 +21,10 @@ import com.bidover.auto.database.dao.MakeDAO;
 import com.bidover.auto.database.dao.ModelDAO;
 import com.bidover.auto.database.dao.ModificationDAO;
 import com.bidover.auto.model.bean.Characteristics;
+import com.bidover.auto.model.bean.CountryAssembly;
 import com.bidover.common.controller.command.AddLotCommand;
 import com.bidover.common.upload.FileIOSet;
+import com.bidover.util.IntegerUtil;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,10 @@ public class AddAutoCommand implements ICommand {
             String modificationTxt = request.getParameter("modification");
             String engineTxt = request.getParameter("engine");
             String odometerTxt = request.getParameter("odometer");
-            String trimTxt = request.getParameter("trim");
+            String displacementTxt = request.getParameter("displacement");
+            String salvageTxt = request.getParameter("salvage");
+            String countryAssemblyTxt = request.getParameter("country_assembly");
+            //String trimTxt = request.getParameter("trim");
             String yearTxt = request.getParameter("year");
             String bodyStyleTxt = request.getParameter("body-style");
             String doorTxt = request.getParameter("door");
@@ -124,160 +128,331 @@ public class AddAutoCommand implements ICommand {
 
 
             Options options = new Options();
-            if (airConditioningTxt != null) {
-                options.setAirConditioning(Byte.valueOf(airConditioningTxt));
-                options.setBugDeflector(Byte.valueOf(bugDeflectorTxt));
-                options.setCdChanger(Byte.valueOf(cdChangerTxt));
-                options.setCdPlayer(Byte.valueOf(cdPlayerTxt));
-                options.setCruiseCtrl(Byte.valueOf(cruiseCtlTxt));
-                options.setDualAirBags(Byte.valueOf(dualAirBagsTxt));
-                options.setDualSlidingSideDoors(Byte.valueOf(dualSlidingSideDoorsTxt));
-                options.setFloorMats(Byte.valueOf(floorMatsTxt));
-                options.setFogLamps(Byte.valueOf(fogLampsTxt));
-                options.setFrontCenterConsole(Byte.valueOf(frontCenterConsoleTxt));
-                options.setHandToolKit(Byte.valueOf(handToolKitTxt));
-                options.setHeatedSeats(Byte.valueOf(heatedSeatsTxt));
-                options.setHomeLink(Byte.valueOf(homelinkTxt));
-                options.setKeylessEntry(Byte.valueOf(keyLessEntryTxt));
-                options.setLiftGate(Byte.valueOf(liftGateTxt));
-                options.setLuggageRack(Byte.valueOf(luggageRackTxt));
-                options.setPowerVentWindows(Byte.valueOf(powerVentWindowsTxt));
-                options.setPwrLocks(Byte.valueOf(pwrLocksTxt));
-                options.setPwrMirrors(Byte.valueOf(pwrMirrorsTxt));
-                options.setPwrSeats(Byte.valueOf(pwrSeatsTxt));
-                options.setPwrSeatsDriversOnly(Byte.valueOf(pwrSeatsDriverOnlyTxt));
-                options.setPwrSteering(Byte.valueOf(pwrSteeringTxt));
-                options.setPwrWindows(Byte.valueOf(pwrWindowsTxt));
-                options.setRearAirConditioning(Byte.valueOf(rearAirConditionigTxt));
-                options.setRearDefrost(Byte.valueOf(rearDefrostTxt));
-                options.setRearTail(Byte.valueOf(rearTailTxt));
-                options.setRearWiper(Byte.valueOf(rearWiperTxt));
-                options.setSecuritySystem(Byte.valueOf(securitySystemTxt));
-                options.setSideAirBags(Byte.valueOf(sideAirBagsTxt));
-                options.setSpoiler(Byte.valueOf(spoilerTxt));
-                options.setSteeringWheelAudioControl(Byte.valueOf(steeringWheelAudioControlTxt));
-                options.setStowAndGo(Byte.valueOf(stowAndGoTxt));
-                options.setStowAndGoThirdRowOnly(Byte.valueOf(stowAndGo3rdRowOnlyTxt));
-                options.setThirdRowSeat(Byte.valueOf(thirdRowSeatTxt));
-                options.setTiltSteering(Byte.valueOf(tiltSteeringTxt));
-                options.setTintedWindows(Byte.valueOf(tintedWindowsTxt));
-                options.setTirePressureMonitorSystem(Byte.valueOf(tirePressureMonitorSystemTxt));
-                options.setTractionControl(Byte.valueOf(tractionControlTxt));
-                options.setTripCounter(Byte.valueOf(tripCounterTxt));
-                options.setWoodTrimDash(Byte.valueOf(woodTrimDashTxt));
-                options.setWoodgrainInteriorPackage(Byte.valueOf(woodgrainInteriorPackageTxt));
-                options.setXenonHeadlights(Byte.valueOf(xenonHeadlightsTxt));
+            if("on".equals(airConditioningTxt)) {
+                options.setAirConditioning(true);
             } else {
-                options.setAirConditioning(Byte.valueOf("0"));
-                options.setBugDeflector(Byte.valueOf("0"));
-                options.setCdChanger(Byte.valueOf("0"));
-                options.setCdPlayer(Byte.valueOf("0"));
-                options.setCruiseCtrl(Byte.valueOf("0"));
-                options.setDualAirBags(Byte.valueOf("0"));
-                options.setDualSlidingSideDoors(Byte.valueOf("0"));
-                options.setFloorMats(Byte.valueOf("0"));
-                options.setFogLamps(Byte.valueOf("0"));
-                options.setFrontCenterConsole(Byte.valueOf("0"));
-                options.setHandToolKit(Byte.valueOf("0"));
-                options.setHeatedSeats(Byte.valueOf("0"));
-                options.setHomeLink(Byte.valueOf("0"));
-                options.setKeylessEntry(Byte.valueOf("0"));
-                options.setLiftGate(Byte.valueOf("0"));
-                options.setLuggageRack(Byte.valueOf("0"));
-                options.setPowerVentWindows(Byte.valueOf("0"));
-                options.setPwrLocks(Byte.valueOf("0"));
-                options.setPwrMirrors(Byte.valueOf("0"));
-                options.setPwrSeats(Byte.valueOf("0"));
-                options.setPwrSeatsDriversOnly(Byte.valueOf("0"));
-                options.setPwrSteering(Byte.valueOf("0"));
-                options.setPwrWindows(Byte.valueOf("0"));
-                options.setRearAirConditioning(Byte.valueOf("0"));
-                options.setRearDefrost(Byte.valueOf("0"));
-                options.setRearTail(Byte.valueOf("0"));
-                options.setRearWiper(Byte.valueOf("0"));
-                options.setSecuritySystem(Byte.valueOf("0"));
-                options.setSideAirBags(Byte.valueOf("0"));
-                options.setSpoiler(Byte.valueOf("0"));
-                options.setSteeringWheelAudioControl(Byte.valueOf("0"));
-                options.setStowAndGo(Byte.valueOf("0"));
-                options.setStowAndGoThirdRowOnly(Byte.valueOf("0"));
-                options.setThirdRowSeat(Byte.valueOf("0"));
-                options.setTiltSteering(Byte.valueOf("0"));
-                options.setTintedWindows(Byte.valueOf("0"));
-                options.setTirePressureMonitorSystem(Byte.valueOf("0"));
-                options.setTractionControl(Byte.valueOf("0"));
-                options.setTripCounter(Byte.valueOf("0"));
-                options.setWoodTrimDash(Byte.valueOf("0"));
-                options.setWoodgrainInteriorPackage(Byte.valueOf("0"));
-                options.setXenonHeadlights(Byte.valueOf("0"));
+                options.setAirConditioning(false);
             }
-
+            if("on".equals(bugDeflectorTxt)) {
+                options.setBugDeflector(true);
+            } else {
+                options.setBugDeflector(false);
+            }
+            if("on".equals(cdChangerTxt)) {
+                options.setCdChanger(true);
+            } else {
+                options.setCdChanger(false);
+            }
+            if("on".equals(cdPlayerTxt)) {
+                options.setCdPlayer(true);
+            } else {
+                options.setCdPlayer(false);
+            }
+            if("on".equals(cruiseCtlTxt)) {
+                options.setCruiseCtrl(true);
+            } else {
+                options.setCruiseCtrl(false);
+            }
+            if("on".equals(dualAirBagsTxt)) {
+                options.setDualAirBags(true);
+            } else {
+                options.setDualAirBags(false);
+            }
+            if("on".equals(dualSlidingSideDoorsTxt)) {
+                options.setDualSlidingSideDoors(true);
+            } else {
+                options.setDualSlidingSideDoors(false);
+            }
+            if("on".equals(floorMatsTxt)) {
+                options.setFloorMats(true);
+            } else {
+                options.setFloorMats(false);
+            }
+            if("on".equals(frontCenterConsoleTxt)) {
+                options.setFrontCenterConsole(true);
+            } else {
+                options.setFrontCenterConsole(false);
+            }
+            if("on".equals(handToolKitTxt)) {
+                options.setHandToolKit(true);
+            } else {
+                options.setHandToolKit(false);
+            }
+            if("on".equals(heatedSeatsTxt)) {
+                options.setHeatedSeats(true);
+            } else {
+                options.setHeatedSeats(false);
+            }
+            if("on".equals(homelinkTxt)) {
+                options.setHomeLink(true);
+            } else {
+                options.setHomeLink(false);
+            }
+            if("on".equals(keyLessEntryTxt)) {
+                options.setKeylessEntry(true);
+            } else {
+                options.setKeylessEntry(false);
+            }
+            if("on".equals(liftGateTxt)) {
+                options.setLiftGate(true);
+            } else {
+                options.setLiftGate(false);
+            }
+            if("on".equals(luggageRackTxt)) {
+                options.setLuggageRack(true);
+            } else {
+                options.setLuggageRack(false);
+            }
+            if("on".equals(powerVentWindowsTxt)) {
+                options.setPowerVentWindows(true);
+            } else {
+                options.setPowerVentWindows(false);
+            }
+            if("on".equals(pwrLocksTxt)) {
+                options.setPwrLocks(true);
+            } else {
+                options.setPwrLocks(false);
+            }
+            if("on".equals(pwrMirrorsTxt)) {
+                options.setPwrMirrors(true);
+            } else {
+                options.setPwrMirrors(false);
+            }
+            if("on".equals(pwrSeatsTxt)) {
+                options.setPwrSeats(true);
+            } else {
+                options.setPwrSeats(false);
+            }
+            if("on".equals(pwrSeatsDriverOnlyTxt)) {
+                options.setPwrSeatsDriversOnly(true);
+            } else {
+                options.setPwrSeatsDriversOnly(false);
+            }
+            if("on".equals(pwrSteeringTxt)) {
+                options.setPwrSteering(true);
+            } else {
+                options.setPwrSteering(false);
+            }
+            if("on".equals(pwrWindowsTxt)) {
+                options.setPwrWindows(true);
+            } else {
+                options.setPwrWindows(false);
+            }
+            if("on".equals(rearAirConditionigTxt)) {
+                options.setRearAirConditioning(true);
+            } else {
+                options.setRearAirConditioning(false);
+            }
+            if("on".equals(rearDefrostTxt)) {
+                options.setRearDefrost(true);
+            } else {
+                options.setRearDefrost(false);
+            }
+            if("on".equals(rearTailTxt)) {
+                options.setRearTail(true);
+            } else {
+                options.setRearTail(false);
+            }
+            if("on".equals(rearWiperTxt)) {
+                options.setRearWiper(true);
+            } else {
+                options.setRearWiper(false);
+            }
+            if("on".equals(securitySystemTxt)) {
+                options.setSecuritySystem(true);
+            } else {
+                options.setSecuritySystem(false);
+            }
+            if("on".equals(sideAirBagsTxt)) {
+                options.setSideAirBags(true);
+            } else {
+                options.setSideAirBags(false);
+            }
+            if("on".equals(spoilerTxt)) {
+                options.setSpoiler(true);
+            } else {
+                options.setSpoiler(false);
+            }
+            if("on".equals(steeringWheelAudioControlTxt)) {
+                options.setSteeringWheelAudioControl(true);
+            } else {
+                options.setSteeringWheelAudioControl(false);
+            }
+            if("on".equals(stowAndGoTxt)) {
+                options.setStowAndGo(true);
+            } else {
+                options.setStowAndGo(false);
+            }
+            if("on".equals(stowAndGo3rdRowOnlyTxt)) {
+                options.setStowAndGoThirdRowOnly(true);
+            } else {
+                options.setStowAndGoThirdRowOnly(false);
+            }
+            if("on".equals(thirdRowSeatTxt)) {
+                options.setThirdRowSeat(true);
+            } else {
+                options.setThirdRowSeat(false);
+            }
+            if("on".equals(tiltSteeringTxt)) {
+                options.setTiltSteering(true);
+            } else {
+                options.setTiltSteering(false);
+            }
+            if("on".equals(tintedWindowsTxt)) {
+                options.setTintedWindows(true);
+            } else {
+                options.setTintedWindows(false);
+            }
+            if("on".equals(tirePressureMonitorSystemTxt)) {
+                options.setTirePressureMonitorSystem(true);
+            } else {
+                options.setTirePressureMonitorSystem(false);
+            }
+            if("on".equals(tractionControlTxt)) {
+                options.setTractionControl(true);
+            } else {
+                options.setTractionControl(false);
+            }
+            if("on".equals(tripCounterTxt)) {
+                options.setTripCounter(true);
+            } else {
+                options.setTripCounter(false);
+            }
+            if("on".equals(woodTrimDashTxt)) {
+                options.setWoodTrimDash(true);
+            } else {
+                options.setWoodTrimDash(false);
+            }
+            if("on".equals(woodgrainInteriorPackageTxt)) {
+                options.setWoodgrainInteriorPackage(true);
+            } else {
+                options.setWoodgrainInteriorPackage(false);
+            }
+            if("on".equals(xenonHeadlightsTxt)) {
+                options.setXenonHeadlights(true);
+            } else {
+                options.setXenonHeadlights(false);
+            }
+            if("on".equals(fogLampsTxt)) {
+                options.setFogLamps(true);
+            } else {
+                options.setFogLamps(false);
+            }
             Damage damage = new Damage();
             if (deckLidTxt != null) {
-                damage.setDeckLid(Integer.valueOf(deckLidTxt));
-                damage.setFrontBumper(Integer.valueOf(frontBumperTxt));
-                damage.setHood(Integer.valueOf(hoodTxt));
-                damage.setLQtrPanel(Integer.valueOf(lQtrPanelTxt));
-                damage.setLfDoor(Integer.valueOf(lfDoorTxt));
-                damage.setLfFender(Integer.valueOf(lfFenderTxt));
-                damage.setLrDoor(Integer.valueOf(lrDoorTxt));
-                damage.setOverallVehicle(Integer.valueOf(overallVehicleTxt));
-                damage.setRQtrPanel(Integer.valueOf(rQtrPanelTxt));
-                damage.setRfFender(Integer.valueOf(rfFenderTxt));
-                damage.setRearBumper(Integer.valueOf(rearBumperTxt));
-                damage.setRfDoor(Integer.valueOf(rfDoorTxt));
-                damage.setRoof(Integer.valueOf(roofTxt));
-                damage.setRrDoor(Integer.valueOf(rrDoorTxt));
-                damage.setSeats(Integer.valueOf(seatsTxt));
-                damage.setWindshield(Integer.valueOf(windshieldTxt));
-            } else {
-                damage.setDeckLid(0);
-                damage.setFrontBumper(0);
-                damage.setHood(0);
-                damage.setLQtrPanel(0);
-                damage.setLfDoor(0);
-                damage.setLfFender(0);
-                damage.setLrDoor(0);
-                damage.setOverallVehicle(0);
-                damage.setRQtrPanel(0);
-                damage.setRfFender(0);
-                damage.setRearBumper(0);
-                damage.setRfDoor(0);
-                damage.setRoof(0);
-                damage.setRrDoor(0);
-                damage.setSeats(0);
-                damage.setWindshield(0);
+                if(!deckLidTxt.isEmpty()){
+                    damage.setDeckLid(IntegerUtil.parseString(deckLidTxt));
+                } else {
+                    damage.setDeckLid(null);
+                }
+                if(!frontBumperTxt.isEmpty()){
+                    damage.setFrontBumper(IntegerUtil.parseString(frontBumperTxt));
+                } else {
+                    damage.setFrontBumper(null);
+                }
+                if(!hoodTxt.isEmpty()){
+                    damage.setHood(IntegerUtil.parseString(hoodTxt));
+                } else {
+                    damage.setHood(null);
+                }
+                if(!lQtrPanelTxt.isEmpty()){
+                    damage.setDeckLid(IntegerUtil.parseString(lQtrPanelTxt));
+                } else {
+                    damage.setDeckLid(null);
+                }
+                if(!lfDoorTxt.isEmpty()){
+                    damage.setLfDoor(IntegerUtil.parseString(lfDoorTxt));
+                } else {
+                    damage.setLfDoor(null);
+                }
+                if(!lfFenderTxt.isEmpty()){
+                    damage.setLfFender(IntegerUtil.parseString(lfFenderTxt));
+                } else {
+                    damage.setLfFender(null);
+                }
+                if(!lrDoorTxt.isEmpty()){
+                    damage.setLrDoor(IntegerUtil.parseString(lrDoorTxt));
+                } else {
+                    damage.setLrDoor(null);
+                }
+                if(!overallVehicleTxt.isEmpty()){
+                    damage.setOverallVehicle(IntegerUtil.parseString(overallVehicleTxt));
+                } else {
+                    damage.setOverallVehicle(null);
+                }
+                if(!rQtrPanelTxt.isEmpty()){
+                    damage.setRQtrPanel(IntegerUtil.parseString(rQtrPanelTxt));
+                } else {
+                    damage.setRQtrPanel(null);
+                }
+                if(!rfFenderTxt.isEmpty()){
+                    damage.setRfFender(IntegerUtil.parseString(rfFenderTxt));
+                } else {
+                    damage.setRfFender(null);
+                }
+                if(!rearBumperTxt.isEmpty()){
+                    damage.setRearBumper(IntegerUtil.parseString(rearBumperTxt));
+                } else {
+                    damage.setRearBumper(null);
+                }
+                if(!rfDoorTxt.isEmpty()){
+                    damage.setRfDoor(IntegerUtil.parseString(rfDoorTxt));
+                } else {
+                    damage.setRfDoor(null);
+                }
+                if(!roofTxt.isEmpty()){
+                    damage.setRoof(IntegerUtil.parseString(roofTxt));
+                } else {
+                    damage.setRoof(null);
+                }
+                if(!rrDoorTxt.isEmpty()){
+                    damage.setRrDoor(IntegerUtil.parseString(rrDoorTxt));
+                } else {
+                    damage.setRrDoor(null);
+                }
+                if(!seatsTxt.isEmpty()){
+                    damage.setSeats(IntegerUtil.parseString(seatsTxt));
+                } else {
+                    damage.setSeats(null);
+                }
+                if(!windshieldTxt.isEmpty()){
+                    damage.setWindshield(IntegerUtil.parseString(windshieldTxt));
+                } else {
+                    damage.setWindshield(null);
+                }
             }
 
             /////////////////////////////проверка!!!!!!!!!!!!!!!!!!
 
 
             BodyStyle bodyStyle = new BodyStyle();
-            bodyStyle.setId(Integer.valueOf(bodyStyleTxt));
+            bodyStyle.setId(IntegerUtil.parseString(bodyStyleTxt));
             DriveTrain driveTrain = new DriveTrain();
-            driveTrain.setId(Integer.valueOf(driveTrainTxt));
+            driveTrain.setId(IntegerUtil.parseString(driveTrainTxt));
             ExteriorColor exteriorColor = new ExteriorColor();
-            exteriorColor.setId(Integer.valueOf(exteriorColorTxt));
+            exteriorColor.setId(IntegerUtil.parseString(exteriorColorTxt));
             Fuel fuel = new Fuel();
-            fuel.setId(Integer.valueOf(fuelTxt));
+            fuel.setId(IntegerUtil.parseString(fuelTxt));
             InteriorColor interiorColor = new InteriorColor();
-            interiorColor.setId(Integer.valueOf(interiorColorTxt));
+            interiorColor.setId(IntegerUtil.parseString(interiorColorTxt));
+            CountryAssembly countryAssembley = new CountryAssembly();
+            countryAssembley.setId(IntegerUtil.parseString(countryAssemblyTxt));
             Tires tires = new Tires();
-            tires.setId(Integer.valueOf(tiresTxt));
+            tires.setId(IntegerUtil.parseString(tiresTxt));
             TopType topType = new TopType();
-            topType.setId(Integer.valueOf(topTypeTxt));
+            topType.setId(IntegerUtil.parseString(topTypeTxt));
             Wheels wheels = new Wheels();
-            wheels.setId(Integer.valueOf(wheelsTxt));
+            wheels.setId(IntegerUtil.parseString(wheelsTxt));
             Door door = new Door();
-            door.setId(Integer.valueOf(doorTxt));
+            door.setId(IntegerUtil.parseString(doorTxt));
             Engine engine = new Engine();
-            engine.setId(Integer.valueOf(engineTxt));
+            engine.setId(IntegerUtil.parseString(engineTxt));
             Transmission transmission = new Transmission();
-            transmission.setId(Integer.valueOf(transmissionTxt));
+            transmission.setId(IntegerUtil.parseString(transmissionTxt));
             InteriorType interiorType = new InteriorType();
-            interiorType.setId(Integer.valueOf(interiorTypeTxt));
-            Trim trim = new Trim();
-            trim.setId(Integer.valueOf(trimTxt));
+            interiorType.setId(IntegerUtil.parseString(interiorTypeTxt));
+//            Trim trim = new Trim();
+//            trim.setId(IntegerUtil.parseString(trimTxt));
 
 
 
@@ -288,13 +463,16 @@ public class AddAutoCommand implements ICommand {
             auto.setIdExteriorColor(exteriorColor);
             auto.setIdFuel(fuel);
             auto.setIdInteriorColor(interiorColor);
-
+            auto.setCountryAssembly(countryAssembley);
+            if("on".equals(salvageTxt)) {
+                auto.setSalvage(true);
+            } else {
+                auto.setSalvage(false);
+            }
             Characteristics characteristics = new Characteristics();
-
             characteristics.setMake(makeTxt);
             characteristics.setModel(modelTxt);
             characteristics.setModification(modificationTxt);
-
             CharacteristicsDAO characteristicsDAO = new CharacteristicsDAO();
             Characteristics character = characteristicsDAO.findByMarkModelModufication(characteristics);
             auto.setCharacteristics(character);
@@ -307,14 +485,14 @@ public class AddAutoCommand implements ICommand {
             auto.setEngine(engine);
             auto.setInteriorType(interiorType);
             auto.setTransmission(transmission);
-            auto.setOdometer(Integer.valueOf(odometerTxt));
+            auto.setOdometer(IntegerUtil.parseString(odometerTxt));
+            auto.setDisplacement(IntegerUtil.parseString(displacementTxt));
             auto.setVin(vinTxt);
-            auto.setYear(Integer.valueOf(yearTxt));
-            auto.setTrim(trim);
+            auto.setYear(IntegerUtil.parseString(yearTxt));
+            //auto.setTrim(trim);
             auto.setDamage(damage);
             AddLotCommand addLotCommand = new AddLotCommand();
-            Integer lotId = addLotCommand.addLot(request, response);
-            auto.setId(lotId);
+            addLotCommand.addLot(request, response, auto);
             AutoDAO autoDAO = new AutoDAO();
 //            if (!autoDAO.isVINExist(vinTxt)) {
             Integer autoId = autoDAO.add(auto);
@@ -334,9 +512,9 @@ public class AddAutoCommand implements ICommand {
             response.sendRedirect("./addImage.jsp?id=" + autoId);
 
 
-        ///  makeDAO.increment(Integer.valueOf(makeTxt));
-        ///   modelDAO.increment(Integer.valueOf(modelTxt));
-        ///   modificationDAO.increment(Integer.valueOf(modificationTxt));
+        ///  makeDAO.increment(IntegerUtil.parseString(makeTxt));
+        ///   modelDAO.increment(IntegerUtil.parseString(modelTxt));
+        ///   modificationDAO.increment(IntegerUtil.parseString(modificationTxt));
         //           } else {
         //             response.sendRedirect("./addAuto.jsp");
         //       }

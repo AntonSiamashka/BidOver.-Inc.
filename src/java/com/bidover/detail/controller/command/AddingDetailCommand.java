@@ -61,8 +61,8 @@ public class AddingDetailCommand implements ICommand {
         detail.setMake(new Make(makeId));
         detail.setModel(new Model(modelId));
         AddLotCommand addLotCommand = new AddLotCommand();
-        Integer lotId = addLotCommand.addLot(request, response);
-        detail.setId(lotId);
+        //Integer lotId = addLotCommand.addLot(request, response);
+        //detail.setId(lotId);
         addingDetailLogic.addDetail(detail);
         return PathProperties.createPathProperties().getProperty(PathProperties.ADD_DETAIL_ESCAPE);
     }

@@ -5,8 +5,6 @@
 package com.bidover.auto.controller.command;
 
 import com.bidover.auto.database.dao.CharacteristicsDAO;
-import com.bidover.auto.model.bean.Modification;
-import com.bidover.auto.database.dao.ModificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

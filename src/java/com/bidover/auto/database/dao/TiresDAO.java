@@ -29,6 +29,9 @@ public class TiresDAO {
     }
 
     public Tires find(Tires tires) {
+        if(tires == null || tires.getId() == null) {
+            return null;
+        }
         return tiresList.get(tires.getId());
     }
 

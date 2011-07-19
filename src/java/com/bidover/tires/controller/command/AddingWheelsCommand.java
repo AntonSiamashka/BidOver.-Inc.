@@ -48,8 +48,8 @@ public class AddingWheelsCommand implements ICommand {
         wheels.setWheelsBCD(new WheelsBCD(bcd));
         wheels.setWheelsED(new WheelsED(ed));
         AddLotCommand addLotCommand = new AddLotCommand();
-        Integer lotId = addLotCommand.addLot(request, response);
-        wheels.setId(lotId);
+//        Integer lotId = addLotCommand.addLot(request, response);
+//        wheels.setId(lotId);
         Integer id = addingWheelsLogic.add(wheels);
         return PathProperties.createPathProperties().getProperty(PathProperties.INDEX_PAGE);
     }

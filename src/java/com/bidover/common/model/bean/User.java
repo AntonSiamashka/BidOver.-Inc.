@@ -1,9 +1,11 @@
 package com.bidover.common.model.bean;
 
-import com.bidover.common.model.bean.Timezone;
 import java.io.Serializable;
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
 
     private Integer id = null;
     private String firstName;
@@ -17,6 +19,7 @@ public class User implements Serializable {
     private String userCountry;
     private String userAddress;
     private String userPhone;
+    private Collection<GrantedAuthority> roles;
 
     public User(Integer id, String firstName, String lastName, String nickName, String password, String email, Timezone timezone, Integer status) {
         this.id = id;
@@ -126,5 +129,33 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Collection<GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    public void setAuthorities(Collection<GrantedAuthority> roles) {
+        this.roles = roles;
+    }
+
+    public String getUsername() {
+        return email;
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 }

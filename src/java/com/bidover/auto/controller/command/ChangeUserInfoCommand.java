@@ -54,25 +54,20 @@ public class ChangeUserInfoCommand implements ICommand {
         User profile = (User) request.getSession().getAttribute("profile");
         user.setId(profile.getId());
         UserDAO userDAO;
-        try {
-            userDAO = new UserDAO();
-            if (userDAO.setUserInfo(user)) {
-                profile.setStatus(UserDAO.TOTAL_REG_STATUS);
-                profile.setLastName(lastName);
-                profile.setFirstName(firstName);
-                profile.setNickName(nickName);
-                profile.setTimezone(timezone);
-                profile.setUserAddress(userAddress);
-                profile.setUserCountry(userCountry);
-                profile.setUserPhone(userPhone);
-                profile.setUserData(userData);
-                request.getSession().setAttribute("status", UserDAO.TOTAL_REG_STATUS);
-                request.getSession().setAttribute("profile", profile);
-                request.getRequestDispatcher("profile.jsp").forward(request, response);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ChangeUserInfoCommand.class.getName()).log(Level.SEVERE, null, ex);
-            request.getRequestDispatcher("Controller?command=").forward(request, response);
+        userDAO = new UserDAO();
+        if (userDAO.setUserInfo(user)) {
+            profile.setStatus(UserDAO.TOTAL_REG_STATUS);
+            profile.setLastName(lastName);
+            profile.setFirstName(firstName);
+            profile.setNickName(nickName);
+            profile.setTimezone(timezone);
+            profile.setUserAddress(userAddress);
+            profile.setUserCountry(userCountry);
+            profile.setUserPhone(userPhone);
+            profile.setUserData(userData);
+            request.getSession().setAttribute("status", UserDAO.TOTAL_REG_STATUS);
+            request.getSession().setAttribute("profile", profile);
+            request.getRequestDispatcher("cp.jsp").forward(request, response);
         }
 
     }

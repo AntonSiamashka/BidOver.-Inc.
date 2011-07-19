@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.bidover.common.mail.EmailValidator;
 import com.bidover.common.mail.MailSender;
+import com.bidover.common.model.bean.User;
+import javax.servlet.http.HttpSession;
 
 
 public class SignupCommand implements ICommand {
@@ -43,7 +45,11 @@ public class SignupCommand implements ICommand {
                 MailSender mailSender = new MailSender();
                 mailSender.sendMail(email, "123", "Bidover.com", "Bidover registration", mailMessage);
 //                rd = request.getRequestDispatcher("/login.jsp");
-                result = "{'status':1}";
+                User user = userDao.getUserByEmailAndPassword(email, password);
+                HttpSession session = request.getSession();
+                session.setAttribute("status", user.getStatus());
+                session.setAttribute("profile", user);
+                result = "{'status':"+user.getStatus()+"}";
             }
             response.getWriter().write(result);
         } catch (ClassNotFoundException ex) {

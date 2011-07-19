@@ -29,6 +29,9 @@ public class TransmissionDAO {
     }
 
     public Transmission find(Transmission transmission) {
+        if(transmission == null || transmission.getId() == null) {
+            return null;
+        }
         return transmissions.get(transmission.getId());
     }
 

@@ -11,7 +11,6 @@
     <script type="text/javascript" src="js/http.request.js"></script>
     <script type="text/javascript" src="js/user.login.js"></script>
 </head>
-
 <body>
 
 <p>&nbsp;</p>
@@ -40,13 +39,25 @@
 <table cellpadding="5" cellspacing="0">
 <tr><td align="center" colspan="2"><span id="msg" style="color:#f00"></span></td></tr>
 <tr><td width="150" align="right" valign="top"><fmt:message key="lbl.login" />:<div class="small">(<fmt:message key="lbl.youremail" />)</div></td><td valign="top"><input id="email" name="email" type="text" size="40" maxlength="40" value=""></td></tr>
-<tr><td width="150" align="right" valign="top"><fmt:message key="lbl.password" />:</td><td valign="top"><input id="pass" name="pass" type="password" size="40" maxlength="40" value=""></td></tr>
+<tr><td width="150" align="right" valign="top">(${password})<fmt:message key="lbl.password" />:</td><td valign="top"><input id="pass" name="pass" type="password" size="40" maxlength="40" value=""></td></tr>
 <tr><td width="150" align="right"><span id="progress_indicator" style="visibility:hidden"><img src="css/bo.progress_bar.gif" alt=""></span></td><td><input type="button" name="login" value="<fmt:message key="btn.signin" />" onClick="getUserLoginInfo();"></td></tr>
 <tr><td align="center" colspan="2"><br><br></td></tr>
 <tr><td align="right"><img src="css/bo.about.032x032.png" border="0" alt=""></td><td><a href="passwordReminder.jsp"><fmt:message key="btn.fogotpassword" /></a></td></tr>
 <tr><td align="right"><img src="css/bo.user.032x032.png" border="0" alt=""></td><td><a href="fm.signup.jsp"><fmt:message key="btn.regnewuser" /></a></td></tr>
 </table>
 </form>
+
+
+<form name="f" action="<c:url value='j_spring_security_check'/>" method="POST">
+      <table>
+        <tr><td>User:</td><td><input type='text' name='j_username' value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/></td></tr>
+        <tr><td>Password:</td><td><input type='password' name='j_password'></td></tr>
+
+        <tr><td colspan='2'><input name="submit" type="submit"></td></tr>
+        <tr><td colspan='2'><input name="reset" type="reset"></td></tr>
+      </table>
+
+    </form>
 </div>
 
 <%@include file="footer.jspf" %>

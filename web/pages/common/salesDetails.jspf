@@ -2,11 +2,6 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  <br/>
                     <table width="100%" cellpadding="5">
-                    <tr>
-                        <td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.condition" />:<div id="cond"><a href="jsps/inf.cond.jsp"><fmt:message key="btn.assist.cond" /></a></div></td>
-                        <td><jsp:include page="/pages/common/fm.cond.jsp" /></td>
-                        <td width="10%"><input id="condition" name="condition" type="hidden" value="0"></td>
-                    </tr>
                     <tr><td width="20%" align="right" valign="top"><span style="color:#f00">*</span><fmt:message key="lbl.salesduration" />:</td><td><span id="sales_duration_list"></span> <fmt:message key="lbl.days" /></td><td width="10%"></td></tr>
                     <tr><td colspan="3">&nbsp;</td></tr>
                     <tr><td width="20%" style="border-top: 1px solid #ccc">&nbsp;</td><td><span class="smtitle"><fmt:message key="lbl.lotlocation" /></span></td><td width="10%"></td></tr>

@@ -27,18 +27,20 @@ public class LoginCommand implements ICommand {
             User user = null;
             request.setCharacterEncoding("UTF8");
             response.setCharacterEncoding("UTF8");
-            String email = request.getParameter("email");
-            String password = request.getParameter("pass");
+            String email = request.getParameter("j_username");
+            String password = request.getParameter("j_password");
             String result = "{'status':0, 'message':'ERROR'}";
             ud = new UserDAO();
             user = ud.getUserByEmailAndPassword(email, password);
-            if (user == null) result = "{'status':0, 'message':'Wrong login+password combination!'}";
-            else {
+            if (user == null) {
+                result = "{'status':-1, 'message':'Wrong login+password combination!'}";
+            } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("status", user.getStatus());
                 session.setAttribute("profile", user);
-                result = "{'status':1}";
+                result = "{'status':"+user.getStatus()+"}";
             }
+            System.out.println(result);
             response.getWriter().write(result);
 
         } catch (ClassNotFoundException ex) {

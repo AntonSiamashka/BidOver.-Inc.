@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import com.bidover.common.logger.Logger;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -129,7 +129,7 @@ public class ModificationDAO {
         int yearBegin = resultSet.getInt("modification.year_begin");
         int yearEnd = resultSet.getInt("modification.year_end");
         modification.setCount(count);
-        model.setId(Integer.valueOf(model_id));
+        model.setId(Integer.getInteger(model_id));
         modification.setTitle(title);
         modification.setBeginYear(yearBegin);
         modification.setEndYear(yearEnd);

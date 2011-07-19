@@ -4,7 +4,7 @@
  */
 package com.bidover.auto.controller.servlet;
 
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.auto.controller.factory.CommandFactory;
 import com.bidover.auto.controller.command.ICommand;
 import com.bidover.common.daemon.MainFrame;

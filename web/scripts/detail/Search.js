@@ -231,3 +231,27 @@ function showElement(id){
     div.style.visibility = "visible";
     div.style.display = "block";
 }
+
+function showAdvancedSearch(){
+    var button = document.getElementById("advanced-search-button");
+    button.style.visibility = "hidden";
+    button.style.display = "none";
+    var table = document.getElementById("advanced-search");
+    table.style.visibility = "visible";
+    table.style.display = "block";
+    var hideButton = document.getElementById("hide-advanced-search-button");
+    hideButton.style.visibility = "visible";
+    hideButton.style.display = "block";
+}
+
+function hideAdvancedSearch(){
+    var button = document.getElementById("advanced-search-button");
+    button.style.visibility = "visible";
+    button.style.display = "block";
+    var table = document.getElementById("advanced-search");
+    table.style.visibility = "hidden";
+    table.style.display = "none";
+    var hideButton = document.getElementById("hide-advanced-search-button");
+    hideButton.style.visibility = "hidden";
+    hideButton.style.display = "none";
+}

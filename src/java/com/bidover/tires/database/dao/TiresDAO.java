@@ -4,7 +4,7 @@
  */
 package com.bidover.tires.database.dao;
 
-import com.bidover.tires.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.tires.model.bean.Tires;
 import com.bidover.tires.model.bean.TiresContour;
 import com.bidover.tires.model.bean.TiresDiameter;

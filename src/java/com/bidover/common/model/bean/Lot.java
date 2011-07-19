@@ -1,8 +1,6 @@
 package com.bidover.common.model.bean;
 
-import com.bidover.common.model.bean.Condition;
 import java.io.Serializable;
-//import java.util.Date;
 
 public class Lot implements Serializable {
 
@@ -41,9 +39,6 @@ public class Lot implements Serializable {
     private boolean isFloorPriceReached;
     private boolean isCountDownStart;
 
-//    private Date lotAddDateFormated;
-//    private Date lotSaleDateFormated;
-//    private Date salesDurationFormated;
     public Lot() {
     }
 

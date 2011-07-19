@@ -22,42 +22,6 @@
         <form action="DetailController?command=SEARCHING_DETAIL" method="post">
                   <table cellpadding="30" cellspacing="20">
                     <tr>
-                        <td valign ="top">
-                            <table>
-                                <tr>
-                                    <td>
-                                        Category
-                                    </td>
-                                    <td>
-                                        <select name="category-select" id="category-select" onchange="getSubCategory()" size="10">
-                                            <c:forEach var="category" items="${categoryList}">
-                                                <option value="${category.id}">${category.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Subcategory
-                                    </td>
-                                    <td>
-                                        <div id="sub-category-div" style="visibility:hidden;display:none;">
-                                            <select name="sub-category-select" id="sub-category-select" onchange="getItem()" size="10"></select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Item
-                                    </td>
-                                    <td>
-                                        <div id="item-div" style="visibility:hidden;display:none;">
-                                            <select name="item-select" id="item-select" size="10"></select>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
                         <td valign="top">
                             <table>
                                 <tr>
@@ -71,8 +35,6 @@
                                             </c:forEach>
                                         </select>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         Model
                                     </td>
@@ -81,8 +43,6 @@
                                             <select name="model-select" id="model-select" onchange="getYear()" size="10"></select>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         Year
                                     </td>
@@ -90,6 +50,55 @@
                                         <div id="year-div" style="visibility:hidden;display:none;">
                                             <select name="year-begin-select" id="year-begin-select"></select>
                                             <select name="year-end-select" id="year-end-select"></select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input id="advanced-search-button" type="button" onclick="showAdvancedSearch()" value="Advanced Search"/>
+                                        <input id="hide-advanced-search-button" type="button" onclick="hideAdvancedSearch()" value="Hide Advanced Search" style="visibility:hidden;display:none;"/>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td valign ="top">
+                            <table id="advanced-search" cellpadding="5" style="visibility:hidden;display:none;">
+                                <tr>
+                                    <td valign="top" align="right"><h4>Advanced Search</h4></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Category
+                                    </td>
+                                    <td>
+                                        <select name="category-select" id="category-select" onchange="getSubCategory()" size="10">
+                                            <c:forEach var="category" items="${categoryList}">
+                                                <option value="${category.id}">${category.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        Subcategory
+                                    </td>
+                                    <td>
+                                        <div id="sub-category-div" style="visibility:hidden;display:none;">
+                                            <select name="sub-category-select" id="sub-category-select" onchange="getItem()" size="10"></select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        Item
+                                    </td>
+                                    <td>
+                                        <div id="item-div" style="visibility:hidden;display:none;">
+                                            <select name="item-select" id="item-select" size="10"></select>
                                         </div>
                                     </td>
                                 </tr>

@@ -18,6 +18,7 @@ import com.bidover.auto.model.bean.Transmission;
 import com.bidover.auto.model.bean.Wheels;
 import com.bidover.auto.database.dao.BodyStyleDAO;
 import com.bidover.auto.database.dao.CharacteristicsDAO;
+import com.bidover.auto.database.dao.CountryAssemblyDAO;
 import com.bidover.auto.database.dao.DoorDAO;
 import com.bidover.auto.database.dao.DriveTrainDAO;
 import com.bidover.auto.database.dao.EngineDAO;
@@ -29,7 +30,10 @@ import com.bidover.auto.database.dao.TiresDAO;
 import com.bidover.auto.database.dao.TopTypeDAO;
 import com.bidover.auto.database.dao.TransmissionDAO;
 import com.bidover.auto.database.dao.WheelsDAO;
+import com.bidover.auto.model.bean.CountryAssembly;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +61,12 @@ public class ShowSearchCommand implements ICommand {
         request.setAttribute("makes", makes);
          */
 
+        List<Integer> years = new ArrayList<Integer>();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        for(int i=year+1; i>=1950; i--){
+            years.add(i);
+        }
+        request.setAttribute("years", years);
         CharacteristicsDAO characteristicsDAO = new CharacteristicsDAO();
         List<String> makes = characteristicsDAO.findAllMakesNames();
         request.setAttribute("makes", makes);
@@ -81,9 +91,9 @@ public class ShowSearchCommand implements ICommand {
         List<Wheels> wheels = wheelDAO.findAll();
         request.setAttribute("wheels", wheels);
 
-        TiresDAO tiresDAO = new TiresDAO();
-        List<Tires> tires = tiresDAO.findAll();
-        request.setAttribute("tires", tires);
+//        TiresDAO tiresDAO = new TiresDAO();
+//        List<Tires> tires = tiresDAO.findAll();
+//        request.setAttribute("tires", tires);
 
         FuelDAO fuelDAO = new FuelDAO();
         List<Fuel> fuel = fuelDAO.findAll();
@@ -104,6 +114,10 @@ public class ShowSearchCommand implements ICommand {
         EngineDAO engineDAO = new EngineDAO();
         List<Engine> engine = engineDAO.findAll();
         request.setAttribute("engine", engine);
+        
+        CountryAssemblyDAO CountryAssemblyDAO = new CountryAssemblyDAO();
+        List<CountryAssembly> countryAssembly = CountryAssemblyDAO.findAll();
+        request.setAttribute("countryAssemblys", countryAssembly);
 
         request.getRequestDispatcher("./search.jsp").forward(request, response);
     }

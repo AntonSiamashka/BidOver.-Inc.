@@ -5,7 +5,7 @@
 
 package com.bidover.tires.controller.servlet;
 
-import com.bidover.tires.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

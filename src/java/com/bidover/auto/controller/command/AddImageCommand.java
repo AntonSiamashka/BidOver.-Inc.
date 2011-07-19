@@ -120,6 +120,15 @@ public class AddImageCommand implements ICommand {
         AutoDAO autoDAO = new AutoDAO();
         Integer autoId = Integer.valueOf(request.getParameter("id"));
         Integer lotId = autoDAO.findLotIdByAutoId(autoId);
+        File lotDir = new File(imgPath + autoId+"\\");
+        File lotBuildDir = new File(imgBuildPath + autoId+"\\");
+        if(!lotDir.exists()){
+            lotDir.mkdir();
+        }
+        if(!lotBuildDir.exists()){
+            lotBuildDir.mkdir();
+        }
+        
         do {
             imgPathTemp = imgPath + autoId + "\\" + lotId + "_" + i + "_" + ".jpg";
             imgBuildPathTemp = imgBuildPath + autoId + "\\" + lotId + "_" + i + "_" + ".jpg";
@@ -127,6 +136,9 @@ public class AddImageCommand implements ICommand {
             uploadetBuildFile = new File(imgBuildPathTemp);
             i++;
         } while (uploadetFile.exists());
+        
+        //uploadetFile = new File("C:\\TMP\\1.jpg");
+        //uploadetBuildFile = new File("C:\\TMP\\build\\1.jpg");
 
         //создаём файл
         uploadetFile.createNewFile();

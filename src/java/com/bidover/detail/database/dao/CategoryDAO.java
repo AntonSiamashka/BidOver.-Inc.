@@ -1,6 +1,6 @@
 package com.bidover.detail.database.dao;
 
-import com.bidover.detail.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.detail.model.bean.Category;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -5,7 +5,7 @@
 package com.bidover.auto.database.dao;
 
 import com.bidover.auto.model.bean.Make;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.auto.model.bean.Characteristics;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,7 +178,7 @@ public class MakeDAO {
         String id = resultSet.getString("make.id");
         String title = resultSet.getString("make.title");
         int count = resultSet.getInt("make.count");
-        make.setId(Integer.valueOf(id));
+        make.setId(Integer.getInteger(id));
         make.setTitle(title);
         make.setCount(count);
         return make;

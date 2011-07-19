@@ -43,15 +43,15 @@
         </tr></thead>
         <c:forEach var="auto" items="${autos}">
             <tr>
-            <td align="center"><a href="images/pics/${auto.lot.id}/${auto.lot.id}_1_.jpg" rel="lightbox" title=""><img src="images/pics/${auto.lot.id}/${auto.lot.id}_1_small.jpg" width="100" height="100" alt="" border="0"/></a></td>
+            <td align="center"><a href="images/pics/${auto.id}/${auto.id}_1_.jpg" rel="lightbox" title=""><img src="images/pics/${auto.id}/${auto.id}_1_small.jpg" width="100" height="100" alt="" border="0"/></a></td>
             <td valign="top">
                 <a href="Controller?command=SHOW_AUTO_VIEW&auto_id=${auto.id}"><c:out value="${auto.year} ${auto.characteristics.make} ${auto.characteristics.model}"></c:out></a>
                 <div><c:out value="Door: ${auto.doors.title}, Engine: ${auto.engine.title}, Transmission: ${auto.transmission.title}, Interior type: ${auto.interiorType.title}, Tires: ${auto.idTires.title}, Odometer: ${auto.odometer}"></c:out></div>
             </td>
             <td valign="top" align="center"> x </td>
             <td valign="top" align="center">
-                <c:if test="${auto.lot.isBiddingClosed}"><span class="err">Sales Closed!</span></c:if>
-                <c:if test="${!auto.lot.isBiddingClosed}"><span id="TimeLeft">${auto.lot.formattedTimeLeft}</span></c:if>
+                <c:if test="${auto.isBiddingClosed}"><span class="err">Sales Closed!</span></c:if>
+                <c:if test="${!auto.isBiddingClosed}"><span id="TimeLeft">${auto.formattedTimeLeft}</span></c:if>
             </td>
             </tr>
         </c:forEach>

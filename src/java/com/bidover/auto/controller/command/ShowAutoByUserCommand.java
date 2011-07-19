@@ -32,23 +32,23 @@ public class ShowAutoByUserCommand implements ICommand {
 
     public void execute() throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("profile");
-        Lot lot = new Lot();
-        lot.setSellerId(user);
-        LotDAO lotDAO = new LotDAO();
-        AutoDAO autoDAO = new AutoDAO();
-        List<Lot> lots = lotDAO.find(lot);
-        List<Auto> autos = new ArrayList<Auto>();
-        if (lots != null) {
-            for (Lot l : lots) {
-                Auto auto = new Auto();
-                auto.setLot(l);
-                List<Auto> tempAutos = autoDAO.findPreview(auto);
-                if (tempAutos != null) {
-                    autos.add(tempAutos.get(0));
-                }
-            }
-        }
-        request.setAttribute("autos", autos);
+//        Lot lot = new Lot();
+//        lot.setSellerId(user);
+//        LotDAO lotDAO = new LotDAO();
+//        AutoDAO autoDAO = new AutoDAO();
+//        List<Lot> lots = lotDAO.find(lot);
+//        List<Auto> autos = new ArrayList<Auto>();
+//        if (lots != null) {
+//            for (Lot l : lots) {
+//                Auto auto = new Auto();
+//                auto.setLot(l);
+//                List<Auto> tempAutos = autoDAO.findPreview(auto);
+//                if (tempAutos != null) {
+//                    autos.add(tempAutos.get(0));
+//                }
+//            }
+//        }
+//        request.setAttribute("autos", autos);
         request.getRequestDispatcher("./userAuto.jsp").forward(request, response);
     }
 }

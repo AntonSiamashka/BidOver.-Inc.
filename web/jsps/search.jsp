@@ -51,9 +51,16 @@
             <div id="search_bar">
                 <table id="auto-table" cellpadding="5">
                     <tr>
+                        <td valign="top" align="right"><h4>Basic Search</h4></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td valign="top" align="right"><h4><fmt:message key="lbl.make" />:</h4></td>
                         <td>
                             <select name="make" id="make" size="10" onchange="getModels()">
+                                <option value="">All</option>
                                 <c:forEach var="make" items="${makes}">
                                     <option value="${make}"> ${make} </option>
                                 </c:forEach>
@@ -62,11 +69,45 @@
 
                         <td valign="top" align="right"><h4><fmt:message key="lbl.model" />:</h4></td>
                         <td><div id="select_model"></div></td>
+                        <td valign="top" align="right"><h4><fmt:message key="lbl.modification" />:</h4></td>
+                        <td><div id="select_modification"></div></td>
                     </tr>
                     <tr>
                         <td valign="top" align="right"><h4><fmt:message key="lbl.years" />:</h4></td>
-                        <td><div id="select_year"></div></td>
-                        <td></td><td></td>
+                        <td>
+                            <select name="years_beg" id="years_beg">
+                                <option value="">All</option>
+                                <c:forEach items="${years}" var="year">
+                                    <option value="${year}">${year}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="years_end" id="years_end">
+                                <option value="">All</option>
+                                <c:forEach items="${years}" var="year">
+                                    <option value="${year}">${year}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="advanced-search-button" type="button" onclick="showAdvancedSearch()" value="Advanced Search"/>
+                            <input id="hide-advanced-search-button" type="button" onclick="hideAdvancedSearch()" value="Hide Advanced Search" style="visibility:hidden;display:none;"/>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <table id="advanced-search" cellpadding="5" style="visibility:hidden;display:none;">
+                    <tr>
+                        <td valign="top" align="right"><h4>Advanced Search</h4></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td align="right"><h4><fmt:message key="lbl.odometer" />:</h4></td>
@@ -113,7 +154,7 @@
                         </td>
                         <td></td><td></td>
                     </tr>
-                    <tr>
+                    <tr style="visibility: hidden; display: none;">
                         <td align="right"><h4><fmt:message key="lbl.body_style" />:</h4></td>
                         <td>
                             <select name="body_style" id="body_style" onchange="">
@@ -209,7 +250,7 @@
                         </td>
                         <td></td><td></td>
                     </tr>
-                    <tr>
+                    <tr style="visibility: hidden; display: none;">
                         <td align="right"><h4><fmt:message key="lbl.wheels" />:</h4></td>
                         <td>
                             <select name="wheels" id="wheels" onchange="">
@@ -222,23 +263,26 @@
                         <td></td><td></td>
                     </tr>
                     <tr>
-                        <td align="right"><h4><fmt:message key="lbl.tires" />:</h4></td>
+                        <td align="right"><h4><fmt:message key="lbl.country.assembly" />:</h4></td>
                         <td>
-                            <select name="tires" id="tires" onchange="">
+                            <select name="country_assembly" id="country_assembly" onchange="">
                                 <option value="-1">All</option>
-                                <c:forEach var="tire" items="${tires}">
-                                    <option value="${tire.id}"> ${tire.title}</option>
+                                <c:forEach items="${countryAssemblys}" var="countryAssembly">
+                                    <option value="${countryAssembly.id}"> ${countryAssembly.title} </option>
                                 </c:forEach>
                             </select>
                         </td>
                         <td></td><td></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td><input type="submit" value="Search"/></td>
+                        <td align="right"><h4><fmt:message key="lbl.salvage" />:</h4></td>
+                        <td>
+                            <input name="salvage" id="salvage" type="checkbox"/>
+                        </td>
                         <td></td><td></td>
                     </tr>
                 </table>
+                <input type="submit" value="Search"/>
             </div>
         </form>
         <%@include file="footer.jspf" %>

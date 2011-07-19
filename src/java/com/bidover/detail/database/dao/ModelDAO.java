@@ -8,7 +8,7 @@ import com.bidover.detail.model.bean.Model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import com.bidover.detail.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import com.bidover.detail.model.bean.Make;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

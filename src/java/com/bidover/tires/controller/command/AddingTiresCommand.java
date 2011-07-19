@@ -54,8 +54,8 @@ public class AddingTiresCommand implements ICommand {
         tires.setTiresSeason(new TiresSeason(season));
         tires.setTiresMake(new TiresMake(make));
         AddLotCommand addLotCommand = new AddLotCommand();
-        Integer lotId = addLotCommand.addLot(request, response);
-        tires.setId(lotId);
+//        Integer lotId = addLotCommand.addLot(request, response);
+//        tires.setId(lotId);
         Integer id = addingTiresLogic.add(tires);
         return PathProperties.createPathProperties().getProperty(PathProperties.INDEX_PAGE);
     }

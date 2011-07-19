@@ -34,6 +34,9 @@ public class InteriorTypeDAO {
     }
 
     public InteriorType find(InteriorType interiorType) {
+        if(interiorType == null || interiorType.getId() == null) {
+            return null;
+        }
         return interiorTypes.get(interiorType.getId());
     }
 

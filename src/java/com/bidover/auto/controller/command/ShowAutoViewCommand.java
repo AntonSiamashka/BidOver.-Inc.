@@ -33,7 +33,7 @@ public class ShowAutoViewCommand implements ICommand {
             Integer lotId = autoDAO.findLotIdByAutoId(Integer.valueOf(autoIdTxt));
             ResourceBundle set = ResourceBundle.getBundle("properties.uploading");
             String imgBuildPath = set.getString("IMG_BUILD_PATH");
-            List<String> imgFiles = getFiles(imgBuildPath+"\\"+lotId, lotId);
+            List<String> imgFiles = getFiles(imgBuildPath+lotId, lotId);
             request.setAttribute("qnt_files", imgFiles.size());
             request.setAttribute("img_files", imgFiles);
             request.setAttribute("auto", auto);
@@ -47,10 +47,9 @@ public class ShowAutoViewCommand implements ICommand {
     }
 
     private List<String> getFiles(String pathDir, Integer lotId) {
-        List<String> files = null;
+        List<String> files = new ArrayList<String>();
         File file = new File(pathDir);
         if (file.isDirectory()) {
-            files = new ArrayList<String>();
             File[] fileArray = file.listFiles();
             for (File tempFile : fileArray) {
                 if (tempFile.getName().startsWith(String.valueOf(lotId)) && tempFile.getName().endsWith(String.valueOf("small.jpg"))) {

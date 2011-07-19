@@ -1,14 +1,12 @@
 package com.bidover.auto.database.dao;
 
-import com.bidover.common.database.dao.LotDAO;
 import com.bidover.auto.model.bean.Auto;
 import com.bidover.auto.model.bean.Door;
 import com.bidover.auto.model.bean.Engine;
 import com.bidover.auto.model.bean.InteriorType;
 import com.bidover.auto.model.bean.Tires;
 import com.bidover.auto.model.bean.Transmission;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
-import java.sql.Connection;
+import com.bidover.common.database.dao.BaseLotDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,22 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import com.bidover.common.logger.Logger;
+import com.bidover.util.IntegerUtil;
 
 /**
  *
  * @author Jedai
  */
-public class AutoDAO {
-
-    private Connection connection;
-    private PreparedStatement peparedStatement;
-    private ConnectionPool connectionPool;
+public class AutoDAO extends BaseLotDAO<Auto> {
 
     public AutoDAO() {
-        connectionPool = ConnectionPool.getConnectionPool();
+        super();
     }
 
-    public Integer add(Auto auto) {
+    public Integer addSpecificInfo(Auto auto) {
         Integer addFlag = null;
         OptionDAO optionDAO = new OptionDAO();
         int idOption = optionDAO.add(auto.getIdOptions());
@@ -42,72 +37,57 @@ public class AutoDAO {
             try {
                 connection = connectionPool.getConnection();
                 peparedStatement = (PreparedStatement) connection.prepareStatement(
-                        "INSERT INTO bidover_db.auto(" +
-                        "VIN, " + 
-                        "id, " +
-                        "doors, " +
-                        "engine, " +
-                        "odometer," +
-                        "year," +
-                        "id_options," +
-                        "id_body_style, " +
-                        "id_top_type," +
-                        "id_fuel," +
-                        "transmission," +
-                        "id_drive_train," +
-                        "id_exterior_color," +
-                        "id_interior_color," +
-                        "interior_type," +
-                        "id_wheels," +
-                        "id_tires," +
-                        "id_trim," +
-                        "id_lot," +
-                        "id_damage," +
-                        "id_characteristics" +
-                        ") " +
-                        "VALUES('" +
-                        auto.getVin() +
-                        "','" +
-                        idLot +
-                        "','" +
-                        auto.getDoors().getId() +
-                        "','" +
-                        auto.getEngine().getId() +
-                        "','" +
-                        auto.getOdometer() +
-                        "','" +
-                        auto.getYear() +
-                        "','" +
-                        idOption +
-                        "','" +
-                        auto.getIdBodyStyle().getId() +
-                        "','" +
-                        auto.getIdTopType().getId() +
-                        "','" +
-                        auto.getIdFuel().getId() +
-                        "','" +
-                        auto.getTransmission().getId() +
-                        "','" +
-                        auto.getIdDriveTrain().getId() +
-                        "','" +
-                        auto.getIdExteriorColor().getId() +
-                        "','" +
-                        auto.getIdInteriorColor().getId() +
-                        "','" +
-                        auto.getInteriorType().getId() +
-                        "','" +
-                        auto.getIdWheels().getId() +
-                        "','" +
-                        auto.getIdTires().getId() +
-                        "','" +
-                        auto.getTrim().getId() +
-                        "','" +
-                        idLot +
-                        "','" +
-                        idDamage +
-                        "','" +
-                        auto.getCharacteristics().getId() +
-                        "')");
+                        "INSERT INTO bidover_db.auto("
+                        + "VIN, "
+                        + "id, "
+                        + "doors, "
+                        + "salvage, "
+                        + "assembly_id, "
+                        + "engine, "
+                        + "odometer,"
+                        + "year,"
+                        + "id_options,"
+                        + "id_body_style, "
+                        + "id_top_type,"
+                        + "id_fuel,"
+                        + "transmission,"
+                        + "id_drive_train,"
+                        + "id_exterior_color,"
+                        + "id_interior_color,"
+                        + "interior_type,"
+                        + "id_wheels,"
+                        + "id_tires,"
+                        + "id_lot,"
+                        + "id_damage,"
+                        + "id_characteristics,"
+                        + "displacement"
+                        + ") VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?)");
+
+
+                peparedStatement.setString(1, auto.getVin());
+                peparedStatement.setObject(2, idLot);
+                peparedStatement.setObject(3, auto.getDoors().getId());
+                peparedStatement.setBoolean(4, auto.isSalvage());
+                peparedStatement.setObject(5, auto.getCountryAssembly().getId());
+                peparedStatement.setObject(6, auto.getEngine().getId());
+                peparedStatement.setObject(7, auto.getOdometer());
+                peparedStatement.setObject(8, auto.getYear());
+                peparedStatement.setObject(9, idOption);
+                peparedStatement.setObject(10, auto.getIdBodyStyle().getId());
+                peparedStatement.setObject(11, auto.getIdTopType().getId());
+                peparedStatement.setObject(12, auto.getIdFuel().getId());
+                peparedStatement.setObject(13, auto.getTransmission().getId());
+                peparedStatement.setObject(14, auto.getIdDriveTrain().getId());
+                peparedStatement.setObject(15, auto.getIdExteriorColor().getId());
+                peparedStatement.setObject(16, auto.getIdInteriorColor().getId());
+                peparedStatement.setObject(17, auto.getInteriorType().getId());
+                peparedStatement.setObject(18, auto.getIdWheels().getId());
+                peparedStatement.setObject(19, auto.getIdTires().getId());
+//                peparedStatement.setObject(20, auto.getTrim().getId());
+                peparedStatement.setObject(20, idLot);
+                peparedStatement.setObject(21, idDamage);
+                peparedStatement.setObject(22, auto.getCharacteristics().getId());
+                peparedStatement.setObject(23, auto.getDisplacement());
 
                 peparedStatement.execute();
                 peparedStatement.close();
@@ -136,23 +116,24 @@ public class AutoDAO {
         if (id != null) {
             try {
                 connection = connectionPool.getConnection();
-                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto " +
-                        "INNER JOIN bidover_db.options ON auto.id_options=options.id " +
-                        "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id " +
-                        "INNER JOIN bidover_db.body_style ON auto.id_body_style=body_style.id " +
-                        "INNER JOIN bidover_db.damage ON auto.id_damage=damage.id " +
-                        "INNER JOIN bidover_db.drive_train ON auto.id_drive_train=drive_train.id " +
-                        "INNER JOIN bidover_db.exterior_color ON auto.id_exterior_color=exterior_color.id " +
-                        "INNER JOIN bidover_db.fuel ON auto.id_fuel=fuel.id " +
-                        "INNER JOIN bidover_db.interior_color ON auto.id_interior_color=interior_color.id " +
-                        "INNER JOIN bidover_db.top_type ON auto.id_top_type=top_type.id " +
-                        "INNER JOIN bidover_db.trim ON auto.id_trim=trim.id " +
-                        "INNER JOIN bidover_db.wheels ON auto.id_wheels=wheels.id " +
-                        "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id " +
-                        "INNER JOIN bidover_db.condition ON lot.condition_code=condition.id WHERE auto.id='" + id + "'");
+                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto "
+                        + "LEFT JOIN bidover_db.options ON auto.id_options=options.id "
+                        + "LEFT JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id "
+                        + "LEFT JOIN bidover_db.body_style ON auto.id_body_style=body_style.id "
+                        + "LEFT JOIN bidover_db.damage ON auto.id_damage=damage.id "
+                        + "LEFT JOIN bidover_db.drive_train ON auto.id_drive_train=drive_train.id "
+                        + "LEFT JOIN bidover_db.exterior_color ON auto.id_exterior_color=exterior_color.id "
+                        + "LEFT JOIN bidover_db.fuel ON auto.id_fuel=fuel.id "
+                        + "LEFT JOIN bidover_db.interior_color ON auto.id_interior_color=interior_color.id "
+                        + "LEFT JOIN bidover_db.top_type ON auto.id_top_type=top_type.id "
+                        + "LEFT JOIN bidover_db.trim ON auto.id_trim=trim.id "
+                        + "LEFT JOIN bidover_db.wheels ON auto.id_wheels=wheels.id "
+                        + "LEFT JOIN bidover_db.assembley ON auto.assembly_id=assembley.id "
+                        + "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id "
+                        + "WHERE auto.id='" + id + "'");
                 ResultSet resultSet = peparedStatement.executeQuery();
                 if (resultSet.next()) {
-                    auto = createAuto(resultSet);
+                    auto = createLot(resultSet);
                 }
                 peparedStatement.close();
                 connectionPool.releaseConnection(connection);
@@ -168,8 +149,8 @@ public class AutoDAO {
         if (autoId != null) {
             try {
                 connection = connectionPool.getConnection();
-                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT auto.id_lot FROM bidover_db.auto " +
-                        "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id WHERE auto.id='" + autoId + "'");
+                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT auto.id_lot FROM bidover_db.auto "
+                        + "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id WHERE auto.id='" + autoId + "'");
                 ResultSet resultSet = peparedStatement.executeQuery();
                 if (resultSet.next()) {
                     lotId = resultSet.getInt("auto.id_lot");
@@ -188,8 +169,8 @@ public class AutoDAO {
         if (vin != null) {
             try {
                 connection = connectionPool.getConnection();
-                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT auto.id FROM bidover_db.auto " +
-                        " WHERE auto.VIN='" + vin + "'");
+                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT auto.id FROM bidover_db.auto "
+                        + " WHERE auto.VIN='" + vin + "'");
                 ResultSet resultSet = peparedStatement.executeQuery();
                 if (resultSet.next()) {
                     autoId = resultSet.getInt("auto.id");
@@ -206,12 +187,16 @@ public class AutoDAO {
     public List<Auto> findPreview(Auto auto) {
         List<Auto> autos = null;
         String dbRequest = createDBRequest(auto);
+        if (dbRequest.isEmpty()) {
+            dbRequest = "1=1";
+        }
+        System.out.println(dbRequest);
         if (!dbRequest.isEmpty()) {
             try {
                 connection = connectionPool.getConnection();
-                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto " +
-                        "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id " +
-                        "INNER JOIN bidover_db.lot ON auto.id=lot.id WHERE " + dbRequest);
+                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto "
+                        + "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id "
+                        + "INNER JOIN bidover_db.lot ON auto.id=lot.id WHERE " + dbRequest);
                 ResultSet resultSet = peparedStatement.executeQuery();
                 while (resultSet.next()) {
                     if (resultSet.isFirst()) {
@@ -233,9 +218,9 @@ public class AutoDAO {
         if (lotId != null) {
             try {
                 connection = connectionPool.getConnection();
-                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto " +
-                        "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id " +
-                        "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id WHERE lot.id='" + lotId + "'");
+                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto "
+                        + "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id "
+                        + "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id WHERE lot.id='" + lotId + "'");
                 ResultSet resultSet = peparedStatement.executeQuery();
                 if (resultSet.next()) {
                     auto = createPreviewAuto(resultSet);
@@ -252,13 +237,17 @@ public class AutoDAO {
     public List<Auto> findPreview(Auto auto, Integer yearBegin, Integer yearEnd) {
         List<Auto> autos = null;
         String dbRequest = createDBRequest(auto);
+        if (dbRequest.isEmpty()) {
+            dbRequest = "1=1";
+        }
+        System.out.println(dbRequest);
         if (!dbRequest.isEmpty()) {
             try {
                 connection = connectionPool.getConnection();
-                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto " +
-                        "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id " +
-                        "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id "+
-                         "WHERE " + dbRequest + " AND auto.year<='" + yearEnd + "' AND auto.year>='" + yearBegin + "'");
+                peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto "
+                        + "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id "
+                        + "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id "
+                        + "WHERE " + dbRequest + " AND auto.year<='" + yearEnd + "' AND auto.year>='" + yearBegin + "'");
                 ResultSet resultSet = peparedStatement.executeQuery();
                 while (resultSet.next()) {
                     if (resultSet.isFirst()) {
@@ -281,10 +270,10 @@ public class AutoDAO {
         List<Auto> autos = null;
         try {
             connection = connectionPool.getConnection();
-            peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto " +
-                    "INNER JOIN bidover_db.options ON auto.id_options=options.id " +
-                    "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id " +
-                    "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id ");
+            peparedStatement = (PreparedStatement) connection.prepareStatement("SELECT * FROM bidover_db.auto "
+                    + "INNER JOIN bidover_db.options ON auto.id_options=options.id "
+                    + "INNER JOIN bidover_db.characteristics ON auto.id_characteristics=characteristics.id "
+                    + "INNER JOIN bidover_db.lot ON auto.id_lot=lot.id ");
             ResultSet resultSet = peparedStatement.executeQuery();
             while (resultSet.next()) {
                 if (resultSet.isFirst()) {
@@ -328,10 +317,9 @@ public class AutoDAO {
         }
     }
 
-    private Auto createAuto(ResultSet resultSet) throws SQLException {
-        Auto auto = new Auto();
+    public void populateSpecificInfo(Auto auto, ResultSet resultSet) throws SQLException {
         String id = resultSet.getString("auto.id");
-        auto.setId(Integer.valueOf(id));
+        auto.setId(IntegerUtil.parseString(id));
 
         CharacteristicsDAO characteristicsDAO = new CharacteristicsDAO();
         auto.setCharacteristics(characteristicsDAO.createCharacteristics(resultSet));
@@ -340,81 +328,85 @@ public class AutoDAO {
         auto.setIdOptions(optionDAO.createOption(resultSet));
 
         BodyStyleDAO bodyStyleDAO = new BodyStyleDAO();
-        auto.setIdBodyStyle(bodyStyleDAO.createBody(resultSet));
+        auto.setIdBodyStyle(bodyStyleDAO.createBean(resultSet));
 
         DamageDAO damageDAO = new DamageDAO();
         auto.setDamage(damageDAO.createDamage(resultSet));
 
         DriveTrainDAO driveTrainDAO = new DriveTrainDAO();
-        auto.setIdDriveTrain(driveTrainDAO.createDriveTrain(resultSet));
+        auto.setIdDriveTrain(driveTrainDAO.createBean(resultSet));
 
         ExteriorColorDAO exteriorColorDAO = new ExteriorColorDAO();
-        auto.setIdExteriorColor(exteriorColorDAO.createExteriorColor(resultSet));
+        auto.setIdExteriorColor(exteriorColorDAO.createBean(resultSet));
 
         FuelDAO fuelDAO = new FuelDAO();
-        auto.setIdFuel(fuelDAO.createFuel(resultSet));
+        auto.setIdFuel(fuelDAO.createBean(resultSet));
 
         InteriorColorDAO interiorColorDAO = new InteriorColorDAO();
-        auto.setIdInteriorColor(interiorColorDAO.createInteriorColor(resultSet));
+        auto.setIdInteriorColor(interiorColorDAO.createBean(resultSet));
 
         TopTypeDAO topTypeDAO = new TopTypeDAO();
-        auto.setIdTopType(topTypeDAO.createTopType(resultSet));
+        auto.setIdTopType(topTypeDAO.createBean(resultSet));
 
         TrimDAO trimDAO = new TrimDAO();
-        auto.setTrim(trimDAO.createTrim(resultSet));
+        auto.setTrim(trimDAO.createBean(resultSet));
 
         WheelsDAO wheelsDAO = new WheelsDAO();
-        auto.setIdWheels(wheelsDAO.createWheels(resultSet));
+        auto.setIdWheels(wheelsDAO.createBean(resultSet));
+
+        CountryAssemblyDAO countryAssembleyDAO = new CountryAssemblyDAO();
+        auto.setCountryAssembly(countryAssembleyDAO.createBean(resultSet));
 
         String doorsTxt = resultSet.getString("auto.doors");
         DoorDAO doorDAO = new DoorDAO();
         Door door = new Door();
-        door.setId(Integer.valueOf(doorsTxt));
+        door.setId(IntegerUtil.parseString(doorsTxt));
         auto.setDoors(doorDAO.find(door));
 
         String engineTxt = resultSet.getString("auto.engine");
         EngineDAO engineDAO = new EngineDAO();
         Engine engine = new Engine();
-        engine.setId(Integer.valueOf(engineTxt));
+        engine.setId(IntegerUtil.parseString(engineTxt));
         auto.setEngine(engineDAO.find(engine));
 
         String transmissionTxt = resultSet.getString("auto.transmission");
         TransmissionDAO transmissionDAO = new TransmissionDAO();
         Transmission transmission = new Transmission();
-        transmission.setId(Integer.valueOf(transmissionTxt));
+        transmission.setId(IntegerUtil.parseString(transmissionTxt));
         auto.setTransmission(transmissionDAO.find(transmission));
 
         String interiorTypeTxt = resultSet.getString("auto.interior_type");
         InteriorTypeDAO interiorTypeDAO = new InteriorTypeDAO();
         InteriorType interiorType = new InteriorType();
-        interiorType.setId(Integer.valueOf(interiorTypeTxt));
+        interiorType.setId(IntegerUtil.parseString(interiorTypeTxt));
         auto.setInteriorType(interiorTypeDAO.find(interiorType));
 
         String tiresTxt = resultSet.getString("auto.id_tires");
         TiresDAO tiresDAO = new TiresDAO();
         Tires tires = new Tires();
-        tires.setId(Integer.valueOf(tiresTxt));
+        tires.setId(IntegerUtil.parseString(tiresTxt));
         auto.setIdTires(tiresDAO.find(tires));
 
         String year = resultSet.getString("auto.year");
-        auto.setYear(Integer.valueOf(year));
+        auto.setYear(IntegerUtil.parseString(year));
+
+        Boolean salvage = resultSet.getBoolean("auto.salvage");
+        auto.setSalvage(salvage);
 
         String odometer = resultSet.getString("auto.odometer");
-        auto.setOdometer(Integer.valueOf(odometer));
+        auto.setOdometer(IntegerUtil.parseString(odometer));
+        
+        String displacement = resultSet.getString("auto.displacement");
+        auto.setDisplacement(IntegerUtil.parseString(displacement));
 
         String VIN = resultSet.getString("auto.VIN");
         auto.setVin(VIN);
-
-        LotDAO lotDAO = new LotDAO();
-        auto.setLot(lotDAO.createLot(resultSet));
-
-        return auto;
     }
 
     private Auto createPreviewAuto(ResultSet resultSet) throws SQLException {
         Auto auto = new Auto();
         String id = resultSet.getString("auto.id");
-        auto.setId(Integer.valueOf(id));
+        auto.setId(IntegerUtil.parseString(id));
 
         CharacteristicsDAO characteristicsDAO = new CharacteristicsDAO();
         auto.setCharacteristics(characteristicsDAO.createCharacteristics(resultSet));
@@ -422,46 +414,49 @@ public class AutoDAO {
         String doorsTxt = resultSet.getString("auto.doors");
         DoorDAO doorDAO = new DoorDAO();
         Door door = new Door();
-        door.setId(Integer.valueOf(doorsTxt));
+        door.setId(IntegerUtil.parseString(doorsTxt));
         auto.setDoors(doorDAO.find(door));
 
         String engineTxt = resultSet.getString("auto.engine");
         EngineDAO engineDAO = new EngineDAO();
         Engine engine = new Engine();
-        engine.setId(Integer.valueOf(engineTxt));
+        engine.setId(IntegerUtil.parseString(engineTxt));
         auto.setEngine(engineDAO.find(engine));
 
         String transmissionTxt = resultSet.getString("auto.transmission");
         TransmissionDAO transmissionDAO = new TransmissionDAO();
         Transmission transmission = new Transmission();
-        transmission.setId(Integer.valueOf(transmissionTxt));
+        transmission.setId(IntegerUtil.parseString(transmissionTxt));
         auto.setTransmission(transmissionDAO.find(transmission));
 
         String interiorTypeTxt = resultSet.getString("auto.interior_type");
         InteriorTypeDAO interiorTypeDAO = new InteriorTypeDAO();
         InteriorType interiorType = new InteriorType();
-        interiorType.setId(Integer.valueOf(interiorTypeTxt));
+        interiorType.setId(IntegerUtil.parseString(interiorTypeTxt));
         auto.setInteriorType(interiorTypeDAO.find(interiorType));
 
         String tiresTxt = resultSet.getString("auto.id_tires");
         TiresDAO tiresDAO = new TiresDAO();
         Tires tires = new Tires();
-        tires.setId(Integer.valueOf(tiresTxt));
+        tires.setId(IntegerUtil.parseString(tiresTxt));
         auto.setIdTires(tiresDAO.find(tires));
 
         String year = resultSet.getString("auto.year");
-        auto.setYear(Integer.valueOf(year));
+        auto.setYear(IntegerUtil.parseString(year));
+
+        Boolean salvage = resultSet.getBoolean("auto.salvage");
+        auto.setSalvage(salvage);
 
         String odometer = resultSet.getString("auto.odometer");
-        auto.setOdometer(Integer.valueOf(odometer));
+        auto.setOdometer(IntegerUtil.parseString(odometer));
 
         String VIN = resultSet.getString("auto.VIN");
         auto.setVin(VIN);
 
-        // ---------------
-        LotDAO lotDAO = new LotDAO();
-        auto.setLot(lotDAO.createLotPreview(resultSet));
-        // ---------------
+//        // ---------------
+//        LotDAO lotDAO = new LotDAO();
+//        auto.setLot(lotDAO.createLotPreview(resultSet));
+//        // ---------------
 
         return auto;
     }
@@ -501,17 +496,29 @@ public class AutoDAO {
             dbRequest += optionDAO.createDBRequest(auto.getIdOptions());
             }
              */
-            if (auto.getLot() != null && auto.getLot().getId() != null) {
-                if (!dbRequest.isEmpty()) {
-                    dbRequest += " AND ";
-                }
-                dbRequest += "auto.id_lot='" + auto.getLot().getId() + "' ";
-            }
-            if (auto.getCharacteristics()!= null && auto.getCharacteristics().getMake() != null) {
+//            if (auto.getLot() != null && auto.getLot().getId() != null) {
+//                if (!dbRequest.isEmpty()) {
+//                    dbRequest += " AND ";
+//                }
+//                dbRequest += "auto.id_lot='" + auto.getLot().getId() + "' ";
+//            }
+            if (auto.getCharacteristics() != null && auto.getCharacteristics().getMake() != null && !auto.getCharacteristics().getMake().isEmpty()) {
                 if (!dbRequest.isEmpty()) {
                     dbRequest += " AND ";
                 }
                 dbRequest += "characteristics.manufacturer='" + auto.getCharacteristics().getMake() + "' ";
+            }
+            if (auto.getCharacteristics() != null && auto.getCharacteristics().getModel() != null && !auto.getCharacteristics().getModel().isEmpty()) {
+                if (!dbRequest.isEmpty()) {
+                    dbRequest += " AND ";
+                }
+                dbRequest += "characteristics.model='" + auto.getCharacteristics().getModel() + "' ";
+            }
+            if (auto.getCharacteristics() != null && auto.getCharacteristics().getModification() != null && !auto.getCharacteristics().getModification().isEmpty()) {
+                if (!dbRequest.isEmpty()) {
+                    dbRequest += " AND ";
+                }
+                dbRequest += "characteristics.modification='" + auto.getCharacteristics().getModification() + "' ";
             }
             if (auto.getIdBodyStyle() != null && auto.getIdBodyStyle().getId() != null) {
                 if (!dbRequest.isEmpty()) {
@@ -597,21 +604,31 @@ public class AutoDAO {
                 }
                 dbRequest += "auto.id_damage='" + auto.getDamage().getId() + "' ";
             }
-            if (auto.getLot() != null && auto.getLot().getId() != null) {
+//            if (auto.getLot() != null && auto.getLot().getId() != null) {
+//                if (!dbRequest.isEmpty()) {
+//                    dbRequest += " AND ";
+//                }
+//                dbRequest += "auto.id='" + auto.getLot().getId() + "' ";
+//            }
+            if (auto.isSalvage() != null) {
                 if (!dbRequest.isEmpty()) {
                     dbRequest += " AND ";
                 }
-                dbRequest += "auto.id='" + auto.getLot().getId() + "' ";
+                dbRequest += "auto.salvage='" + auto.isSalvage() + "' ";
+            }
+            if (auto.getCountryAssembly() != null && auto.getCountryAssembly().getId() != null) {
+                if (!dbRequest.isEmpty()) {
+                    dbRequest += " AND ";
+                }
+                dbRequest += "auto.assembly_id='" + auto.getCountryAssembly().getId() + "' ";
             }
         }
         return dbRequest;
     }
 
-    private void executeRequest(String request) throws SQLException {
-        connection = connectionPool.getConnection();
-        peparedStatement = (PreparedStatement) connection.prepareStatement(request);
-        peparedStatement.execute();
-        peparedStatement.close();
-        connectionPool.releaseConnection(connection);
+    @Override
+    public Auto createNewInstance() {
+        return new Auto();
     }
+
 }

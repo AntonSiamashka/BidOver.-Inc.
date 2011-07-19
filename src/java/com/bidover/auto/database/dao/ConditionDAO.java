@@ -3,7 +3,7 @@ package com.bidover.auto.database.dao;
 
 
 import com.bidover.common.model.bean.Condition;
-import com.bidover.auto.database.connectionpool.ConnectionPool;
+import com.bidover.common.database.connectionpool.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -119,7 +119,7 @@ public class ConditionDAO {
         Condition condition = new Condition();
         String id = resultSet.getString("condition.id");
         String title = resultSet.getString("condition.title");
-        condition.setId(Integer.valueOf(id));
+        condition.setId(Integer.getInteger(id));
         condition.setTitle(title);
         return condition;
     }

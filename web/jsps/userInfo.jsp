@@ -1,21 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"
-        import="bidoverdb.bean.Timezone"
-        import="bidoverdb.bean.User"
-        %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-        if (request.getSession() != null && request.getSession().getAttribute("status") != null) {
-            int status = (Integer) request.getSession().getAttribute("status");
-            if (status != 2 && status != 1) {
-                response.sendRedirect("./");
-                return;
-            }
-        } else {
-            response.sendRedirect("./");
-            return;
-        }
-%>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,15 +12,15 @@
             <form action="Controller?command=CHANGE_USER_INFO" method=POST>
                 <table id = "t_registration">
                     <tr>
-                        <td>Ваша фамилия:</td>
+                        <td>???? ???????:</td>
                         <td><input type=text name="lastName" id="lastName" style = "width:100px" value="${profile.lastName}"/></td>
                     </tr>
                     <tr>
-                        <td>Ваше имя:</td>
+                        <td>???? ???:</td>
                         <td><input type="text" name="firstName" id="firstName" style = "width:100px" value="${profile.firstName}"/></td>
                     </tr>
                     <tr>
-                        <td>Ваш nickname:</td>
+                        <td>??? nickname:</td>
                         <td><input type="text" name="nickName" id="nickName" style = "width:100px" value="${profile.nickName}"/></td>
                     </tr>
                     <tr>
@@ -57,7 +40,7 @@
                         <td><input type="text" name="user_phone" id="user_phone" style = "width:100px"  value="${profile.userPhone}"/></td>
                     </tr>
                     <tr>
-                        <td>Ваш часовой пояс:</td>
+                        <td>??? ??????? ????:</td>
                         <td>
                             <select  name="timezone" id="timezone">
                                 <c:forEach var="timezoneElement" items="${timezones}">

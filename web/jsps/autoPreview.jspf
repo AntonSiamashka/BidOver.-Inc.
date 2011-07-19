@@ -5,8 +5,8 @@
         <c:forEach var="auto" items="${autos}">
             <tr class="alt">
                 <td align="center">
-                    <a href="images/pics/${auto.lot.id}_1_.jpg" rel="lightbox" title="my caption">
-                        <img src="images/pics/${auto.lot.id}_1_small.jpg" width="100" height="100" alt="image"/>
+                    <a href="images/pics/${auto.id}/${auto.id}_1_.jpg" rel="lightbox" title="my caption">
+                        <img src="images/pics/${auto.id}/${auto.id}_1_small.jpg" width="100" height="100" alt="image"/>
                     </a>
                 </td>
                 <td class="name" valign="top">
@@ -18,7 +18,7 @@
 
                 </td>
             <td valign="top" align="center"> x </td>
-            <td valign="top" align="center">${auto.lot.formattedTimeLeft}</td>
+            <td valign="top" align="center">${auto.formattedTimeLeft}</td>
             </tr>
         </c:forEach>
 

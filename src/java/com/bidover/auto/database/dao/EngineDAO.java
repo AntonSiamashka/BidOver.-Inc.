@@ -28,6 +28,9 @@ public class EngineDAO {
     }
 
     public Engine find(Engine engine) {
+        if(engine == null || engine.getId() == null) {
+            return null;
+        }
         return engines.get(engine.getId());
     }
     public List<Engine> findAll() {

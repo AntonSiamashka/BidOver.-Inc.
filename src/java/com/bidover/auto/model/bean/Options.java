@@ -10,48 +10,48 @@ package com.bidover.auto.model.bean;
  */
 public class Options {
     private Integer id = null;
-    private Byte pwrLocks = null;
-    private Byte pwrWindows = null;
-    private Byte pwrSteering = null;
-    private Byte pwrMirrors = null;
-    private Byte pwrSeats = null;
-    private Byte pwrSeatsDriversOnly = null;
-    private Byte tiltSteering = null;
-    private Byte airConditioning = null;
-    private Byte rearAirConditioning = null;
-    private Byte cruiseCtrl = null;
-    private Byte rearDefrost = null;
-    private Byte sideAirBags = null;
-    private Byte dualAirBags = null;
-    private Byte fogLamps = null;
-    private Byte tripCounter = null;
-    private Byte luggageRack = null;
-    private Byte thirdRowSeat = null;
-    private Byte xenonHeadlights = null;
-    private Byte cdPlayer = null;
-    private Byte cdChanger = null;
-    private Byte rearWiper = null;
-    private Byte floorMats = null;
-    private Byte securitySystem = null;
-    private Byte tractionControl = null;
-    private Byte rearTail = null;
-    private Byte liftGate = null;
-    private Byte heatedSeats = null;
-    private Byte tintedWindows = null;
-    private Byte homeLink = null;
-    private Byte tirePressureMonitorSystem = null;
-    private Byte steeringWheelAudioControl = null;
-    private Byte spoiler = null;
-    private Byte bugDeflector = null;
-    private Byte keylessEntry = null;
-    private Byte handToolKit = null;
-    private Byte dualSlidingSideDoors = null;
-    private Byte powerVentWindows = null;
-    private Byte frontCenterConsole = null;
-    private Byte stowAndGo = null;
-    private Byte stowAndGoThirdRowOnly = null;
-    private Byte woodTrimDash = null;
-    private Byte woodgrainInteriorPackage = null;
+    private Boolean pwrLocks = null;
+    private Boolean pwrWindows = null;
+    private Boolean pwrSteering = null;
+    private Boolean pwrMirrors = null;
+    private Boolean pwrSeats = null;
+    private Boolean pwrSeatsDriversOnly = null;
+    private Boolean tiltSteering = null;
+    private Boolean airConditioning = null;
+    private Boolean rearAirConditioning = null;
+    private Boolean cruiseCtrl = null;
+    private Boolean rearDefrost = null;
+    private Boolean sideAirBags = null;
+    private Boolean dualAirBags = null;
+    private Boolean fogLamps = null;
+    private Boolean tripCounter = null;
+    private Boolean luggageRack = null;
+    private Boolean thirdRowSeat = null;
+    private Boolean xenonHeadlights = null;
+    private Boolean cdPlayer = null;
+    private Boolean cdChanger = null;
+    private Boolean rearWiper = null;
+    private Boolean floorMats = null;
+    private Boolean securitySystem = null;
+    private Boolean tractionControl = null;
+    private Boolean rearTail = null;
+    private Boolean liftGate = null;
+    private Boolean heatedSeats = null;
+    private Boolean tintedWindows = null;
+    private Boolean homeLink = null;
+    private Boolean tirePressureMonitorSystem = null;
+    private Boolean steeringWheelAudioControl = null;
+    private Boolean spoiler = null;
+    private Boolean bugDeflector = null;
+    private Boolean keylessEntry = null;
+    private Boolean handToolKit = null;
+    private Boolean dualSlidingSideDoors = null;
+    private Boolean powerVentWindows = null;
+    private Boolean frontCenterConsole = null;
+    private Boolean stowAndGo = null;
+    private Boolean stowAndGoThirdRowOnly = null;
+    private Boolean woodTrimDash = null;
+    private Boolean woodgrainInteriorPackage = null;
 
     public Options() {
     }
@@ -64,339 +64,339 @@ public class Options {
         this.id = id;
     }
 
-    public Byte getAirConditioning() {
+    public Boolean getAirConditioning() {
         return airConditioning;
     }
 
-    public void setAirConditioning(Byte airConditioning) {
+    public void setAirConditioning(Boolean airConditioning) {
         this.airConditioning = airConditioning;
     }
 
-    public Byte getBugDeflector() {
+    public Boolean getBugDeflector() {
         return bugDeflector;
     }
 
-    public void setBugDeflector(Byte bugDeflector) {
+    public void setBugDeflector(Boolean bugDeflector) {
         this.bugDeflector = bugDeflector;
     }
 
-    public Byte getCdChanger() {
+    public Boolean getCdChanger() {
         return cdChanger;
     }
 
-    public void setCdChanger(Byte cdChanger) {
+    public void setCdChanger(Boolean cdChanger) {
         this.cdChanger = cdChanger;
     }
 
-    public Byte getCdPlayer() {
+    public Boolean getCdPlayer() {
         return cdPlayer;
     }
 
-    public void setCdPlayer(Byte cdPlayer) {
+    public void setCdPlayer(Boolean cdPlayer) {
         this.cdPlayer = cdPlayer;
     }
 
-    public Byte getCruiseCtrl() {
+    public Boolean getCruiseCtrl() {
         return cruiseCtrl;
     }
 
-    public void setCruiseCtrl(Byte cruiseCtrl) {
+    public void setCruiseCtrl(Boolean cruiseCtrl) {
         this.cruiseCtrl = cruiseCtrl;
     }
 
-    public Byte getDualAirBags() {
+    public Boolean getDualAirBags() {
         return dualAirBags;
     }
 
-    public void setDualAirBags(Byte dualAirBags) {
+    public void setDualAirBags(Boolean dualAirBags) {
         this.dualAirBags = dualAirBags;
     }
 
-    public Byte getDualSlidingSideDoors() {
+    public Boolean getDualSlidingSideDoors() {
         return dualSlidingSideDoors;
     }
 
-    public void setDualSlidingSideDoors(Byte dualSlidingSideDoors) {
+    public void setDualSlidingSideDoors(Boolean dualSlidingSideDoors) {
         this.dualSlidingSideDoors = dualSlidingSideDoors;
     }
 
-    public Byte getFloorMats() {
+    public Boolean getFloorMats() {
         return floorMats;
     }
 
-    public void setFloorMats(Byte floorMats) {
+    public void setFloorMats(Boolean floorMats) {
         this.floorMats = floorMats;
     }
 
-    public Byte getFogLamps() {
+    public Boolean getFogLamps() {
         return fogLamps;
     }
 
-    public void setFogLamps(Byte fogLamps) {
+    public void setFogLamps(Boolean fogLamps) {
         this.fogLamps = fogLamps;
     }
 
-    public Byte getFrontCenterConsole() {
+    public Boolean getFrontCenterConsole() {
         return frontCenterConsole;
     }
 
-    public void setFrontCenterConsole(Byte frontCenterConsole) {
+    public void setFrontCenterConsole(Boolean frontCenterConsole) {
         this.frontCenterConsole = frontCenterConsole;
     }
 
-    public Byte getHandToolKit() {
+    public Boolean getHandToolKit() {
         return handToolKit;
     }
 
-    public void setHandToolKit(Byte handToolKit) {
+    public void setHandToolKit(Boolean handToolKit) {
         this.handToolKit = handToolKit;
     }
 
-    public Byte getHeatedSeats() {
+    public Boolean getHeatedSeats() {
         return heatedSeats;
     }
 
-    public void setHeatedSeats(Byte heatedSeats) {
+    public void setHeatedSeats(Boolean heatedSeats) {
         this.heatedSeats = heatedSeats;
     }
 
-    public Byte getHomeLink() {
+    public Boolean getHomeLink() {
         return homeLink;
     }
 
-    public void setHomeLink(Byte homeLink) {
+    public void setHomeLink(Boolean homeLink) {
         this.homeLink = homeLink;
     }
 
-    public Byte getKeylessEntry() {
+    public Boolean getKeylessEntry() {
         return keylessEntry;
     }
 
-    public void setKeylessEntry(Byte keylessEntry) {
+    public void setKeylessEntry(Boolean keylessEntry) {
         this.keylessEntry = keylessEntry;
     }
 
-    public Byte getLiftGate() {
+    public Boolean getLiftGate() {
         return liftGate;
     }
 
-    public void setLiftGate(Byte liftGate) {
+    public void setLiftGate(Boolean liftGate) {
         this.liftGate = liftGate;
     }
 
-    public Byte getLuggageRack() {
+    public Boolean getLuggageRack() {
         return luggageRack;
     }
 
-    public void setLuggageRack(Byte luggageRack) {
+    public void setLuggageRack(Boolean luggageRack) {
         this.luggageRack = luggageRack;
     }
 
-    public Byte getPowerVentWindows() {
+    public Boolean getPowerVentWindows() {
         return powerVentWindows;
     }
 
-    public void setPowerVentWindows(Byte powerVentWindows) {
+    public void setPowerVentWindows(Boolean powerVentWindows) {
         this.powerVentWindows = powerVentWindows;
     }
 
-    public Byte getPwrLocks() {
+    public Boolean getPwrLocks() {
         return pwrLocks;
     }
 
-    public void setPwrLocks(Byte pwrLocks) {
+    public void setPwrLocks(Boolean pwrLocks) {
         this.pwrLocks = pwrLocks;
     }
 
-    public Byte getPwrMirrors() {
+    public Boolean getPwrMirrors() {
         return pwrMirrors;
     }
 
-    public void setPwrMirrors(Byte pwrMirrors) {
+    public void setPwrMirrors(Boolean pwrMirrors) {
         this.pwrMirrors = pwrMirrors;
     }
 
-    public Byte getPwrSeats() {
+    public Boolean getPwrSeats() {
         return pwrSeats;
     }
 
-    public void setPwrSeats(Byte pwrSeats) {
+    public void setPwrSeats(Boolean pwrSeats) {
         this.pwrSeats = pwrSeats;
     }
 
-    public Byte getPwrSeatsDriversOnly() {
+    public Boolean getPwrSeatsDriversOnly() {
         return pwrSeatsDriversOnly;
     }
 
-    public void setPwrSeatsDriversOnly(Byte pwrSeatsDriversOnly) {
+    public void setPwrSeatsDriversOnly(Boolean pwrSeatsDriversOnly) {
         this.pwrSeatsDriversOnly = pwrSeatsDriversOnly;
     }
 
-    public Byte getPwrSteering() {
+    public Boolean getPwrSteering() {
         return pwrSteering;
     }
 
-    public void setPwrSteering(Byte pwrSteering) {
+    public void setPwrSteering(Boolean pwrSteering) {
         this.pwrSteering = pwrSteering;
     }
 
-    public Byte getPwrWindows() {
+    public Boolean getPwrWindows() {
         return pwrWindows;
     }
 
-    public void setPwrWindows(Byte pwrWindows) {
+    public void setPwrWindows(Boolean pwrWindows) {
         this.pwrWindows = pwrWindows;
     }
 
-    public Byte getRearAirConditioning() {
+    public Boolean getRearAirConditioning() {
         return rearAirConditioning;
     }
 
-    public void setRearAirConditioning(Byte rearAirConditioning) {
+    public void setRearAirConditioning(Boolean rearAirConditioning) {
         this.rearAirConditioning = rearAirConditioning;
     }
 
-    public Byte getRearDefrost() {
+    public Boolean getRearDefrost() {
         return rearDefrost;
     }
 
-    public void setRearDefrost(Byte rearDefrost) {
+    public void setRearDefrost(Boolean rearDefrost) {
         this.rearDefrost = rearDefrost;
     }
 
-    public Byte getRearTail() {
+    public Boolean getRearTail() {
         return rearTail;
     }
 
-    public void setRearTail(Byte rearTail) {
+    public void setRearTail(Boolean rearTail) {
         this.rearTail = rearTail;
     }
 
-    public Byte getRearWiper() {
+    public Boolean getRearWiper() {
         return rearWiper;
     }
 
-    public void setRearWiper(Byte rearWiper) {
+    public void setRearWiper(Boolean rearWiper) {
         this.rearWiper = rearWiper;
     }
 
-    public Byte getSecuritySystem() {
+    public Boolean getSecuritySystem() {
         return securitySystem;
     }
 
-    public void setSecuritySystem(Byte securitySystem) {
+    public void setSecuritySystem(Boolean securitySystem) {
         this.securitySystem = securitySystem;
     }
 
-    public Byte getSideAirBags() {
+    public Boolean getSideAirBags() {
         return sideAirBags;
     }
 
-    public void setSideAirBags(Byte sideAirBags) {
+    public void setSideAirBags(Boolean sideAirBags) {
         this.sideAirBags = sideAirBags;
     }
 
-    public Byte getSpoiler() {
+    public Boolean getSpoiler() {
         return spoiler;
     }
 
-    public void setSpoiler(Byte spoiler) {
+    public void setSpoiler(Boolean spoiler) {
         this.spoiler = spoiler;
     }
 
-    public Byte getSteeringWheelAudioControl() {
+    public Boolean getSteeringWheelAudioControl() {
         return steeringWheelAudioControl;
     }
 
-    public void setSteeringWheelAudioControl(Byte steeringWheelAudioControl) {
+    public void setSteeringWheelAudioControl(Boolean steeringWheelAudioControl) {
         this.steeringWheelAudioControl = steeringWheelAudioControl;
     }
 
-    public Byte getStowAndGo() {
+    public Boolean getStowAndGo() {
         return stowAndGo;
     }
 
-    public void setStowAndGo(Byte stowAndGo) {
+    public void setStowAndGo(Boolean stowAndGo) {
         this.stowAndGo = stowAndGo;
     }
 
-    public Byte getStowAndGoThirdRowOnly() {
+    public Boolean getStowAndGoThirdRowOnly() {
         return stowAndGoThirdRowOnly;
     }
 
-    public void setStowAndGoThirdRowOnly(Byte stowAndGoThirdRowOnly) {
+    public void setStowAndGoThirdRowOnly(Boolean stowAndGoThirdRowOnly) {
         this.stowAndGoThirdRowOnly = stowAndGoThirdRowOnly;
     }
 
-    public Byte getThirdRowSeat() {
+    public Boolean getThirdRowSeat() {
         return thirdRowSeat;
     }
 
-    public void setThirdRowSeat(Byte thirdRowSeat) {
+    public void setThirdRowSeat(Boolean thirdRowSeat) {
         this.thirdRowSeat = thirdRowSeat;
     }
 
-    public Byte getTiltSteering() {
+    public Boolean getTiltSteering() {
         return tiltSteering;
     }
 
-    public void setTiltSteering(Byte tiltSteering) {
+    public void setTiltSteering(Boolean tiltSteering) {
         this.tiltSteering = tiltSteering;
     }
 
-    public Byte getTintedWindows() {
+    public Boolean getTintedWindows() {
         return tintedWindows;
     }
 
-    public void setTintedWindows(Byte tintedWindows) {
+    public void setTintedWindows(Boolean tintedWindows) {
         this.tintedWindows = tintedWindows;
     }
 
-    public Byte getTirePressureMonitorSystem() {
+    public Boolean getTirePressureMonitorSystem() {
         return tirePressureMonitorSystem;
     }
 
-    public void setTirePressureMonitorSystem(Byte tirePressureMonitorSystem) {
+    public void setTirePressureMonitorSystem(Boolean tirePressureMonitorSystem) {
         this.tirePressureMonitorSystem = tirePressureMonitorSystem;
     }
 
-    public Byte getTractionControl() {
+    public Boolean getTractionControl() {
         return tractionControl;
     }
 
-    public void setTractionControl(Byte tractionControl) {
+    public void setTractionControl(Boolean tractionControl) {
         this.tractionControl = tractionControl;
     }
 
-    public Byte getTripCounter() {
+    public Boolean getTripCounter() {
         return tripCounter;
     }
 
-    public void setTripCounter(Byte tripCounter) {
+    public void setTripCounter(Boolean tripCounter) {
         this.tripCounter = tripCounter;
     }
 
-    public Byte getWoodTrimDash() {
+    public Boolean getWoodTrimDash() {
         return woodTrimDash;
     }
 
-    public void setWoodTrimDash(Byte woodTrimDash) {
+    public void setWoodTrimDash(Boolean woodTrimDash) {
         this.woodTrimDash = woodTrimDash;
     }
 
-    public Byte getWoodgrainInteriorPackage() {
+    public Boolean getWoodgrainInteriorPackage() {
         return woodgrainInteriorPackage;
     }
 
-    public void setWoodgrainInteriorPackage(Byte woodgrainInteriorPackage) {
+    public void setWoodgrainInteriorPackage(Boolean woodgrainInteriorPackage) {
         this.woodgrainInteriorPackage = woodgrainInteriorPackage;
     }
 
-    public Byte getXenonHeadlights() {
+    public Boolean getXenonHeadlights() {
         return xenonHeadlights;
     }
 
-    public void setXenonHeadlights(Byte xenonHeadlights) {
+    public void setXenonHeadlights(Boolean xenonHeadlights) {
         this.xenonHeadlights = xenonHeadlights;
     }
     

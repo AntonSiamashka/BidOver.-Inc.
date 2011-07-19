@@ -4,7 +4,7 @@ function showPreviewLot(){
     var errorMessage="";
     var errorFlag = false;
     var messageDiv = "message-div";
-    var condition = getSelectedRadioValue("cond");
+    //var condition = getSelectedRadioValue("cond");
     var sales_duration = getSelectedOptionChild("sales_duration");
     var country_code = getSelectedOptionChild("country_code");
     var atd_code = getSelectedOptionChild("atd_code");
@@ -78,23 +78,23 @@ function showPreviewLot(){
             fixed_price_only = lbl_lot_no;
         }
         table = document.createElement("table");
-        inserTr(table,lbl_cond,document.createTextNode(condition));
-        inserTr(table,lbl_sales_duration,document.createTextNode(sales_duration));
-        inserTr(table,lbl_country_code,document.createTextNode(country_code));
-        inserTr(table,lbl_atd_code,document.createTextNode(atd_code));
-        inserTr(table,lbl_location_code,document.createTextNode(location_code));
-        inserTr(table,lbl_forbid_bidding,document.createTextNode(forbid_bidding));
-        inserTr(table,lbl_fixed_price,document.createTextNode(fixed_price));
-        inserTr(table,lbl_fixed_price_only,document.createTextNode(fixed_price_only));
-        inserTr(table,lbl_qnt_items_available,document.createTextNode(qnt_items_available));
-        inserTr(table,lbl_floor_price,document.createTextNode(floor_price));
-        inserTr(table,lbl_starting_bid,document.createTextNode(starting_bid));
-        inserTr(table,lbl_currency_code,document.createTextNode(currency_code));
-        inserTr(table,lbl_pmntmethod,document.createTextNode(payment_details));
-        inserTr(table,lbl_payment_instructions,document.createTextNode(payment_instructions));
-        inserTr(table,lbl_shipping,document.createTextNode(shipping));
-        inserTr(table,lbl_handling_time,document.createTextNode(handling_time));
-        inserTr(table,lbl_description,document.createTextNode(description));
+        //inserTr(table,lbl_cond,document.createTextNode(condition));
+        inserTrIfNotEmpty(table,lbl_sales_duration,document.createTextNode(sales_duration));
+        inserTrIfNotEmpty(table,lbl_country_code,document.createTextNode(country_code));
+        inserTrIfNotEmpty(table,lbl_atd_code,document.createTextNode(atd_code));
+        inserTrIfNotEmpty(table,lbl_location_code,document.createTextNode(location_code));
+        inserTrIfNotEmpty(table,lbl_forbid_bidding,document.createTextNode(forbid_bidding));
+        inserTrIfNotEmpty(table,lbl_fixed_price,document.createTextNode(fixed_price));
+        inserTrIfNotEmpty(table,lbl_fixed_price_only,document.createTextNode(fixed_price_only));
+        inserTrIfNotEmpty(table,lbl_qnt_items_available,document.createTextNode(qnt_items_available));
+        inserTrIfNotEmpty(table,lbl_floor_price,document.createTextNode(floor_price));
+        inserTrIfNotEmpty(table,lbl_starting_bid,document.createTextNode(starting_bid));
+        inserTrIfNotEmpty(table,lbl_currency_code,document.createTextNode(currency_code));
+        inserTrIfNotEmpty(table,lbl_pmntmethod,document.createTextNode(payment_details));
+        inserTrIfNotEmpty(table,lbl_payment_instructions,document.createTextNode(payment_instructions));
+        inserTrIfNotEmpty(table,lbl_shipping,document.createTextNode(shipping));
+        inserTrIfNotEmpty(table,lbl_handling_time,document.createTextNode(handling_time));
+        inserTrIfNotEmpty(table,lbl_description,document.createTextNode(description));
     }
     return table;
 }
@@ -176,13 +176,10 @@ function getSelectedOptionChild(selectName){
     var select = document.getElementById(selectName);
     if(select!=null){
         var id = select.value;
-        var items = select.childNodes;
-        for (var I = 0 ; I < items.length ; I++) {
-            var item = items[I];
-            var value = item.getAttribute("value");
-            if(value==id){
-                child = item.firstChild.nodeValue;
-            }
+        if(id!=''){
+            child = $("#"+selectName+" option[value='"+id+"']").text();
+        } else {
+            child = '';
         }
     }
     return child;
@@ -203,6 +200,7 @@ function getSelectedRadioValue(selectName){
     }
     return value;
 }
+
 function getSelectedCheckboxValue(selectName){
     var value="";
     var radio = document.getElementsByName(selectName);
@@ -230,4 +228,15 @@ function getInputValue(name){
 function addTextInDiv(id,text){
     var div = document.getElementById(id);
     div.appendChild(document.createTextNode(text))
+}
+
+function inserTrIfNotEmpty(table,first,second){
+    if(second.nodeValue!=null && second.nodeValue!='' && second.nodeValue!=lbl_none) {
+        var num = table.rows.length;
+        var newRow = table.insertRow(num);
+        var newCell = newRow.insertCell(0);
+        newCell.innerHTML=first;
+        newCell = newRow.insertCell(1);
+        newCell.appendChild(second);
+    }
 }

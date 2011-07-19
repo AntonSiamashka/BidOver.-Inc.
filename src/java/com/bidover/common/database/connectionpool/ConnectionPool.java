@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import com.bidover.common.logger.Logger;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -92,12 +93,13 @@ public class ConnectionPool {
     }
 
     private Connection openOneConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
         Properties prop = new Properties();
-        prop.setProperty("user", "root");
-        prop.setProperty("password", "admin");
-        prop.setProperty("useUnicode", "true");
-        prop.setProperty("characterEncoding", "utf-8");
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/bidover_db", prop);
+        Class.forName(resourceBundle.getString("JDBC_DRIVER"));
+        prop.setProperty("user", resourceBundle.getString("user"));
+        prop.setProperty("password", resourceBundle.getString("password"));
+        prop.setProperty("useUnicode", resourceBundle.getString("useUnicode"));
+        prop.setProperty("characterEncoding", resourceBundle.getString("characterEncoding"));
+        return DriverManager.getConnection(resourceBundle.getString("ADDRESS_DB"), prop);
     }
 }

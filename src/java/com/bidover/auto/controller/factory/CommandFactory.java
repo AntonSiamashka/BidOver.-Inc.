@@ -4,7 +4,11 @@
  */
 package com.bidover.auto.controller.factory;
 
+import com.bidover.common.controller.command.CloseBiddingCommand;
+import com.bidover.common.controller.command.BuyNowCommand;
+import com.bidover.common.controller.command.GetHighBidCommand;
 import com.bidover.auto.controller.command.*;
+import com.bidover.common.controller.command.PlaceBidCommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,7 +25,6 @@ public class CommandFactory {
         REGISTRATION,
         ADD_AUTO,
         ADD_BUTTON_TO_ADD,
-        ADD_DAMAGE_TO_ADD,
         ADD_MAKE_TO_ADD,
         ADD_MODEL_TO_ADD,
         ADD_MODEL_TO_SEARCH,
@@ -75,9 +78,6 @@ public class CommandFactory {
                     break;
                 case ADD_BUTTON_TO_ADD:
                     command = new AddButtonToAddCommand(request, response);
-                    break;
-                case ADD_DAMAGE_TO_ADD:
-                    command = new AddDamageToAddCommand(request, response);
                     break;
                 case ADD_MAKE_TO_ADD:
                     command = new AddMakeToAddCommand(request, response);

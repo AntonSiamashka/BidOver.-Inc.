@@ -58,90 +58,89 @@ public class Damage implements Serializable {
         this.id = id;
 
         this.hood = hood;
-        this.hoodStr = intToStr(hood);
+        //this.hoodStr = intToStr(hood);
 
         this.roof = roof;
-        this.roofStr = intToStr(roof);
+        //this.roofStr = intToStr(roof);
 
 
         this.windshield = windshield;
-        this.windshieldStr = intToStr(windshield);
+        //this.windshieldStr = intToStr(windshield);
 
 
         this.lfDoor = lfDoor;
-        this.lfDoorStr = intToStr(lfDoor);
+        //this.lfDoorStr = intToStr(lfDoor);
 
         this.lrDoor = lrDoor;
-        this.lrDoorStr = intToStr(lrDoor);
+        //this.lrDoorStr = intToStr(lrDoor);
 
         this.rfDoor = rfDoor;
-        this.rfDoorStr = intToStr(rfDoor);
+        //this.rfDoorStr = intToStr(rfDoor);
 
         this.rrDoor = rrDoor;
-        this.rrDoorStr = intToStr(rrDoor);
+        //this.rrDoorStr = intToStr(rrDoor);
 
         this.lQtrPanel = lQtrPanel;
-        this.lQtrPanelStr = intToStr(lQtrPanel);
+        //this.lQtrPanelStr = intToStr(lQtrPanel);
 
         this.rQtrPanel = rQtrPanel;
-        this.rQtrPanelStr = intToStr(rQtrPanel);
+        //this.rQtrPanelStr = intToStr(rQtrPanel);
 
         this.frontBumper = frontBumper;
-        this.frontBumperStr = intToStr(frontBumper);
+        //this.frontBumperStr = intToStr(frontBumper);
 
         this.rearBumper = rearBumper;
-        this.rearBumperStr = intToStr(rearBumper);
+        //this.rearBumperStr = intToStr(rearBumper);
 
         this.lfFender = lfFender;
-        this.lfFenderStr = intToStr(lfFender);
+        //this.lfFenderStr = intToStr(lfFender);
 
         this.rfFender = rfFender;
-        this.rfFenderStr = intToStr(rfFender);
+        //this.rfFenderStr = intToStr(rfFender);
 
         this.deckLid = deckLid;
-        this.deckLidStr = intToStr(deckLid);
+        //this.deckLidStr = intToStr(deckLid);
 
         this.seats = seats;
-        this.seatsStr = intToStr(seats);
+        //this.seatsStr = intToStr(seats);
 
         this.overallVehicle = overallVehicle;
-        this.overallVehicleStr = intToStr(overallVehicle);
+        //this.overallVehicleStr = intToStr(overallVehicle);
     }
 
-    public String intToStr(Integer i) {
-        switch (i) {
-            case 1:
-                return "Chipped";
-            case 2:
-                return "Scratched";
-            case 3:
-                return "Scratch Heavy";
-            case 4:
-                return "Mult Scratches/Light";
-            case 5:
-                return " Worn";
-            case 6:
-                return "Torn";
-            case 7:
-                return "Stained";
-            case 8:
-                return "Dent";
-            case 9:
-                return "Dent/No Paint Dmg";
-            case 10:
-                return "Dent/Paint Dmg";
-            case 11:
-                return "Dirty";
-            case 12:
-                return "After Market";
-            default:
-                return "unknown";
-
-        }
-
-
-
-    }
+//    public String intToStr(Integer i) {
+//        if (i != null) {
+//            switch (i) {
+//                case 1:
+//                    return "Chipped";
+//                case 2:
+//                    return "Scratched";
+//                case 3:
+//                    return "Scratch Heavy";
+//                case 4:
+//                    return "Mult Scratches/Light";
+//                case 5:
+//                    return " Worn";
+//                case 6:
+//                    return "Torn";
+//                case 7:
+//                    return "Stained";
+//                case 8:
+//                    return "Dent";
+//                case 9:
+//                    return "Dent/No Paint Dmg";
+//                case 10:
+//                    return "Dent/Paint Dmg";
+//                case 11:
+//                    return "Dirty";
+//                case 12:
+//                    return "After Market";
+//                default:
+//                    return "Not specified";
+//            }
+//        }
+//        return "Not specified";
+//    }
 
     public String getDeckLidStr() {
         return deckLidStr;
@@ -221,7 +220,7 @@ public class Damage implements Serializable {
 
     public void setrQtrPanel(Integer rQtrPanel) {
         this.rQtrPanel = rQtrPanel;
-        this.rQtrPanelStr = intToStr(rQtrPanel);
+        //this.rQtrPanelStr = intToStr(rQtrPanel);
     }
 
     public String getrQtrPanelStr() {
@@ -301,7 +300,7 @@ public class Damage implements Serializable {
     }
 
     public void setHood(Integer hood) {
-        this.hoodStr = intToStr(hood);
+        //this.hoodStr = intToStr(hood);
         this.hood = hood;
     }
 
@@ -310,7 +309,7 @@ public class Damage implements Serializable {
     }
 
     public void setRoof(Integer roof) {
-        this.roofStr = intToStr(roof);
+        //this.roofStr = intToStr(roof);
         this.roof = roof;
     }
 
@@ -319,7 +318,7 @@ public class Damage implements Serializable {
     }
 
     public void setWindshield(Integer windshield) {
-        this.windshieldStr = intToStr(windshield);
+        //this.windshieldStr = intToStr(windshield);
         this.windshield = windshield;
     }
 
@@ -328,7 +327,7 @@ public class Damage implements Serializable {
     }
 
     public void setLfDoor(Integer lfDoor) {
-        this.lfDoorStr = intToStr(lfDoor);
+        //this.lfDoorStr = intToStr(lfDoor);
         this.lfDoor = lfDoor;
     }
 
@@ -337,7 +336,7 @@ public class Damage implements Serializable {
     }
 
     public void setLrDoor(Integer lrDoor) {
-        this.lrDoorStr = intToStr(lrDoor);
+        //this.lrDoorStr = intToStr(lrDoor);
         this.lrDoor = lrDoor;
     }
 
@@ -346,7 +345,7 @@ public class Damage implements Serializable {
     }
 
     public void setRfDoor(Integer rfDoor) {
-        this.rfDoorStr = intToStr(rfDoor);
+        //this.rfDoorStr = intToStr(rfDoor);
         this.rfDoor = rfDoor;
     }
 
@@ -355,7 +354,7 @@ public class Damage implements Serializable {
     }
 
     public void setRrDoor(Integer rrDoor) {
-        this.rrDoorStr = intToStr(rrDoor);
+        //this.rrDoorStr = intToStr(rrDoor);
         this.rrDoor = rrDoor;
     }
 
@@ -364,7 +363,7 @@ public class Damage implements Serializable {
     }
 
     public void setLQtrPanel(Integer lQtrPanel) {
-        this.lQtrPanelStr = intToStr(lQtrPanel);
+        //this.lQtrPanelStr = intToStr(lQtrPanel);
         this.lQtrPanel = lQtrPanel;
     }
 
@@ -373,7 +372,7 @@ public class Damage implements Serializable {
     }
 
     public void setRQtrPanel(Integer rQtrPanel) {
-        this.rQtrPanelStr = intToStr(rQtrPanel);
+        //this.rQtrPanelStr = intToStr(rQtrPanel);
         this.rQtrPanel = rQtrPanel;
     }
 
@@ -382,7 +381,7 @@ public class Damage implements Serializable {
     }
 
     public void setFrontBumper(Integer frontBumper) {
-        this.frontBumperStr = intToStr(frontBumper);
+        //this.frontBumperStr = intToStr(frontBumper);
         this.frontBumper = frontBumper;
     }
 
@@ -391,7 +390,7 @@ public class Damage implements Serializable {
     }
 
     public void setRearBumper(Integer rearBumper) {
-        this.rearBumperStr = intToStr(rearBumper);
+        //this.rearBumperStr = intToStr(rearBumper);
         this.rearBumper = rearBumper;
     }
 
@@ -400,7 +399,7 @@ public class Damage implements Serializable {
     }
 
     public void setLfFender(Integer lfFender) {
-        this.lfFenderStr = intToStr(lfFender);
+        //this.lfFenderStr = intToStr(lfFender);
         this.lfFender = lfFender;
     }
 
@@ -409,7 +408,7 @@ public class Damage implements Serializable {
     }
 
     public void setRfFender(Integer rfFender) {
-        this.rfFenderStr = intToStr(rfFender);
+        //this.rfFenderStr = intToStr(rfFender);
         this.rfFender = rfFender;
     }
 
@@ -418,7 +417,7 @@ public class Damage implements Serializable {
     }
 
     public void setDeckLid(Integer deckLid) {
-        this.deckLidStr = intToStr(deckLid);
+        //this.deckLidStr = intToStr(deckLid);
         this.deckLid = deckLid;
     }
 
@@ -427,7 +426,7 @@ public class Damage implements Serializable {
     }
 
     public void setSeats(Integer seats) {
-        this.seatsStr = intToStr(seats);
+        //this.seatsStr = intToStr(seats);
         this.seats = seats;
     }
 
@@ -436,7 +435,7 @@ public class Damage implements Serializable {
     }
 
     public void setOverallVehicle(Integer overallVehicle) {
-        this.overallVehicleStr = intToStr(overallVehicle);
+        //this.overallVehicleStr = intToStr(overallVehicle);
         this.overallVehicle = overallVehicle;
     }
 

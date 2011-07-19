@@ -44,7 +44,7 @@ public class RemindPasswordCommand implements ICommand {
                     System.out.println(mailMessage);
                     MailSender mailSender = new MailSender();
                     mailSender.sendMail(email, "123", "Bidover.com", "Bidover registration", mailMessage);
-                    requestDispatcher = request.getRequestDispatcher("/login.jsp");
+                    requestDispatcher = request.getRequestDispatcher("/fm.login.jsp");
                 }
             }
         } catch (ClassNotFoundException ex) {

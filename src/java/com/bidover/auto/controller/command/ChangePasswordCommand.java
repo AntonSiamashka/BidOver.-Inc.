@@ -30,23 +30,19 @@ public class ChangePasswordCommand implements ICommand {
 
     public void execute() throws ServletException, IOException {
         boolean flag = false;
-        try {
-            User profile = (User) request.getSession().getAttribute("profile");
-            String password = (String) request.getParameter("password");
-            String repeat = (String) request.getParameter("repeat");
-            UserDAO userDAO = new UserDAO();
-            if (password != null && repeat != null && !"".equals(password) && !"".equals(repeat)) {
-                if (password.equals(repeat)) {
-                    String newPassword = userDAO.changePassword(password, profile.getId());
-                    if (newPassword != null) {
-                        profile.setPassword(newPassword);
-                        response.sendRedirect("profile.jsp");
-                        flag = true;
-                    }
+        User profile = (User) request.getSession().getAttribute("profile");
+        String password = (String) request.getParameter("password");
+        String repeat = (String) request.getParameter("repeat");
+        UserDAO userDAO = new UserDAO();
+        if (password != null && repeat != null && !"".equals(password) && !"".equals(repeat)) {
+            if (password.equals(repeat)) {
+                String newPassword = userDAO.changePassword(password, profile.getId());
+                if (newPassword != null) {
+                    profile.setPassword(newPassword);
+                    response.sendRedirect("profile.jsp");
+                    flag = true;
                 }
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ChangePasswordCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (!flag) {
             response.sendRedirect("passwordChanger.jsp");
