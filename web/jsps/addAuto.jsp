@@ -74,7 +74,7 @@
             <tr><td colspan="3">&nbsp;</td></tr>
         </table>
 
-        <form name="add_form" method="POST" action="Controller?command=add_auto">
+        <form name="add_form" method="POST" action="Controller.do?command=add_auto">
             <div id="add_form" style="display:block">
                 <div id="status" style = "visibility:hidden;">
                     <img name ="status"  src="images/bo.progress_bar.gif" width="109" height="17" alt="bo.progress_bar"/>

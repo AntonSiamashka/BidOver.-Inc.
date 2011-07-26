@@ -22,6 +22,7 @@ import com.bidover.auto.database.dao.ModelDAO;
 import com.bidover.auto.database.dao.ModificationDAO;
 import com.bidover.auto.model.bean.Characteristics;
 import com.bidover.auto.model.bean.CountryAssembly;
+import com.bidover.common.constants.CommonConstants;
 import com.bidover.common.controller.command.AddLotCommand;
 import com.bidover.common.upload.FileIOSet;
 import com.bidover.util.IntegerUtil;
@@ -491,6 +492,8 @@ public class AddAutoCommand implements ICommand {
             auto.setYear(IntegerUtil.parseString(yearTxt));
             //auto.setTrim(trim);
             auto.setDamage(damage);
+            auto.setTitle(characteristics.getMake() + ", " + characteristics.getModel() + ", " + characteristics.getModification());
+            auto.setLotType(CommonConstants.AUTO_LOT_TYPE);
             AddLotCommand addLotCommand = new AddLotCommand();
             addLotCommand.addLot(request, response, auto);
             AutoDAO autoDAO = new AutoDAO();
@@ -520,7 +523,6 @@ public class AddAutoCommand implements ICommand {
         //       }
         } catch (NumberFormatException ex) {
             response.sendRedirect("./addAuto.jsp");
-        //request.getRequestDispatcher("Controller?command=SHOW_SEARCH").forward(request, response);
         }
     }
 }

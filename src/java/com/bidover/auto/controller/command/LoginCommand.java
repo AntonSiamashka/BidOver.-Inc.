@@ -1,8 +1,9 @@
-
 package com.bidover.auto.controller.command;
 
 import com.bidover.common.database.dao.UserDAO;
 import com.bidover.common.model.bean.User;
+import com.bidover.common.service.auth.DaoAuthenticationProvider;
+import com.bidover.util.SpringContextUtil;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,34 +23,24 @@ public class LoginCommand implements ICommand {
     }
 
     public void execute() throws ServletException, IOException {
-    try {
-            UserDAO ud = null;
-            User user = null;
+        try {
+//            DaoAuthenticationProvider authenticationProvider = (DaoAuthenticationProvider) SpringContextUtil.getService(DaoAuthenticationProvider.class, request.getServletContext());
+            HttpSession session = request.getSession();
+            
+            User user = (User) session.getAttribute("profile");
             request.setCharacterEncoding("UTF8");
             response.setCharacterEncoding("UTF8");
-            String email = request.getParameter("j_username");
-            String password = request.getParameter("j_password");
             String result = "{'status':0, 'message':'ERROR'}";
-            ud = new UserDAO();
-            user = ud.getUserByEmailAndPassword(email, password);
             if (user == null) {
                 result = "{'status':-1, 'message':'Wrong login+password combination!'}";
             } else {
-                HttpSession session = request.getSession();
                 session.setAttribute("status", user.getStatus());
-                session.setAttribute("profile", user);
-                result = "{'status':"+user.getStatus()+"}";
+                result = "{'status':" + user.getStatus() + "}";
             }
             System.out.println(result);
             response.getWriter().write(result);
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
-             response.getWriter().close();
+        } finally {
+            response.getWriter().close();
         }
 
     }

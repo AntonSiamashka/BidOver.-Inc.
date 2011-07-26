@@ -25,6 +25,6 @@ public class LogoutCommand implements ICommand {
 
     public void execute() throws ServletException, IOException {
         request.getSession().invalidate();
-        response.sendRedirect("Controller");
+        response.sendRedirect("Controller.do");
     }
 }

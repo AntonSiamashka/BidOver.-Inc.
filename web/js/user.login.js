@@ -10,11 +10,11 @@ function getUserPass() {
 function getUserLoginInfo() {
 	document.getElementById("progress_indicator").style.visibility = 'visible';
 	createRequest();
-	var url = "Controller";
+	var url = "performLogin.do";
 	request.open("POST", url, true);
 	request.onreadystatechange = updateLoginPage;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	request.send( "command=LOGIN&j_username="+encodeURIComponent(getUserEmail())+"&j_password="+encodeURIComponent(getUserPass()) );
+	request.send( "username="+encodeURIComponent(getUserEmail())+"&password="+encodeURIComponent(getUserPass()) );
 }
 
 function updateLoginPage() {
@@ -24,7 +24,7 @@ function updateLoginPage() {
             if (jsonData.status == 1){
                 window.location = "cp.jsp";
             } else if (jsonData.status == 0) {
-                window.location = "Controller?command=REGISTRATION";
+                window.location = "Controller.do?command=REGISTRATION";
             } else {
                 replaceText(document.getElementById("msg"), jsonData.message);
             }

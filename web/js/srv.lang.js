@@ -1,7 +1,7 @@
 
 function setLang(lng) {
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 	request.open("POST", url, true);
 	request.onreadystatechange = updateLang;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

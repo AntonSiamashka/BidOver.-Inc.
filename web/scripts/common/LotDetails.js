@@ -1,6 +1,6 @@
 function getSalesDetails(){
     createRequest();
-    var url = "Controller";
+    var url = "Controller.do";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateSalesDetailsList;

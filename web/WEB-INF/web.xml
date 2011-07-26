@@ -44,7 +44,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>Controller</welcome-file>
+        <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>Controller</servlet-name>
@@ -52,8 +52,9 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/Controller</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>cp</servlet-name>
         <jsp-file>/jsps/cp.jsp</jsp-file>
@@ -118,12 +119,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>auto</servlet-name>
-        <jsp-file>/jsps/auto.jsp</jsp-file>
+        <servlet-name>lot</servlet-name>
+        <jsp-file>/jsps/lot.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>auto</servlet-name>
-        <url-pattern>/auto.jsp</url-pattern>
+        <servlet-name>lot</servlet-name>
+        <url-pattern>/lot.jsp</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>userInfo</servlet-name>
@@ -134,12 +135,12 @@
         <url-pattern>/userInfo.jsp</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>userAuto</servlet-name>
-        <jsp-file>/jsps/userAuto.jsp</jsp-file>
+        <servlet-name>userLots</servlet-name>
+        <jsp-file>/jsps/userLots.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>userAuto</servlet-name>
-        <url-pattern>/userAuto.jsp</url-pattern>
+        <servlet-name>userLots</servlet-name>
+        <url-pattern>/userLots.jsp</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>passwordReminder</servlet-name>
@@ -158,20 +159,12 @@
         <url-pattern>/passwordChanger.jsp</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>autoView</servlet-name>
-        <jsp-file>/jsps/autoView.jspf</jsp-file>
+        <servlet-name>lotPreview</servlet-name>
+        <jsp-file>/jsps/lotPreview.jspf</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>autoView</servlet-name>
-        <url-pattern>/autoView.jspf</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>autoPreview</servlet-name>
-        <jsp-file>/jsps/autoPreview.jspf</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>autoPreview</servlet-name>
-        <url-pattern>/autoPreview.jspf</url-pattern>
+        <servlet-name>lotPreview</servlet-name>
+        <url-pattern>/lotPreview.jspf</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>addImage</servlet-name>

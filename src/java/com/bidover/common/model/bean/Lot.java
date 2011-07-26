@@ -38,7 +38,9 @@ public class Lot implements Serializable {
     private boolean isLastHour;
     private boolean isFloorPriceReached;
     private boolean isCountDownStart;
-
+    private String title;
+    private Integer lotType;
+    
     public Lot() {
     }
 
@@ -311,6 +313,24 @@ public class Lot implements Serializable {
     }
 
     
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getLotType() {
+        return lotType;
+    }
+
+    public void setLotType(Integer lotType) {
+        this.lotType = lotType;
+    }
+    
+    
+    
     /*
 
     public Date getLotAddDateFormated() {
@@ -376,4 +396,7 @@ public class Lot implements Serializable {
     public String toString() {
         return "bidoverdb.bean.Lot[id=" + id + "]";
     }
+
+    
+    
 }

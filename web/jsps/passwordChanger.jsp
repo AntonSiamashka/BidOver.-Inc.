@@ -27,7 +27,7 @@
     </head>
     <body>
         <center>
-            <form action="Controller?command=CHANGE_PASSWORD" method=POST>
+            <form action="Controller.do?command=CHANGE_PASSWORD" method=POST>
                 <table id = "t_registration">
                     <tr>
                         <td>Ваш password:</td>

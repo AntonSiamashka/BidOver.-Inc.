@@ -4,11 +4,13 @@
  */
 package com.bidover.auto.controller.factory;
 
+import com.bidover.common.controller.command.ShowUserLotsCommand;
 import com.bidover.common.controller.command.CloseBiddingCommand;
 import com.bidover.common.controller.command.BuyNowCommand;
 import com.bidover.common.controller.command.GetHighBidCommand;
 import com.bidover.auto.controller.command.*;
 import com.bidover.common.controller.command.PlaceBidCommand;
+import com.bidover.common.controller.command.ShowLotViewCommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CommandFactory {
 
     public enum Commands {
+
         CHG_LNG,
         SIGNUP,
         LOGIN,
@@ -39,8 +42,8 @@ public class CommandFactory {
         LOG_OUT,
         SEARCH,
         SHOW_AUTO_BY_MAKE,
-        SHOW_AUTO_BY_USER,
-        SHOW_AUTO_VIEW,
+        SHOWUSERLOTS,
+        VIEWLOT,
         SHOW_SEARCH,
         REMIND_PASSWORD,
         CHANGE_PASSWORD,
@@ -53,10 +56,19 @@ public class CommandFactory {
         CLOSE_BIDDING,
         HELP;
     }
- 
+
     public static ICommand createCommand(HttpServletRequest request, HttpServletResponse response) {
         ICommand command = null;
-        String commandStr = (String) request.getParameter("command");
+        String uri = request.getRequestURI();
+        String commandStr = "";
+        int start = uri.indexOf(request.getContextPath()) + request.getContextPath().length() + 1;
+        int end = uri.indexOf(".do");
+        if (start >= 0 && end > start) {
+            commandStr = uri.substring(start, end);
+        }
+        if ("Controller".equals(commandStr)) {
+            commandStr = (String) request.getParameter("command");
+        }
         Commands commandEnum;
         try {
             commandEnum = Commands.valueOf(commandStr.toUpperCase());
@@ -121,11 +133,11 @@ public class CommandFactory {
                 case SHOW_AUTO_BY_MAKE:
                     command = new ShowAutoByMakeCommand(request, response);
                     break;
-                case SHOW_AUTO_BY_USER:
-                    command = new ShowAutoByUserCommand(request, response);
+                case SHOWUSERLOTS:
+                    command = new ShowUserLotsCommand(request, response);
                     break;
-                case SHOW_AUTO_VIEW:
-                    command = new ShowAutoViewCommand(request, response);
+                case VIEWLOT:
+                    command = new ShowLotViewCommand(request, response);
                     break;
                 case SHOW_SEARCH:
                     command = new ShowSearchCommand(request, response);
@@ -151,10 +163,10 @@ public class CommandFactory {
                 case GET_HIGH_BID:
                     command = new GetHighBidCommand(request, response);
                     break;
-               case BUY_NOW:
+                case BUY_NOW:
                     command = new BuyNowCommand(request, response);
                     break;
-               case CLOSE_BIDDING:
+                case CLOSE_BIDDING:
                     command = new CloseBiddingCommand(request, response);
                     break;
                 case HELP:

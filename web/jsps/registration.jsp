@@ -7,7 +7,7 @@
         <script src = "scripts/isMailExist.js" type = "text/javascript"> </script>
     </head>
     <body>
-        <form action="Controller?command=registrator" method=POST>
+        <form action="Controller.do?command=registrator" method=POST>
             <center>
                 Enter information about You, please
             </center>

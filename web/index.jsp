@@ -42,20 +42,26 @@
     <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
     </c:if>
     <c:if test="${status!=2}">
-    <div>
-    <table>
-    <tr><td><p class="greeting"><fmt:message key="lbl.welcometo" />&nbsp;bidOver!</p></td></tr>
-    <tr><td align="right"><span><a href="./fm.login.jsp"><fmt:message key="btn.signin" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="lbl.firstvisit" />&nbsp;bidOver?&nbsp;&nbsp;<a href="fm.signup.jsp"><fmt:message key="btn.register" /></a>.<br><fmt:message key="lbl.freereg" /></span></td></tr>
-	</table>
-	</div>
-	</c:if>
+        <div>
+            <table>
+                <tr>
+                    <td><p class="greeting"><fmt:message key="lbl.welcometo" />&nbsp;bidOver!</p></td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <%@include file="jsps/logout.jspf" %>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </c:if>
     <table width="100%" style="border-top: 1px solid #444">
     <tr><td>
 	    <table><tr><td><div class="title"><fmt:message key="lbl.categories" /></div></td><td valign="top">&nbsp;&nbsp;|&nbsp;<a href="#" class="small"><fmt:message key="btn.allcategories" /></a></td></tr></table>
         <br>
         <table cellpadding="10" cellspacing="10">
             <tr>
-                <td valign="top" width="50%"><div><a href="Controller?command=SHOW_SEARCH">Vehicles</a></div><div><a href="DetailController?command=SEARCH_DETAIL">Spare Parts</a></div><div><a href="tiresIndex.jsp">Wheels & Tyres</a></div></td>
+                <td valign="top" width="50%"><div><a href="Controller.do?command=SHOW_SEARCH">Vehicles</a></div><div><a href="DetailController.do?command=SEARCH_DETAIL">Spare Parts</a></div><div><a href="tiresIndex.jsp">Wheels & Tyres</a></div></td>
                 <td valign="top" width="50%"><div>Batteries</div><div>Automotive fluids and greases</div><div>Car care products</div></td>
             </tr>
         </table>

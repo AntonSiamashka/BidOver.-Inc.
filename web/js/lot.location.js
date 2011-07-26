@@ -7,7 +7,7 @@ function getATDCode() {
 function processATD() {
 	document.getElementById("progress_indicator_country").style.visibility = 'visible';
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 	
 	request.open("POST", url, true);
 	request.onreadystatechange = updateATD;
@@ -29,7 +29,7 @@ function updateATD() {
 function processLocation() {
 	document.getElementById("progress_indicator_atd").style.visibility = 'visible';
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 	
 	request.open("POST", url, true);
 	request.onreadystatechange = updateLocation;

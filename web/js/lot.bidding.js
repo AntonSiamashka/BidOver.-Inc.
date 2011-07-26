@@ -26,7 +26,7 @@ function placeBid() {
 	replaceText(document.getElementById("msg"), '');
 	createRequest();
 
-	var url = "Controller";
+	var url = "Controller.do";
 	request.open("POST", url, true);
 	request.onreadystatechange = updatePlaceBidPage;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -49,7 +49,7 @@ function updatePlaceBidPage() {
 // --------------------------------
 function getHighBid() {
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 	request.open("POST", url, true);
 	request.onreadystatechange = updateHighBidPage;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -81,7 +81,7 @@ function updateHighBidPage() {
 // --------------------------------
 function lotBuyNow() {
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 
 	request.open("POST", url, true);
 	request.onreadystatechange = updateBuyNowPage;
@@ -109,7 +109,7 @@ function updateBuyNowPage() {
 // --------------------------------
 function closeBidding(lotId) {
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 	request.open("POST", url, true);
 	request.onreadystatechange = updateCloseBidding;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

@@ -1,0 +1,14 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="isAnonymous()">
+    <span>
+        <a href="./fm.login.jsp"><fmt:message key="btn.signin" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <fmt:message key="lbl.firstvisit" />&nbsp;bidOver?&nbsp;&nbsp;
+        <a href="fm.signup.jsp"><fmt:message key="btn.register" /></a>.<br><fmt:message key="lbl.freereg" />
+    </span>
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_USER')">
+    <span>
+        <a href="./cp.jsp"><fmt:message key="lbl.aft.profile" /></a>
+    </span>
+</sec:authorize>

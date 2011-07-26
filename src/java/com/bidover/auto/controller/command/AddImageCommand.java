@@ -92,7 +92,7 @@ public class AddImageCommand implements ICommand {
         }
 
         //перенаправляем на страницу с уведомлением о успешной загрузке файлов
-        response.sendRedirect("Controller?command=SHOW_AUTO_BY_USER");
+        response.sendRedirect("Controller.do?command=SHOW_AUTO_BY_USER");
         //request.getRequestDispatcher("/profile.jsp").forward(request, response);
     }
 

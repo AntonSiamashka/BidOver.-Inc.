@@ -16,7 +16,7 @@
     <body>
         <center>
             <h2>What do You want to add?</h2><hr/>
-           <p> <a href="Controller?command=ADD_MAKE_TO_ADD">add autos</a></p>
+           <p> <a href="Controller.do?command=ADD_MAKE_TO_ADD">add autos</a></p>
            <a href="DetailController?command=ADD_DETAIL">add details</a>
            <p> <a href="TiresController?command=ADD_TIRES">add tires</a></p>
            <p> <a href="TiresController?command=ADD_WHEELS">add wheels</a></p>

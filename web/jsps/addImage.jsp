@@ -14,10 +14,10 @@
     </head>
     <body>
         <%String id = request.getParameter("id");%>
-        <form action="Controller?command=ADD_IMAGE&id=<%=id%>" method="post" enctype="multipart/form-data">
+        <form action="Controller.do?command=ADD_IMAGE&id=<%=id%>" method="post" enctype="multipart/form-data">
             <input name="data" type="file"><br>
             <input type="submit"><br>
         </form>
-        <a href="Controller?command=SHOW_AUTO_BY_USER">Show My Autos</a>
+        <a href="Controller.do?command=SHOW_AUTO_BY_USER">Show My Autos</a>
     </body>
 </html>

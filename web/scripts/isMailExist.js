@@ -23,7 +23,7 @@ function isExists(){
     var email = document.getElementById("e-mail");
     var emailStr = email.value;
     createRequest();
-    var url = "Controller?command=IS_MAIL_EXISTS";
+    var url = "Controller.do?command=IS_MAIL_EXISTS";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateRemind;

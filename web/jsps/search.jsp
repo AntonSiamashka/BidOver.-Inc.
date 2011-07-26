@@ -19,7 +19,7 @@
                 <td width="38%" valign="top">
                     <span class="logo">bid<span style="color: #600">Over</span></span>
                     <p class="logounderline">on-line auctions</p>
-                    <c:if test="${status==2}"><p class="small"><fmt:message key="lbl.goto" /> <a href="./cp.jsp"><fmt:message key="btn.ctrlpanel" /></a> <fmt:message key="lbl.or" /> <a type="submit" href="Controller?command=LOG_OUT"><fmt:message key="btn.logout" /></a></p></c:if>
+                    <c:if test="${status==2}"><p class="small"><fmt:message key="lbl.goto" /> <a href="./cp.jsp"><fmt:message key="btn.ctrlpanel" /></a> <fmt:message key="lbl.or" /> <a type="submit" href="Controller.do?command=LOG_OUT"><fmt:message key="btn.logout" /></a></p></c:if>
                     <c:if test="${status!=2}"><p class="small"><fmt:message key="lbl.welcome" /> <a href="./login.jsp"><fmt:message key="btn.signin" /></a> <fmt:message key="lbl.or" /> <a href="registration.jsp"><fmt:message key="btn.register" /></a></p></c:if>
                 </td>
                 <td valign="top">
@@ -47,7 +47,7 @@
         </table>
         <p>&nbsp;</p>
         <!-- END OF TITLE -->
-        <form action="Controller?command=SEARCH" method="POST">
+        <form action="Controller.do?command=SEARCH" method="POST">
             <div id="search_bar">
                 <table id="auto-table" cellpadding="5">
                     <tr>

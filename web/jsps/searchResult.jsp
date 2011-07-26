@@ -24,7 +24,7 @@
     <td width="38%" valign="top">
         <span class="logo">bid<span style="color: #600">Over</span></span>
         <p class="logounderline">on-line auctions</p>
-        <c:if test="${status==2}"><p class="small"><fmt:message key="lbl.goto" /> <a href="./cp.jsp"><fmt:message key="btn.ctrlpanel" /></a> <fmt:message key="lbl.or" /> <a type="submit" href="Controller?command=LOG_OUT"><fmt:message key="btn.logout" /></a></p></c:if>
+        <c:if test="${status==2}"><p class="small"><fmt:message key="lbl.goto" /> <a href="./cp.jsp"><fmt:message key="btn.ctrlpanel" /></a> <fmt:message key="lbl.or" /> <a type="submit" href="Controller.do?command=LOG_OUT"><fmt:message key="btn.logout" /></a></p></c:if>
         <c:if test="${status!=2}"><p class="small"><fmt:message key="lbl.welcome" /> <a href="./login.jsp"><fmt:message key="btn.signin" /></a> <fmt:message key="lbl.or" /> <a href="registration.jsp"><fmt:message key="btn.register" /></a></p></c:if>
     </td>
     <td valign="top">
@@ -42,7 +42,7 @@
 		<td valign="top">
 			<table style="border-top: 1px solid #444">
 			<tr><td><img src="css/bo.home.024x024.png" border="0" alt=""></td><td valign="middle"><a href="index.jsp" class="small"><fmt:message key="btn.home" /></a></td></tr>
-			<tr><td><img src="css/bo.search.024x024.png" border="0" alt=""></td><td valign="middle"><a href="Controller?command=SHOW_SEARCH" class="small"><fmt:message key="btn.newsearch" /></a></td></tr>
+			<tr><td><img src="css/bo.search.024x024.png" border="0" alt=""></td><td valign="middle"><a href="Controller.do?command=SHOW_SEARCH" class="small"><fmt:message key="btn.newsearch" /></a></td></tr>
 			</table>
 		</td>
         </tr>
@@ -55,7 +55,7 @@
                         <c:if test="${not empty makes}">
                             <c:forEach var="make" items="${makes}">
                                 <ul>
-                                    <li><a href="Controller?command=SHOW_AUTO_BY_MAKE&make_id=${make.id}">${make.title}</a></li>
+                                    <li><a href="Controller.do?command=SHOW_AUTO_BY_MAKE&make_id=${make.id}">${make.title}</a></li>
                                 </ul>
                             </c:forEach>
                         </c:if>
@@ -69,7 +69,7 @@
                         <td width="20%"><fmt:message key="lbl.currenthighbid" /></td>
                         <td width="20%"><fmt:message key="lbl.timeleft" /></td>
                      </tr></thead>
-                     <%@include file="autoPreview.jspf" %>
+                     <%@include file="lotPreview.jspf" %>
                     </table>
                 </td>
             </tr>

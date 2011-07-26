@@ -8,6 +8,7 @@ import com.bidover.common.logger.Logger;
 import com.bidover.common.model.bean.Lot;
 import com.bidover.common.model.bean.User;
 import com.bidover.util.DateSets;
+import com.bidover.util.IntegerUtil;
 import com.bidover.util.UtilSets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +58,8 @@ public abstract class BaseLotDAO<L extends Lot> extends BaseDAO {
                     ", paid_shipping='" + lot.getPaidShipping() + "'" +
                     ", handling_time=" + lot.getHandlingTime() +
                     ", qnt_items_available=" + lot.getItemsQnt() +
+                    ", title=" + lot.getTitle() +
+                    ", lotType=" + lot.getLotType() +
                     ", description='" + lot.getDescription() + "'";
             connection = connectionPool.getConnection();
             peparedStatement = (PreparedStatement) connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -78,6 +81,8 @@ public abstract class BaseLotDAO<L extends Lot> extends BaseDAO {
 
         return generatedId;
     }
+    
+    public abstract L findLotById(Integer lotId);
     
     public L createLot(ResultSet resultSet) throws SQLException {
         L lot = createNewInstance();
@@ -102,6 +107,8 @@ public abstract class BaseLotDAO<L extends Lot> extends BaseDAO {
         String shipCost = resultSet.getString("lot.shipping_cost");
         String currency = resultSet.getString("lot.currency_code");
         String status = resultSet.getString("lot.status");
+        String title = resultSet.getString("lot.title");
+        String lotType = resultSet.getString("lot.lotType");
 
         User seller = new User();
         lot.setSellerId(seller);
@@ -116,7 +123,8 @@ public abstract class BaseLotDAO<L extends Lot> extends BaseDAO {
         lot.setShippingCost(Double.parseDouble(shipCost));
         lot.setCurrency(currency);
         lot.setStatus(Byte.valueOf(status));
-
+        lot.setTitle(title);
+        lot.setLotType(IntegerUtil.parseString(lotType));
         //ConditionDAO conditionDAO = new ConditionDAO();
         //lot.setCondition(conditionDAO.createCondition(resultSet));
 

@@ -15,7 +15,7 @@
     </head>
     <body>
         <center>
-            <form action="Controller?command=remind_password" method=POST>
+            <form action="Controller.do?command=remind_password" method=POST>
                 <center>
                     Enter your e-mail
                 </center>

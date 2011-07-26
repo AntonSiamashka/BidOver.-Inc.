@@ -111,7 +111,7 @@ public class AutoDAO extends BaseLotDAO<Auto> {
     }
     return updFlag;
     }*/
-    public Auto findById(Integer id) {
+    public Auto findLotById(Integer id) {
         Auto auto = null;
         if (id != null) {
             try {

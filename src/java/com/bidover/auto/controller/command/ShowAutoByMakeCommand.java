@@ -36,6 +36,6 @@ public class ShowAutoByMakeCommand implements ICommand {
         AutoDAO autoDAO = new AutoDAO();
         List<Auto> autos = autoDAO.findPreview(auto);
         request.setAttribute("autos", autos);
-        request.getRequestDispatcher("Controller?command=").forward(request, response);
+        request.getRequestDispatcher("Controller.do?command=").forward(request, response);
     }
 }

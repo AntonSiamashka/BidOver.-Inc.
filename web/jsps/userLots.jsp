@@ -33,7 +33,7 @@
     <body>
     <%@include file="header.jspf" %>
     
-    <c:if test="${not empty autos}">
+    <c:if test="${not empty lots}">
         <table id="auto-table" cellpadding="5" cellspacing="1" class="stripeT">
         <thead><tr align="center">
             <td width="10%"><fmt:message key="lbl.photo" /></td>
@@ -41,23 +41,26 @@
             <td width="20%"><fmt:message key="lbl.currenthighbid" /></td>
             <td width="20%"><fmt:message key="lbl.timeleft" /></td>
         </tr></thead>
-        <c:forEach var="auto" items="${autos}">
+        <c:forEach var="lot" items="${lots}">
             <tr>
-            <td align="center"><a href="images/pics/${auto.id}/${auto.id}_1_.jpg" rel="lightbox" title=""><img src="images/pics/${auto.id}/${auto.id}_1_small.jpg" width="100" height="100" alt="" border="0"/></a></td>
+            <td align="center"><a href="images/pics/${lot.id}/${lot.id}_1_.jpg" rel="lightbox" title=""><img src="images/pics/${lot.id}/${lot.id}_1_small.jpg" width="100" height="100" alt="" border="0"/></a></td>
             <td valign="top">
-                <a href="Controller?command=SHOW_AUTO_VIEW&auto_id=${auto.id}"><c:out value="${auto.year} ${auto.characteristics.make} ${auto.characteristics.model}"></c:out></a>
-                <div><c:out value="Door: ${auto.doors.title}, Engine: ${auto.engine.title}, Transmission: ${auto.transmission.title}, Interior type: ${auto.interiorType.title}, Tires: ${auto.idTires.title}, Odometer: ${auto.odometer}"></c:out></div>
+                <a href="viewLot.do?lotId=${lot.id}&lotType=${lot.lotType}"><c:out value="${lot.title}"></c:out></a>
             </td>
             <td valign="top" align="center"> x </td>
             <td valign="top" align="center">
-                <c:if test="${auto.isBiddingClosed}"><span class="err">Sales Closed!</span></c:if>
-                <c:if test="${!auto.isBiddingClosed}"><span id="TimeLeft">${auto.formattedTimeLeft}</span></c:if>
+                <c:if test="${lot.isBiddingClosed}"><span class="err">Sales Closed!</span></c:if>
+                <c:if test="${!lot.isBiddingClosed}"><span id="TimeLeft">${lot.formattedTimeLeft}</span></c:if>
             </td>
             </tr>
         </c:forEach>
         </table>
     </c:if>
 
+    <c:if test="${empty lots}">
+        No lots.
+    </c:if>
+    
     <%@include file="footer.jspf" %>
     </body>
 </html>

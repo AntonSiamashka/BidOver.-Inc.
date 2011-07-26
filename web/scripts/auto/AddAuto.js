@@ -7,7 +7,7 @@ function getModels(){
         makeStr = make.value;
     }
     createRequest();
-    var url = "Controller?command=ADD_MODEL_TO_ADD";
+    var url = "Controller.do?command=ADD_MODEL_TO_ADD";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateModelList;
@@ -44,7 +44,7 @@ function getModifications(){
         modelStr = model.value;
     }
     createRequest();
-    var url = "Controller?command=ADD_MODIFICATION_TO_ADD";
+    var url = "Controller.do?command=ADD_MODIFICATION_TO_ADD";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateModificationList;
@@ -80,7 +80,7 @@ function getOthers(){
         modificationStr = modification.value;
     }
     createRequest();
-    var url = "Controller?command=ADD_OTHER_TO_ADD";
+    var url = "Controller.do?command=ADD_OTHER_TO_ADD";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateOthersList;
@@ -221,7 +221,7 @@ function getDamages(){
 
 function showAddButton(){
     createRequest();
-    var url = "Controller?command=ADD_BUTTON_TO_ADD";
+    var url = "Controller.do?command=ADD_BUTTON_TO_ADD";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateAddButton;

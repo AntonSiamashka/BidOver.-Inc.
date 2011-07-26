@@ -5,7 +5,7 @@ function getModels(){
         makeStr = make.value;
     }
     createRequest();
-    var url = "Controller?command=ADD_MODEL_TO_SEARCH";
+    var url = "Controller.do?command=ADD_MODEL_TO_SEARCH";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateModelList;
@@ -38,7 +38,7 @@ function getModifications(){
         modelStr = model.value;
     }
     createRequest();
-    var url = "Controller?command=ADD_MODIFICATION_TO_ADD";
+    var url = "Controller.do?command=ADD_MODIFICATION_TO_ADD";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateModificationList;
@@ -73,7 +73,7 @@ function getYears(){
         modelStr = model.value;
     }
     createRequest();
-    var url = "Controller?command=ADD_YEAR_TO_SEARCH";
+    var url = "Controller.do?command=ADD_YEAR_TO_SEARCH";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = updateYearsLists;

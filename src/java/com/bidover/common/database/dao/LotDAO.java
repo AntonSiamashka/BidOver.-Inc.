@@ -4,6 +4,7 @@ import com.bidover.common.logger.Logger;
 import com.bidover.common.model.bean.Lot;
 import com.bidover.common.upload.FileIOSet;
 import com.bidover.util.DateSets;
+import com.bidover.util.IntegerUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -254,8 +255,12 @@ public class LotDAO extends BaseLotDAO {
         String id = resultSet.getString("lot.id");
         String expirationTime = resultSet.getString("lot.expiration_time");
         String status = resultSet.getString("lot.status");
+        String title = resultSet.getString("lot.title");
+        Integer lotType = IntegerUtil.parseString(resultSet.getString("lot.lot_type"));
         Lot lot = new Lot();
         lot.setId(Integer.valueOf(id));
+        lot.setTitle(title);
+        lot.setLotType(lotType);
         long millisTimeLeft = Long.valueOf(expirationTime) - System.currentTimeMillis();
         lot.setStatus(Byte.valueOf(status));
         boolean isBiddingClosed = millisTimeLeft < 0 || lot.getStatus() > 0 ? true : false;
@@ -352,6 +357,11 @@ public class LotDAO extends BaseLotDAO {
 
     @Override
     public Integer addSpecificInfo(Lot lot) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Lot findLotById(Integer lotId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

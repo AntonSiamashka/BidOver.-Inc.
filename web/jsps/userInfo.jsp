@@ -9,7 +9,7 @@
     <body>
         <center>
             <br><a href="passwordChanger.jsp">Change password</a>
-            <form action="Controller?command=CHANGE_USER_INFO" method=POST>
+            <form action="Controller.do?command=CHANGE_USER_INFO" method=POST>
                 <table id = "t_registration">
                     <tr>
                         <td>???? ???????:</td>

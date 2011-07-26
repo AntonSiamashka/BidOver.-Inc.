@@ -49,7 +49,7 @@
                             <td>&nbsp;&nbsp;&nbsp;</td>
                             <td valign="top">
                                 <table style="border-top: 1px solid #444">
-                                    <tr><td><a href="./" class="small"><fmt:message key="btn.home" /></a>&nbsp;|&nbsp;<a href="Controller.do?command=LOG_OUT" class="small"><fmt:message key="btn.logout" /></a></td></tr>
+                                    <tr><td><a href="./" class="small"><fmt:message key="btn.home" /></a>&nbsp;|&nbsp;<a href="Controller?command=LOG_OUT" class="small"><fmt:message key="btn.logout" /></a></td></tr>
                                 </table>
                             </td>
                         </tr>
@@ -72,7 +72,7 @@
                     <table width='100%'><tr><td valign='middle'><span class='smtitle'><fmt:message key="lbl.lotsforsales" /></span>
                                 <table width='100%'>
                                     <tr><td colspan='3'>&nbsp;</td></tr>
-                                    <tr><td width='40'></td><td><img src='css/bo.info.024x024.png' border='0' alt=""></td><td valign='middle'><a href='showUserLots.do'><fmt:message key="lbl.waitsales" /></a> <sup><%=lots_00%></sup></td></tr>
+                                    <tr><td width='40'></td><td><img src='css/bo.info.024x024.png' border='0' alt=""></td><td valign='middle'><a href='Controller?command=SHOW_AUTO_BY_USER'><fmt:message key="lbl.waitsales" /></a> <sup><%=lots_00%></sup></td></tr>
                                     <tr><td width='40'></td><td><img src='css/bo.alert.024x024.png' border='0' alt=""></td><td valign='middle'><a href='?alt=11'><fmt:message key="lbl.waitdecision" /></a> <sup><%=lots_01%></sup></td></tr>
                                     <tr><td width='40'></td><td><img src='css/bo.cancel.024x024.png' border='0' alt=""></td><td valign='middle'><a href='?alt=12'><fmt:message key="lbl.notsold" /></a> <sup><%=lots_02%></sup></td></tr>
                                     <tr><td width='40'></td><td><img src='css/bo.ok.024x024.png' border='0' alt=""></td><td valign='middle'><a href='?alt=13'><fmt:message key="lbl.sold" /></a> <sup><%=lots_03%></sup></td></tr>
@@ -98,7 +98,7 @@
                     <table width='100%'><tr><td width='40'><img src='css/bo.favorites.032x032.png' border='0' alt=""></td><td valign='middle'><a href='?alt=66'><fmt:message key="lbl.favorites" /></a> <sup><%=fvrs_00%></sup></td></tr></table>
                     <table width='100%'><tr><td width='40'><img src='css/bo.search.032x032.png' border='0' alt=""></td><td valign='middle'><a href='lot.jsp'><fmt:message key="lbl.searchlot" /></a></td></tr></table>
                     <table width='100%'><tr><td width='40'><img src='css/bo.contact.032x032.png' border='0' alt=""></td><td valign='middle'><a href='?alt=69'><fmt:message key="lbl.postbox" /></a> <sup><%=userPosts%></sup></td></tr></table>
-                    <table width='100%'><tr><td width='40'><img src='css/bo.user.032x032.png' border='0' alt=""></td><td valign='middle'><a href='Controller.do?command=registration'><fmt:message key="lbl.regpack" /></a></td></tr></table>
+                    <table width='100%'><tr><td width='40'><img src='css/bo.user.032x032.png' border='0' alt=""></td><td valign='middle'><a href='Controller?command=registration'><fmt:message key="lbl.regpack" /></a></td></tr></table>
                 </td>
             </tr>
         </table>

@@ -8,24 +8,67 @@
 			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-<!--        <beans:bean id="filterChainProxy" class="org.springframework.security.util.FilterChainProxy">
-            <security:filter-chain-map path-type="ant">
-                <security:filter-chain pattern="/*login*" filters="none"/>
-                <security:filter-chain pattern="/**" 
-                                       filters="httpSessionContextIntegrationFilter,
-                                                logoutFilter,
-                                                authenticationProcessingFilter,
-                                                basicProcessingFilter,
-                                                securityContextHolderAwareRequestFilter,
-                                                rememberMeProcessingFilter,
-                                                anonymousProcessingFilter,
-                                                exceptionTranslationFilter,
-                                                filterInvocationInterceptor,
-                                                switchUserProcessingFilter"/>
-            </security:filter-chain-map>
-        </beans:bean>-->
+        <beans:bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+            <filter-chain-map path-type="ant">
+                <filter-chain pattern="/js/**" filters="none"/>
+                <filter-chain pattern="/css/**" filters="none"/>
+                
+                <filter-chain pattern="/**" 
+                                       filters="securityContextPersistenceFilter,
+                                       anonymousAuthenticationFilter,
+                                       usernamePasswordAuthenticationFilter,
+                                       filterSecurityInterceptor"/>
+            </filter-chain-map>
+        </beans:bean>
+        
+        <beans:bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+        
+        <beans:bean id="webPrivilegeEvaluator" class="org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator">
+	    <beans:constructor-arg ref="filterSecurityInterceptor" />
+	</beans:bean>
+        
+        <beans:bean id="usernamePasswordAuthenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+            <beans:property name="authenticationManager" ref="authenticationManager"/>
+            <beans:property name="filterProcessesUrl" value="/performLogin.do"/>
+            <beans:property name="usernameParameter" value="username"/>
+            <beans:property name="passwordParameter" value="password"/>
+            <beans:property name="authenticationSuccessHandler">
+                <beans:bean class="com.bidover.common.service.auth.BidoverAuthenticationSuccessHandler">
+                    <beans:property name="defaultTargetUrl" value="cp.jsp"/>
+                </beans:bean>
+            </beans:property>
+            <beans:property name="authenticationFailureHandler">
+                <beans:bean class="com.bidover.common.service.auth.BidoverAuthenticationFailureHandler">
+                </beans:bean>
+            </beans:property>
+        </beans:bean>
+        
+        <beans:bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
+        
+        <beans:bean id="anonymousAuthenticationFilter" class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+            <beans:property name="key" value="foobar"/>
+            <beans:property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS"/>
+        </beans:bean>
+        
+        <beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+            <beans:property name="securityMetadataSource">
+                <filter-security-metadata-source>
+                    <intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                    <intercept-url pattern="/**.do" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                    <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                    <intercept-url pattern="/index.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                    <intercept-url pattern="/fm.login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                    <intercept-url pattern="/fm.signup.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                    <intercept-url pattern="/**" access="ROLE_USER"/>
+                    <intercept-url pattern="/cp.jsp*" access="ROLE_USER"/>
+                    <intercept-url pattern="/*command=registration" access="ROLE_PREUSER,ROLE_USER" />
+                </filter-security-metadata-source>
+            </beans:property>
+            <beans:property name="authenticationManager" ref="authenticationManager" />
+            <beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+        </beans:bean>
 
-	<http auto-config="true">
+<!--	<http auto-config="true">
             <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="/*login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="/*command=LOGIN*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
@@ -34,14 +77,42 @@
             <intercept-url pattern="*js/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="*css/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="*images/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-            <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+            <intercept-url pattern="/**" access="ROLE_USER"/>
             <intercept-url pattern="/cp.jsp*" access="ROLE_USER"/>
             <intercept-url pattern="/*command=registration" access="ROLE_PREUSER,ROLE_USER" />
             <form-login login-page="/fm.login.jsp"
                         default-target-url="/index.jsp" />
-	</http>
-        <authentication-manager>
-            <authentication-provider user-service-ref="userDao"/>
-        </authentication-manager>
-    <beans:bean id="userDao" class="com.bidover.common.database.dao.UserDAO"/>
+	</http>-->
+ 
+        <beans:bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+          <beans:property name="providers">
+            <beans:list>
+              <beans:ref local="daoAuthenticationProvider"/>
+              <beans:ref local="anonymousProvider"/>
+            </beans:list>
+          </beans:property>
+        </beans:bean>
+        
+    <beans:bean id="anonymousProvider" class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+        <beans:property name="key" value="foobar" />
+    </beans:bean>
+    
+    <beans:bean id="userDAO" class="com.bidover.common.database.dao.UserDAO"/>
+    
+    <beans:bean id="daoAuthenticationProvider" class="com.bidover.common.service.auth.DaoAuthenticationProvider">
+        <beans:property name="userDAO" ref="userDAO"/>
+        <beans:property name="passwordEncoder">
+            <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+        </beans:property>
+    </beans:bean>
+    
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    
 </beans:beans>

@@ -1,10 +1,10 @@
+package com.bidover.common.controller.command;
 
-package com.bidover.auto.controller.command;
-
-import com.bidover.auto.model.bean.Auto;
-import com.bidover.auto.database.dao.AutoDAO;
+import com.bidover.auto.controller.command.ICommand;
+import com.bidover.common.database.dao.BaseLotDAO;
 import com.bidover.common.model.bean.Lot;
-import com.bidover.common.database.dao.LotDAO;
+import com.bidover.common.database.dao.LotFactory;
+import com.bidover.common.model.bean.User;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,36 +14,36 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-public class ShowAutoViewCommand implements ICommand {
+public class ShowLotViewCommand implements ICommand {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public ShowAutoViewCommand(HttpServletRequest request, HttpServletResponse response) {
+    public ShowLotViewCommand(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }
 
     public void execute() throws ServletException, IOException {
-        String autoIdTxt = request.getParameter("auto_id");
-        AutoDAO autoDAO = new AutoDAO();
-        Auto auto = autoDAO.findById(Integer.valueOf(autoIdTxt));
-        if (auto != null) {
-            Integer lotId = autoDAO.findLotIdByAutoId(Integer.valueOf(autoIdTxt));
+        User user = (User) request.getSession().getAttribute("profile");
+        int lotId = Integer.valueOf(request.getParameter("lotId"));
+        int lotType = Integer.valueOf(request.getParameter("lotType"));
+        BaseLotDAO lotDao = LotFactory.createLotDao(lotType);
+        Lot lot = lotDao.findLotById(lotId);
+        if (lot != null) {
             ResourceBundle set = ResourceBundle.getBundle("properties.uploading");
             String imgBuildPath = set.getString("IMG_BUILD_PATH");
-            List<String> imgFiles = getFiles(imgBuildPath+lotId, lotId);
+            List<String> imgFiles = getFiles(imgBuildPath + lotId, lotId);
             request.setAttribute("qnt_files", imgFiles.size());
             request.setAttribute("img_files", imgFiles);
-            request.setAttribute("auto", auto);
-// -------- my insert
-            LotDAO lotDAO = new LotDAO();
-            Lot lot = lotDAO.getLotByID(lotId);
             request.setAttribute("lot", lot);
-// ---------
+            boolean isOwner = false;
+            if (user != null) {
+                isOwner = lot.getSellerId().getId().equals(user.getId());
+            }
+            request.setAttribute("isOwner", isOwner);
         }
-        request.getRequestDispatcher("./auto.jsp").forward(request, response);
+        request.getRequestDispatcher("./lot.jsp").forward(request, response);
     }
 
     private List<String> getFiles(String pathDir, Integer lotId) {

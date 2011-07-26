@@ -165,7 +165,7 @@ public class SearchCommand implements ICommand {
             request.setAttribute("autos", autos);
             request.getRequestDispatcher("searchResult.jsp").forward(request, response);
         } catch (NumberFormatException ex) {
-            response.sendRedirect("Controller?command=SHOW_SEARCH");
+            response.sendRedirect("Controller.do?command=SHOW_SEARCH");
             //request.getRequestDispatcher("Controller?command=SHOW_SEARCH").forward(request, response);
         }
     }

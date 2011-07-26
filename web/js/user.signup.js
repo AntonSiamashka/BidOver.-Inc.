@@ -7,7 +7,7 @@ function getUserEmail() {
 function getUserRegInfo() {
 	document.getElementById("progress_indicator").style.visibility = 'visible';
 	createRequest();
-	var url = "Controller";
+	var url = "Controller.do";
 	request.open("POST", url, true);
 	request.onreadystatechange = updateRegPage;
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -21,7 +21,7 @@ function updateRegPage() {
             if (jsonData.status == 1){
                 window.location = "cp.jsp";
             } else if (jsonData.status == 0) {
-                window.location = "Controller?command=REGISTRATION";
+                window.location = "Controller.do?command=REGISTRATION";
             } else {
                 replaceText(document.getElementById("msg"), jsonData.message);
             }

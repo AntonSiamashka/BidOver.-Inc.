@@ -36,7 +36,7 @@
         <fmt:setLocale value="${sessionScope.LNG}" />
         <fmt:setBundle basename="Messages"/>
         <%@include file="header.jspf" %>
-        <%@include file="dtlAuto.jspf" %>
+        <%@include file="lotInfo.jspf" %>
         <%@include file="footer.jspf" %>
     </body>
 </html>
